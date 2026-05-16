@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Project Management - Industrial Admin</title>
+<link href="/manifest.json" rel="manifest"/>
+<link href="/favicon.ico" rel="icon" sizes="any"/>
+<link href="/favicon-32.png" rel="icon" type="image/png" sizes="32x32"/>
+<link href="/apple-touch-icon.png" rel="apple-touch-icon" sizes="180x180"/>
+<meta content="#041627" name="theme-color"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-dim": "#d8dadc",
+                        "secondary-fixed-dim": "#c7c6c6",
+                        "tertiary": "#2a0c00",
+                        "secondary-fixed": "#e3e2e2",
+                        "on-secondary-fixed-variant": "#464747",
+                        "secondary-container": "#e3e2e2",
+                        "surface": "#f8f9fb",
+                        "on-primary": "#ffffff",
+                        "surface-variant": "#e0e3e5",
+                        "primary-container": "#1a2b3c",
+                        "error": "#ba1a1a",
+                        "surface-container-lowest": "#ffffff",
+                        "on-primary-container": "#8192a7",
+                        "inverse-primary": "#b7c8de",
+                        "outline-variant": "#c4c6cd",
+                        "inverse-surface": "#2d3133",
+                        "tertiary-container": "#4b1b00",
+                        "outline": "#74777d",
+                        "on-secondary": "#ffffff",
+                        "on-tertiary": "#ffffff",
+                        "on-primary-fixed-variant": "#38485a",
+                        "on-tertiary-fixed-variant": "#7a3000",
+                        "on-error-container": "#93000a",
+                        "error-container": "#ffdad6",
+                        "on-tertiary-container": "#eb6a1b",
+                        "on-error": "#ffffff",
+                        "surface-container": "#eceef0",
+                        "on-primary-fixed": "#0b1d2d",
+                        "surface-container-highest": "#e0e3e5",
+                        "on-secondary-fixed": "#1b1c1c",
+                        "on-surface": "#191c1e",
+                        "tertiary-fixed": "#ffdbcb",
+                        "surface-tint": "#4f6073",
+                        "surface-container-low": "#f2f4f6",
+                        "secondary": "#5e5e5e",
+                        "background": "#f8f9fb",
+                        "primary-fixed": "#d2e4fb",
+                        "primary": "#041627",
+                        "surface-container-high": "#e6e8ea",
+                        "on-background": "#191c1e",
+                        "surface-bright": "#f8f9fb",
+                        "on-surface-variant": "#44474c",
+                        "primary-fixed-dim": "#b7c8de",
+                        "on-secondary-container": "#646464",
+                        "on-tertiary-fixed": "#341000",
+                        "inverse-on-surface": "#eff1f3",
+                        "tertiary-fixed-dim": "#ffb693"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "lg": "2.5rem",
+                        "sm": "1rem",
+                        "gutter": "24px",
+                        "md": "1.5rem",
+                        "max_width": "1280px",
+                        "base": "4px",
+                        "xl": "4rem",
+                        "xs": "0.5rem",
+                        "margin": "32px"
+                    },
+                    "fontFamily": {
+                        "headline-md": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "body-md": ["Inter"],
+                        "table-data": ["Inter"],
+                        "label-bold": ["Inter"],
+                        "display-lg": ["Inter"],
+                        "body-sm": ["Inter"],
+                        "headline-sm": ["Inter"]
+                    },
+                    "fontSize": {
+                        "headline-md": ["32px", { "lineHeight": "1.2", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+                        "body-lg": ["18px", { "lineHeight": "1.6", "fontWeight": "400" }],
+                        "body-md": ["16px", { "lineHeight": "1.5", "fontWeight": "400" }],
+                        "table-data": ["14px", { "lineHeight": "1.2", "fontWeight": "500" }],
+                        "label-bold": ["12px", { "lineHeight": "1", "letterSpacing": "0.05em", "fontWeight": "700" }],
+                        "display-lg": ["48px", { "lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "body-sm": ["14px", { "lineHeight": "1.5", "fontWeight": "400" }],
+                        "headline-sm": ["24px", { "lineHeight": "1.3", "fontWeight": "600" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .material-symbols-outlined[data-weight="fill"] {
+            font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+</head>
+<body class="bg-surface text-on-surface font-body-md min-h-screen flex">
+<!-- SideNavBar -->
+<nav class="fixed left-0 top-0 h-full flex flex-col pt-4 pb-8 w-64 border-r border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 z-40">
+<div class="px-6 mb-8 flex items-center gap-3">
+<div class="w-10 h-10 rounded-DEFAULT bg-primary flex items-center justify-center text-on-primary font-bold overflow-hidden">
+<img alt="Company Logo" class="w-full h-full object-cover" data-alt="Abstract geometric logo design featuring interlocking blue and orange shapes on a dark background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCz30Y3bZmbMTU5uHAW_ANCzW29aCYixBKxVD0Ehga4LBPozTGG30OTIlfkeDOyZ0tZDslL66T7aFbpjN5Ti4ZmSdKOAl3JRGUbysDy1_ssEYyDEty0o4t70yobdhznMd51cvfr-tGDeg0rbv8YX5Z8VA4kiE9yoBiOFX58lGNKkNUIma_1cfrsDBdn-Zg6jC9KOoZNWC92VH9kwyIqKGXYUsxCS3tV2yIYLcqIt7Z06VjyJW9KFOVt_zGYxZ-8z-LFTLvAg2oy3rxR"/>
+</div>
+<div>
+<h1 class="font-bold text-slate-900 dark:text-white font-headline-sm text-headline-sm">Core Assets</h1>
+<p class="text-on-surface-variant font-body-sm text-body-sm">SME Management</p>
+</div>
+</div>
+<div class="px-4 mb-6">
+<button class="w-full bg-primary hover:bg-primary/90 text-on-primary py-2 px-4 rounded-DEFAULT font-label-bold text-label-bold flex items-center justify-center gap-2 transition-colors duration-150">
+<span class="material-symbols-outlined text-[18px]">add</span>
+                New Entry
+            </button>
+</div>
+<ul class="flex-1 px-4 space-y-1">
+<li>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-DEFAULT text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-900 transition-all duration-150 font-inter text-xs font-semibold uppercase tracking-widest" href="#">
+<span class="material-symbols-outlined text-[20px]">inventory_2</span>
+                    Products
+                </a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-DEFAULT bg-slate-200 dark:bg-slate-800 text-orange-600 dark:text-orange-400 border-l-4 border-orange-600 transition-all duration-150 font-inter text-xs font-semibold uppercase tracking-widest" href="#">
+<span class="material-symbols-outlined text-[20px]" data-weight="fill">construction</span>
+                    Projects
+                </a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-DEFAULT text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-900 transition-all duration-150 font-inter text-xs font-semibold uppercase tracking-widest" href="#">
+<span class="material-symbols-outlined text-[20px]">category</span>
+                    Categories
+                </a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-DEFAULT text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-900 transition-all duration-150 font-inter text-xs font-semibold uppercase tracking-widest" href="#">
+<span class="material-symbols-outlined text-[20px]">conveyor_belt</span>
+                    Suppliers
+                </a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-DEFAULT text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-900 transition-all duration-150 font-inter text-xs font-semibold uppercase tracking-widest" href="#">
+<span class="material-symbols-outlined text-[20px]">settings</span>
+                    Settings
+                </a>
+</li>
+</ul>
+<ul class="px-4 mt-auto space-y-1">
+<li>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-DEFAULT text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-900 transition-all duration-150 font-inter text-xs font-semibold uppercase tracking-widest" href="#">
+<span class="material-symbols-outlined text-[20px]">help</span>
+                    Support
+                </a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-DEFAULT text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-900 transition-all duration-150 font-inter text-xs font-semibold uppercase tracking-widest" href="#">
+<span class="material-symbols-outlined text-[20px]">logout</span>
+                    Logout
+                </a>
+</li>
+</ul>
+</nav>
+<!-- Main Content Area -->
+<div class="flex-1 ml-64 flex flex-col min-h-screen">
+<!-- TopNavBar -->
+<header class="sticky top-0 z-30 flex items-center justify-between px-6 h-16 w-full bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 border-b border-slate-200 dark:border-slate-800 shadow-sm font-inter text-sm font-medium tracking-tight">
+<div class="flex items-center gap-8">
+<span class="text-lg font-black tracking-tighter text-slate-900 dark:text-white uppercase hidden md:block">Industrial Admin</span>
+<nav class="hidden md:flex items-center h-full space-x-6">
+<a class="h-16 flex items-center text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors duration-200 ease-in-out border-b-2 border-transparent" href="#">Dashboard</a>
+<a class="h-16 flex items-center text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors duration-200 ease-in-out border-b-2 border-transparent" href="#">Inventory</a>
+<a class="h-16 flex items-center text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors duration-200 ease-in-out border-b-2 border-transparent" href="#">Reports</a>
+</nav>
+</div>
+<div class="flex items-center gap-4">
+<div class="relative hidden sm:block">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-[18px]">search</span>
+<input class="pl-9 pr-4 py-1.5 bg-slate-100 dark:bg-slate-800 border-none rounded-DEFAULT text-sm focus:ring-2 focus:ring-primary w-64 text-slate-900 dark:text-slate-100" placeholder="Search..." type="text"/>
+</div>
+<div class="flex items-center gap-2">
+<button class="p-2 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors duration-200 ease-in-out rounded-full hover:bg-slate-100 dark:hover:bg-slate-800">
+<span class="material-symbols-outlined text-[20px]">notifications</span>
+</button>
+<button class="p-2 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors duration-200 ease-in-out rounded-full hover:bg-slate-100 dark:hover:bg-slate-800">
+<span class="material-symbols-outlined text-[20px]">settings</span>
+</button>
+</div>
+<div class="w-8 h-8 rounded-full overflow-hidden border border-slate-200 dark:border-slate-700">
+<img alt="Administrator Avatar" class="w-full h-full object-cover" data-alt="Portrait of a professional man in a business shirt, smiling softly, with a neutral blurred background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD2QJiDI1zuqYbJjwQPJTkSL0eTZx2I1B0bZlNyXXhwzao-QR3LtRJTIaXK2AoWoWUjMNENFnc-eQZY0ircdy4uKUhnYEfI6g--IC9x54oUS4Ub_9RrOpR0DS_Nschr6J10POZXOmGtmQ9YZtGcm693XnGXBXkhxbfevT7N62KNeb3wPgpN-Pt4H4Jyn2J89irzChT51Ww3D-Y0Vywsy996BGHyyPOc7fDenghpZoWF_v0RGkhURXSSkOrfathz7fitQbYgmPO6GSt-"/>
+</div>
+</div>
+</header>
+<!-- Page Content -->
+<main class="flex-1 p-8">
+<div class="max-w-[max_width] mx-auto w-full">
+<!-- Page Header -->
+<div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-8">
+<div>
+<h2 class="font-headline-md text-headline-md text-on-surface mb-2">Project Management</h2>
+<p class="font-body-md text-body-md text-on-surface-variant">Oversee and manage ongoing construction infrastructure assets.</p>
+</div>
+<button class="bg-[#eb6a1b] hover:bg-[#c25413] text-white px-6 py-2.5 rounded-DEFAULT font-label-bold text-label-bold flex items-center justify-center gap-2 transition-colors shrink-0">
+<span class="material-symbols-outlined text-[18px]">add</span>
+                        Add New Project
+                    </button>
+</div>
+<!-- Controls Bar -->
+<div class="bg-surface-container-lowest p-4 rounded-lg border border-outline-variant/50 mb-6 flex flex-col lg:flex-row gap-4 items-center justify-between">
+<div class="relative w-full lg:w-96">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline text-[20px]">search</span>
+<input class="w-full pl-10 pr-4 py-2 bg-surface-container-low border border-outline-variant rounded-DEFAULT focus:border-primary focus:ring-1 focus:ring-primary font-body-sm text-body-sm transition-all text-on-surface" placeholder="Search projects by title, client, or location..." type="text"/>
+</div>
+<div class="flex items-center gap-3 w-full lg:w-auto overflow-x-auto pb-2 lg:pb-0">
+<div class="flex items-center gap-2 text-on-surface-variant font-label-bold text-label-bold shrink-0">
+<span class="material-symbols-outlined text-[18px]">filter_list</span>
+                            STATUS:
+                        </div>
+<button class="px-4 py-1.5 rounded-DEFAULT bg-primary-container text-on-primary-container font-table-data text-table-data whitespace-nowrap">All Projects</button>
+<button class="px-4 py-1.5 rounded-DEFAULT border border-outline-variant text-on-surface-variant hover:bg-surface-container font-table-data text-table-data whitespace-nowrap">Ongoing</button>
+<button class="px-4 py-1.5 rounded-DEFAULT border border-outline-variant text-on-surface-variant hover:bg-surface-container font-table-data text-table-data whitespace-nowrap">Completed</button>
+<button class="px-4 py-1.5 rounded-DEFAULT border border-outline-variant text-on-surface-variant hover:bg-surface-container font-table-data text-table-data whitespace-nowrap">Planning</button>
+</div>
+</div>
+<!-- Data Table Container -->
+<div class="bg-surface-container-lowest rounded-lg border border-[#c4c6cd]/50 overflow-hidden">
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-primary text-on-primary font-label-bold text-label-bold uppercase tracking-widest">
+<th class="px-6 py-4 font-semibold">Project Title</th>
+<th class="px-6 py-4 font-semibold">Location</th>
+<th class="px-6 py-4 font-semibold">Client</th>
+<th class="px-6 py-4 font-semibold">Completion Date</th>
+<th class="px-6 py-4 font-semibold">Status</th>
+<th class="px-6 py-4 font-semibold text-center">Featured</th>
+<th class="px-6 py-4 font-semibold text-right">Actions</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant/30 font-table-data text-table-data text-on-surface">
+<!-- Row 1 -->
+<tr class="hover:bg-surface-container-low transition-colors group">
+<td class="px-6 py-4">
+<div class="font-bold text-primary">Vinh Tuy Bridge 2</div>
+<div class="text-on-surface-variant text-xs mt-1">ID: PRJ-2023-089</div>
+</td>
+<td class="px-6 py-4 text-on-surface-variant">Hanoi, Vietnam</td>
+<td class="px-6 py-4">Ministry of Transport</td>
+<td class="px-6 py-4 text-on-surface-variant">Sep 2023</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-[#e6f4ea] text-[#137333] border border-[#ceead6]">
+                                            Completed
+                                        </span>
+</td>
+<td class="px-6 py-4 text-center">
+<label class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only peer" type="checkbox" value=""/>
+<div class="w-9 h-5 bg-outline-variant rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-[#eb6a1b]"></div>
+</label>
+</td>
+<td class="px-6 py-4">
+<div class="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="p-1.5 text-on-surface-variant hover:text-primary hover:bg-surface-container-highest rounded-DEFAULT transition-colors" title="View Details">
+<span class="material-symbols-outlined text-[20px]">visibility</span>
+</button>
+<button class="p-1.5 text-on-surface-variant hover:text-primary hover:bg-surface-container-highest rounded-DEFAULT transition-colors" title="Edit Project">
+<span class="material-symbols-outlined text-[20px]">edit</span>
+</button>
+<button class="p-1.5 text-on-surface-variant hover:text-error hover:bg-error-container rounded-DEFAULT transition-colors" title="Delete">
+<span class="material-symbols-outlined text-[20px]">delete</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="hover:bg-surface-container-low transition-colors group">
+<td class="px-6 py-4">
+<div class="font-bold text-primary">Metro Line 1 (Ben Thanh - Suoi Tien)</div>
+<div class="text-on-surface-variant text-xs mt-1">ID: PRJ-2012-001</div>
+</td>
+<td class="px-6 py-4 text-on-surface-variant">Ho Chi Minh City, Vietnam</td>
+<td class="px-6 py-4">MAUR</td>
+<td class="px-6 py-4 text-on-surface-variant">Dec 2024</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-[#fef7e0] text-[#b06000] border border-[#fce8b2]">
+                                            Ongoing
+                                        </span>
+</td>
+<td class="px-6 py-4 text-center">
+<label class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only peer" type="checkbox" value=""/>
+<div class="w-9 h-5 bg-outline-variant rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-[#eb6a1b]"></div>
+</label>
+</td>
+<td class="px-6 py-4">
+<div class="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="p-1.5 text-on-surface-variant hover:text-primary hover:bg-surface-container-highest rounded-DEFAULT transition-colors" title="View Details">
+<span class="material-symbols-outlined text-[20px]">visibility</span>
+</button>
+<button class="p-1.5 text-on-surface-variant hover:text-primary hover:bg-surface-container-highest rounded-DEFAULT transition-colors" title="Edit Project">
+<span class="material-symbols-outlined text-[20px]">edit</span>
+</button>
+<button class="p-1.5 text-on-surface-variant hover:text-error hover:bg-error-container rounded-DEFAULT transition-colors" title="Delete">
+<span class="material-symbols-outlined text-[20px]">delete</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="hover:bg-surface-container-low transition-colors group">
+<td class="px-6 py-4">
+<div class="font-bold text-primary">Long Thanh International Airport</div>
+<div class="text-on-surface-variant text-xs mt-1">ID: PRJ-2021-042</div>
+</td>
+<td class="px-6 py-4 text-on-surface-variant">Dong Nai, Vietnam</td>
+<td class="px-6 py-4">ACV</td>
+<td class="px-6 py-4 text-on-surface-variant">Q4 2026</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-[#fef7e0] text-[#b06000] border border-[#fce8b2]">
+                                            Ongoing
+                                        </span>
+</td>
+<td class="px-6 py-4 text-center">
+<label class="relative inline-flex items-center cursor-pointer">
+<input class="sr-only peer" type="checkbox" value=""/>
+<div class="w-9 h-5 bg-outline-variant rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-[#eb6a1b]"></div>
+</label>
+</td>
+<td class="px-6 py-4">
+<div class="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="p-1.5 text-on-surface-variant hover:text-primary hover:bg-surface-container-highest rounded-DEFAULT transition-colors" title="View Details">
+<span class="material-symbols-outlined text-[20px]">visibility</span>
+</button>
+<button class="p-1.5 text-on-surface-variant hover:text-primary hover:bg-surface-container-highest rounded-DEFAULT transition-colors" title="Edit Project">
+<span class="material-symbols-outlined text-[20px]">edit</span>
+</button>
+<button class="p-1.5 text-on-surface-variant hover:text-error hover:bg-error-container rounded-DEFAULT transition-colors" title="Delete">
+<span class="material-symbols-outlined text-[20px]">delete</span>
+</button>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Pagination -->
+<div class="bg-surface-container-low border-t border-outline-variant/30 px-6 py-3 flex items-center justify-between">
+<div class="font-body-sm text-body-sm text-on-surface-variant">
+                            Showing 1 to 3 of 45 projects
+                        </div>
+<div class="flex items-center gap-1">
+<button class="p-1 rounded-DEFAULT text-outline hover:bg-surface-container hover:text-on-surface transition-colors disabled:opacity-50" disabled="">
+<span class="material-symbols-outlined text-[20px]">chevron_left</span>
+</button>
+<div class="flex items-center gap-1">
+<button class="w-8 h-8 rounded-DEFAULT bg-primary text-on-primary font-table-data text-table-data flex items-center justify-center">1</button>
+<button class="w-8 h-8 rounded-DEFAULT hover:bg-surface-container text-on-surface-variant font-table-data text-table-data flex items-center justify-center transition-colors">2</button>
+<button class="w-8 h-8 rounded-DEFAULT hover:bg-surface-container text-on-surface-variant font-table-data text-table-data flex items-center justify-center transition-colors">3</button>
+<span class="text-outline mx-1">...</span>
+<button class="w-8 h-8 rounded-DEFAULT hover:bg-surface-container text-on-surface-variant font-table-data text-table-data flex items-center justify-center transition-colors">15</button>
+</div>
+<button class="p-1 rounded-DEFAULT text-outline hover:bg-surface-container hover:text-on-surface transition-colors">
+<span class="material-symbols-outlined text-[20px]">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+<script>
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('/sw.js').catch(() => {});
+  });
+}
+</script>
+</body>
+</html>

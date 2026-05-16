@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+
+<html class="light" lang="vi"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>CONCRETE ELITE - Nền tảng vững chắc cho mọi công trình</title>
+<link href="/manifest.json" rel="manifest"/>
+<link href="/favicon.ico" rel="icon" sizes="any"/>
+<link href="/favicon-32.png" rel="icon" type="image/png" sizes="32x32"/>
+<link href="/apple-touch-icon.png" rel="apple-touch-icon" sizes="180x180"/>
+<meta content="#041627" name="theme-color"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;300;400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-tertiary-fixed-variant": "#7a3000",
+                        "on-surface-variant": "#44474c",
+                        "on-secondary-container": "#646464",
+                        "on-tertiary-fixed": "#341000",
+                        "surface-bright": "#f8f9fb",
+                        "primary-container": "#1a2b3c",
+                        "error-container": "#ffdad6",
+                        "secondary-fixed": "#e3e2e2",
+                        "primary": "#041627",
+                        "on-background": "#191c1e",
+                        "on-tertiary-container": "#eb6a1b",
+                        "on-error-container": "#93000a",
+                        "surface-variant": "#e0e3e5",
+                        "secondary-container": "#e3e2e2",
+                        "background": "#f8f9fb",
+                        "primary-fixed": "#d2e4fb",
+                        "surface-container-highest": "#e0e3e5",
+                        "surface-dim": "#d8dadc",
+                        "on-tertiary": "#ffffff",
+                        "surface-tint": "#4f6073",
+                        "surface-container-lowest": "#ffffff",
+                        "secondary-fixed-dim": "#c7c6c6",
+                        "on-primary-container": "#8192a7",
+                        "tertiary": "#2a0c00",
+                        "on-primary-fixed": "#0b1d2d",
+                        "surface-container-low": "#f2f4f6",
+                        "inverse-on-surface": "#eff1f3",
+                        "primary-fixed-dim": "#b7c8de",
+                        "error": "#ba1a1a",
+                        "on-secondary-fixed": "#1b1c1c",
+                        "on-primary": "#ffffff",
+                        "on-secondary": "#ffffff",
+                        "secondary": "#5e5e5e",
+                        "outline": "#74777d",
+                        "surface-container": "#eceef0",
+                        "tertiary-fixed": "#ffdbcb",
+                        "surface-container-high": "#e6e8ea",
+                        "on-primary-fixed-variant": "#38485a",
+                        "on-error": "#ffffff",
+                        "inverse-surface": "#2d3133",
+                        "on-secondary-fixed-variant": "#464747",
+                        "surface": "#f8f9fb",
+                        "outline-variant": "#c4c6cd",
+                        "inverse-primary": "#b7c8de",
+                        "tertiary-fixed-dim": "#ffb693",
+                        "tertiary-container": "#4b1b00",
+                        "on-surface": "#191c1e"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "md": "1.5rem",
+                        "xs": "0.5rem",
+                        "sm": "1rem",
+                        "margin": "32px",
+                        "lg": "2.5rem",
+                        "gutter": "24px",
+                        "base": "4px",
+                        "xl": "4rem",
+                        "max_width": "1280px"
+                    },
+                    "fontFamily": {
+                        "label-bold": ["Inter"],
+                        "body-sm": ["Inter"],
+                        "body-md": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "headline-md": ["Inter"],
+                        "display-lg": ["Inter"],
+                        "table-data": ["Inter"],
+                        "headline-sm": ["Inter"]
+                    },
+                    "fontSize": {
+                        "label-bold": ["12px", {"lineHeight": "1", "letterSpacing": "0.05em", "fontWeight": "700"}],
+                        "body-sm": ["14px", {"lineHeight": "1.5", "fontWeight": "400"}],
+                        "body-md": ["16px", {"lineHeight": "1.5", "fontWeight": "400"}],
+                        "body-lg": ["18px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                        "headline-md": ["32px", {"lineHeight": "1.2", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                        "display-lg": ["48px", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "table-data": ["14px", {"lineHeight": "1.2", "fontWeight": "500"}],
+                        "headline-sm": ["24px", {"lineHeight": "1.3", "fontWeight": "600"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body { font-family: 'Inter', sans-serif; }
+    </style>
+</head>
+<body class="bg-surface text-on-surface">
+<!-- TopNavBar -->
+<header class="fixed top-0 left-0 right-0 z-50 bg-white border-b border-slate-200">
+<div class="max-w-7xl mx-auto flex justify-between items-center px-6 h-20 w-full">
+<div class="text-2xl font-black text-slate-900 tracking-widest">
+                CONCRETE ELITE
+            </div>
+<nav class="hidden md:flex items-center space-x-8 font-['Inter'] tracking-tighter uppercase font-semibold text-sm">
+<a class="text-orange-600 border-b-2 border-orange-600 pb-1" href="/trangchconcretepro.html">Trang chủ</a>
+<a class="text-slate-600 hover:text-slate-900 transition-colors duration-200" href="/trangchngcpthcchinconcretepro.html">Giới thiệu</a>
+<a class="text-slate-600 hover:text-slate-900 transition-colors duration-200" href="/snphmvtliuxydng.html">Sản phẩm</a>
+<a class="text-slate-600 hover:text-slate-900 transition-colors duration-200" href="/hsdn.html">Dự án</a>
+<a class="text-slate-600 hover:text-slate-900 transition-colors duration-200" href="/chitittintcgiiphpbtngxanh.html">Tin tức</a>
+<a class="text-slate-600 hover:text-slate-900 transition-colors duration-200" href="/giithiucngty.html">Liên hệ</a>
+</nav>
+<button class="bg-on-tertiary-container text-white px-6 py-3 rounded-none font-label-bold text-label-bold uppercase tracking-widest hover:bg-orange-700 transition-all shadow-sm">
+                Yêu cầu báo giá
+            </button>
+</div>
+</header>
+<!-- Hero Section -->
+<section class="relative h-screen flex items-center pt-20 overflow-hidden">
+<div class="absolute inset-0 z-0">
+<img class="w-full h-full object-cover" data-alt="industrial concrete batching plant with massive silos and cement mixers under a dramatic sky at sunset with warm golden lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDV3ioRG9rTO3bR8Ez_JlC0b1ELIToG7gWuaT4dWxO41df821Mte6vz4wzUEPdsdMyk6KB3BuLkv7OtF5GOB1b1iRK1HSRcRj6fsLoX7QhOWOQy3Z21aY0F8dVu45t5CeUohbej0LfYiCtTR_TdlB2gMTYc6UXFM5RUSknYxdG80XUnIe908WOJ8VEcGLGgHQBdlJF8Hrj6t6J9zKbrbtR7CaetDQdRl3ad4oLfWGnsitNyXNPnAMXe2gxOj5naGxqydQPHvfqi9ecU"/>
+<div class="absolute inset-0 bg-primary/60"></div>
+</div>
+<div class="relative z-10 max-w-7xl mx-auto px-6 w-full">
+<div class="max-w-2xl">
+<div class="h-1 w-24 bg-on-tertiary-container mb-8"></div>
+<h1 class="font-display-lg text-display-lg text-white mb-6 uppercase">
+                    Nền tảng vững chắc cho mọi công trình
+                </h1>
+<p class="font-body-lg text-body-lg text-slate-300 mb-10">
+                    Cung cấp các giải pháp bê tông tươi và vật liệu xây dựng chất lượng cao cho các công trình trọng điểm trên toàn quốc. Đỉnh cao của độ bền và niềm tin.
+                </p>
+<div class="flex space-x-4">
+<button class="bg-on-tertiary-container text-white px-8 py-4 rounded-none font-label-bold text-label-bold uppercase tracking-widest hover:translate-y-[-2px] transition-transform">
+                        Khám phá sản phẩm
+                    </button>
+<button class="border border-white text-white px-8 py-4 rounded-none font-label-bold text-label-bold uppercase tracking-widest hover:bg-white hover:text-primary transition-all">
+                        Xem dự án
+                    </button>
+</div>
+</div>
+</div>
+<!-- Slide Indicator Mimic -->
+<div class="absolute bottom-12 left-1/2 -translate-x-1/2 flex space-x-4">
+<div class="w-12 h-1 bg-on-tertiary-container"></div>
+<div class="w-12 h-1 bg-slate-500/50"></div>
+<div class="w-12 h-1 bg-slate-500/50"></div>
+</div>
+</section>
+<!-- Stats Section -->
+<section class="bg-white border-b border-slate-200">
+<div class="max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-4 divide-x divide-slate-100">
+<div class="p-12 text-center">
+<div class="font-display-lg text-primary mb-2">20+</div>
+<div class="font-label-bold text-label-bold text-slate-500 uppercase tracking-widest">Năm kinh nghiệm</div>
+</div>
+<div class="p-12 text-center">
+<div class="font-display-lg text-primary mb-2">500+</div>
+<div class="font-label-bold text-label-bold text-slate-500 uppercase tracking-widest">Dự án hoàn thành</div>
+</div>
+<div class="p-12 text-center">
+<div class="font-display-lg text-primary mb-2">10</div>
+<div class="font-label-bold text-label-bold text-slate-500 uppercase tracking-widest">Trạm trộn bê tông</div>
+</div>
+<div class="p-12 text-center">
+<div class="font-display-lg text-primary mb-2">1.5M</div>
+<div class="font-label-bold text-label-bold text-slate-500 uppercase tracking-widest">Khối bê tông/Năm</div>
+</div>
+</div>
+</section>
+<!-- Core Products Section -->
+<section class="py-xl bg-surface-container-low">
+<div class="max-w-7xl mx-auto px-6">
+<div class="flex justify-between items-end mb-16">
+<div>
+<span class="font-label-bold text-label-bold text-on-tertiary-container uppercase tracking-widest block mb-4">Danh mục sản phẩm</span>
+<h2 class="font-headline-md text-headline-md text-primary uppercase">Sản phẩm cốt lõi</h2>
+</div>
+<div class="h-px bg-slate-200 flex-grow mx-12 hidden lg:block"></div>
+<a class="font-label-bold text-label-bold text-primary uppercase border-b-2 border-primary pb-1" href="/danhmcsnphm.html">Xem tất cả</a>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-gutter">
+<!-- Product Card 1 -->
+<div class="bg-white border border-slate-200 group overflow-hidden">
+<div class="h-64 relative overflow-hidden">
+<img class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" data-alt="close up high detailed macro shot of wet grey concrete texture being poured from a nozzle" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDo3L28XjuEiPvTDcs8AQzmHOzx_tVq_Z-gI1QI7ZOT-WEJdre_xYdeJGFS8N2FtFbabua0wi-FFgtcuuP0MiWH0_1oo27TV6M7IkGnBVwXIt1qkj2KRGPUKJ1wNDw2wrX9e1mVnnI4vaeEU9WyU1jG3wO1PNX7DaK7In7UAc0Ukl7s9y86IzyxlQgn8TUzIapuMq1VrUMm0djzl1DZXT_r1BflOGQlXh0-HV6NVQPW5smKbpejOCAMCYT4qtYWu8vuSfn1lQwMjf6Q"/>
+</div>
+<div class="p-8">
+<h3 class="font-headline-sm text-headline-sm text-primary mb-4">Bê tông tươi</h3>
+<p class="font-body-md text-body-md text-on-surface-variant mb-8">
+                            Cung cấp mác bê tông từ M100 đến M600, đáp ứng mọi tiêu chuẩn kỹ thuật khắt khe nhất của các dự án công nghiệp.
+                        </p>
+<button class="flex items-center text-on-tertiary-container font-label-bold text-label-bold uppercase tracking-widest group-hover:gap-4 transition-all">
+                            Tìm hiểu thêm <span class="material-symbols-outlined ml-2">arrow_forward</span>
+</button>
+</div>
+</div>
+<!-- Product Card 2 -->
+<div class="bg-white border border-slate-200 group overflow-hidden">
+<div class="h-64 relative overflow-hidden">
+<img class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" data-alt="construction site with specialized concrete pouring into deep foundation molds for high-rise buildings" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC3-Xc4OTqlFNzo1yvgVE3CqCB0eBPJbSpx0d2zAertxnu7Fh4EfUOYMMNZdJOOxx3mvW49vIYmO_tw1V-fHtOF66wHVN8dv5bw_JB5jkS1bnFvkkwvMWgoFHOWza-390BOCk6jjrtlTk4wgiYb1IFtFAIySR-juRlPk4p1i6Rx7JMTJQtN7jZlVWeqow2udRfWIjrA1R7tcqMqvNvlEbQHfAs1Q8lWTBY1bZxm-ih3svyW3_OZe3NUXhsVYbJ_C57MCsW5tynK-Rbh"/>
+</div>
+<div class="p-8">
+<h3 class="font-headline-sm text-headline-sm text-primary mb-4">Bê tông đặc biệt</h3>
+<p class="font-body-md text-body-md text-on-surface-variant mb-8">
+                            Các dòng bê tông chống thấm, bê tông tự lèn, bê tông sợi thép cường độ cao cho các cấu kiện đặc thù.
+                        </p>
+<button class="flex items-center text-on-tertiary-container font-label-bold text-label-bold uppercase tracking-widest group-hover:gap-4 transition-all">
+                            Tìm hiểu thêm <span class="material-symbols-outlined ml-2">arrow_forward</span>
+</button>
+</div>
+</div>
+<!-- Product Card 3 -->
+<div class="bg-white border border-slate-200 group overflow-hidden">
+<div class="h-64 relative overflow-hidden">
+<img class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" data-alt="abstract architectural close-up of smooth finished precast concrete panels with sharp geometric lines" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDp4_x_C10UkZf4HvcMhtvr8dgQYYNi6p8Lsc47uXGprBYhm6Sq79wSqMxTpDhPTA12JgRaFYknvR436EfeFYhtV9Rw50AHdAcCsVyMmWyabdcm0FS9bHEOaOKVy7ukPn3ri01ut6CrtyEkHgN4ggr-GuHla8GPiNwNWlsPK4dJaA3Q9bqUbniGS4UvMmy8tzSrqsnDOpvedVfzD1fvFxSjNsh3GFegmLR0P8YokOfWfPYLG3ifKTbqYzyNGjci3HePbR8KXx3ccDWm"/>
+</div>
+<div class="p-8">
+<h3 class="font-headline-sm text-headline-sm text-primary mb-4">Cấu kiện đúc sẵn</h3>
+<p class="font-body-md text-body-md text-on-surface-variant mb-8">
+                            Dầm, cọc, tấm sàn bê tông đúc sẵn giúp đẩy nhanh tiến độ thi công và kiểm soát chất lượng tuyệt đối.
+                        </p>
+<button class="flex items-center text-on-tertiary-container font-label-bold text-label-bold uppercase tracking-widest group-hover:gap-4 transition-all">
+                            Tìm hiểu thêm <span class="material-symbols-outlined ml-2">arrow_forward</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Featured Projects Section (Bento Grid) -->
+<section class="py-xl bg-white">
+<div class="max-w-7xl mx-auto px-6">
+<div class="text-center mb-16">
+<span class="font-label-bold text-label-bold text-on-tertiary-container uppercase tracking-widest">Dự án thực tế</span>
+<h2 class="font-headline-md text-headline-md text-primary uppercase mt-4">Công trình tiêu biểu</h2>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-4 grid-rows-2 gap-4 h-[800px]">
+<div class="md:col-span-2 md:row-span-2 relative group overflow-hidden">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" data-alt="massive urban bridge construction site with giant concrete pillars stretching across a river at twilight" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCd01PVslUnJZcfkeaeib1cuYdR8s8qsN44PJRtE9Cc_57gyYLHWLnu7bRb9VJBXNdk6t4e2ZpKZEkBMjmqTXEF-xiaAIlyld64XL0FkKjvENL-Ny9JYlqL01xC9H2U5T9UkCo9_33IQxuIleKKBPL6mjPtECclXAa5gDcSKqI9WEJCjZJOn7K-uQxeDKFsEnRPi7fu86Y-gnAVUQ-vrJjX0rnVRGAYEJ2gKkVMN3PKfGyCl05uz2Gshvq_V_2flIDJR5m3bqMkNn72"/>
+<div class="absolute inset-0 bg-gradient-to-t from-primary/90 to-transparent flex flex-col justify-end p-8 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+<span class="text-orange-500 text-label-bold uppercase mb-2">Hạ tầng giao thông</span>
+<h4 class="text-white text-headline-sm font-bold uppercase">Cầu vượt nút giao Trung Hòa</h4>
+</div>
+</div>
+<div class="md:col-span-2 md:row-span-1 relative group overflow-hidden">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" data-alt="modern glass and concrete office skyscraper towering into the blue sky with sharp architectural perspective" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCTkej2nYtexZwtg6YsEZ6Lc3QTPKJoM5F2pWckooso5nmFd5XZgca4bCjqGd001fTXzRuu6W-8OfaOVHoP_uO6Oep7jbb8Ne_FiNOgSaOfTCtIZTiglaKQRlTkwq5gq7jhfGEyjnBCRILycG4SOXXRiW9A5odQSJsC5AN8UTJc7aPYOO9QjTjqAzpwLcNtRwFDAYS-o76Z0Yqw-k8tW4wobWU7teQdHY_TvUbI1h4Pe-HVgKygBbCigixUoe-aMJSyVsrxq_ptyIQ_"/>
+<div class="absolute inset-0 bg-gradient-to-t from-primary/90 to-transparent flex flex-col justify-end p-8 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+<span class="text-orange-500 text-label-bold uppercase mb-2">Tòa nhà thương mại</span>
+<h4 class="text-white text-headline-sm font-bold uppercase">Vinhomes Central Park</h4>
+</div>
+</div>
+<div class="md:col-span-1 md:row-span-1 relative group overflow-hidden">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" data-alt="large industrial manufacturing warehouse construction with exposed steel beams and concrete flooring" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBOmc7AmZLoK6NJSmFNS5bh4q1KPqa9v0khkxGJm1xJgarKgkwKe1jQeT6csbHyQ3ccUWgPolFlucSge4tub6sJyG7OTiTOdDNTsobNhS0ZAwtJfCE-W7EX7ThxcOy9kGcPriReKN3YUGfa7N0jxsHPakxRGc4KAwf0Gg4RdscVE2DXsEP-0fbzMS1NnpyxT7iykHdiP8riwQgFoarktoRPDz4BFOxZ8QeQN_deRZkkOLgK_Wbceyxy3atf5vl6rLYQqE_psxrTbo_K"/>
+<div class="absolute inset-0 bg-gradient-to-t from-primary/90 to-transparent flex flex-col justify-end p-6 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+<span class="text-orange-500 text-label-bold uppercase mb-1">Công nghiệp</span>
+<h4 class="text-white text-md font-bold uppercase">Nhà máy Samsung SEVT</h4>
+</div>
+</div>
+<div class="md:col-span-1 md:row-span-1 relative group overflow-hidden">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" data-alt="interior view of a modern luxury apartment with minimalist raw concrete walls and elegant lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA5N6-vBxlrjqa5CNxtFDUwINlsNR3XGC88QsHD-BhIkLR7mbrcJ9ZqJKu_MJyk0-2UM52qliVt7-OHwXY4jn1RvOseDOCNvnvzc7yHdy8giAs5vy-l6s8XgHo_MkbEhK-y612h5Y0Oar5htug2b0wj17ERBzOpyabBfJPAcQHHJl4gUgOXGucqAqcYgVuUnfiuzcedBgs2BqQxGKjvMZndbUUCLzeJZ9ezH_ndTq9glohnYzON7c-b31w9ANBCK8GrZZx6ht65-UET"/>
+<div class="absolute inset-0 bg-gradient-to-t from-primary/90 to-transparent flex flex-col justify-end p-6 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+<span class="text-orange-500 text-label-bold uppercase mb-1">Dân dụng</span>
+<h4 class="text-white text-md font-bold uppercase">Biệt thự Ciputra</h4>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- News Section -->
+<section class="py-xl bg-surface-container-low">
+<div class="max-w-7xl mx-auto px-6">
+<div class="flex items-center justify-between mb-16">
+<h2 class="font-headline-md text-headline-md text-primary uppercase">Tin tức & Sự kiện</h2>
+<div class="flex space-x-2">
+<button class="w-12 h-12 flex items-center justify-center border border-slate-200 bg-white hover:bg-primary hover:text-white transition-colors">
+<span class="material-symbols-outlined">chevron_left</span>
+</button>
+<button class="w-12 h-12 flex items-center justify-center border border-slate-200 bg-white hover:bg-primary hover:text-white transition-colors">
+<span class="material-symbols-outlined">chevron_right</span>
+</button>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-gutter">
+<!-- Article 1 -->
+<article class="bg-white border border-slate-100">
+<img class="w-full h-48 object-cover" data-alt="construction worker in safety vest and hardhat checking concrete quality with technical equipment on site" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDDKMlZgcKKvWUPqtKGfDZyArEU5-OmEcJYBCIClhnHH8noo9LjS5SsQJF_LljxMBLglqdmFtpv67QQ-KZI3YcoDztd4zq1-zTtirYPUDYupqT4HbBCtlmHdphZyMeVdLT32xKVzmh2qo910hiDkwhq3GHjqgE2zq-ayhNQWn3yHo16Swoho4dceZqTRsrNaZ9RQo_u94dQx9WW49esyRTfHueHQ3alLziDcRydq8SUEITuWKNMIpl7krLN6sx_7mrC5YV6JMY-J01S"/>
+<div class="p-6">
+<time class="font-label-bold text-label-bold text-slate-400 uppercase tracking-widest">15 Th05, 2024</time>
+<h3 class="font-headline-sm text-lg mt-4 mb-4 hover:text-orange-600 cursor-pointer transition-colors">
+                            Công nghệ bê tông xanh - Xu hướng bền vững trong xây dựng hiện đại
+                        </h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant line-clamp-2">
+                            Chúng tôi đang áp dụng các vật liệu mới nhằm giảm thiểu lượng khí thải CO2 trong quá trình sản xuất...
+                        </p>
+</div>
+</article>
+<!-- Article 2 -->
+<article class="bg-white border border-slate-100">
+<img class="w-full h-48 object-cover" data-alt="modern construction equipment and digital monitors showing structural analysis of building materials" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDNSCsZl4Zn24DcUsytwZqX-8seL9M_fktSK_KWnGRaSHJRvYUgZ-4Ks5nr7OJm3a4uuDiyAPC0JyRhVBY9ORScsQXa87yM2bWjXyiX5jL5YrizowKupXpuzmx52sB5FJ0gSldcmp3obeDw-QuZybrzyLRDqBKIxd5rVxyKxcUZZiXlQvUCexdcR7Bu5osEQ8d1jRfEwEWNxsXFNroN33N10QXV-7_-nn2evAJTHoxP2056kP3SvWJyLixlozt8AHmx7Ry87Nvv-DVj"/>
+<div class="p-6">
+<time class="font-label-bold text-label-bold text-slate-400 uppercase tracking-widest">10 Th05, 2024</time>
+<h3 class="font-headline-sm text-lg mt-4 mb-4 hover:text-orange-600 cursor-pointer transition-colors">
+                            Quy trình kiểm định chất lượng nghiêm ngặt tại trạm trộn Concrete Elite
+                        </h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant line-clamp-2">
+                            Đảm bảo từng khối bê tông ra khỏi trạm đều đạt chuẩn mác thiết kế và có độ sụt ổn định...
+                        </p>
+</div>
+</article>
+<!-- Article 3 -->
+<article class="bg-white border border-slate-100">
+<img class="w-full h-48 object-cover" data-alt="industrial truck delivering concrete to a large-scale construction site with workers preparing foundations" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAMmAcMzL1oeeVxLvcNIih4QCsxV_2BL1v8c0ANvOLLW_XyqaRqFQgQRX1qeSuAywfUaury176-Jrykz8X6Oiw2C-bNqC3n_WccIOPPv7562i1K-dyqel5EQgXrdK3AmBYwKNb8R5Jx3diFXOYrV9UaFoDz-M-QdWErFzvXU2NlpFsAvljL5bKG0Ra7J94Qj5iFRhJHf7hmOHiJEWv9HY7l5d1YAnsNXvjS3gcxXZ81SljKTDUJ4suxYt8nJogCb1PxZDo76GzqV0lL"/>
+<div class="p-6">
+<time class="font-label-bold text-label-bold text-slate-400 uppercase tracking-widest">02 Th05, 2024</time>
+<h3 class="font-headline-sm text-lg mt-4 mb-4 hover:text-orange-600 cursor-pointer transition-colors">
+                            Hành trình 20 năm khẳng định vị thế dẫn đầu ngành bê tông tươi
+                        </h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant line-clamp-2">
+                            Nhìn lại chặng đường phát triển từ một xưởng sản xuất nhỏ đến hệ thống 10 trạm trộn hiện đại...
+                        </p>
+</div>
+</article>
+</div>
+</div>
+</section>
+<!-- Footer -->
+<footer class="bg-slate-900 border-t-4 border-orange-600 text-white">
+<div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-12 px-6 py-16">
+<div>
+<span class="text-xl font-bold text-white mb-4 block">CONCRETE ELITE</span>
+<p class="font-body-sm text-slate-400 mb-8 lowercase first-letter:uppercase">
+                    Đơn vị hàng đầu trong cung cấp bê tông và giải pháp xây dựng công nghiệp tại Việt Nam.
+                </p>
+<div class="flex space-x-4">
+<a class="text-slate-400 hover:text-orange-500 transition-colors" href="https://concretepro.vn" title="Website"><span class="material-symbols-outlined">public</span></a>
+<a class="text-slate-400 hover:text-orange-500 transition-colors" href="mailto:info@concretepro.vn" title="Email"><span class="material-symbols-outlined">alternate_email</span></a>
+<a class="text-slate-400 hover:text-orange-500 transition-colors" href="#"><span class="material-symbols-outlined">call</span></a>
+</div>
+</div>
+<div>
+<h4 class="font-label-bold text-orange-500 uppercase mb-8">Liên kết nhanh</h4>
+<ul class="space-y-4 font-['Inter'] text-xs uppercase tracking-wider">
+<li><a class="text-slate-400 hover:text-orange-500 hover:translate-x-1 transition-transform inline-block" href="/trangchconcretepro.html">Trang chủ</a></li>
+<li><a class="text-slate-400 hover:text-orange-500 hover:translate-x-1 transition-transform inline-block" href="/trangchngcpthcchinconcretepro.html">Giới thiệu</a></li>
+<li><a class="text-slate-400 hover:text-orange-500 hover:translate-x-1 transition-transform inline-block" href="/snphmvtliuxydng.html">Sản phẩm</a></li>
+<li><a class="text-slate-400 hover:text-orange-500 hover:translate-x-1 transition-transform inline-block" href="/hsdn.html">Dự án tiêu biểu</a></li>
+</ul>
+</div>
+<div>
+<h4 class="font-label-bold text-orange-500 uppercase mb-8">Hỗ trợ khách hàng</h4>
+<ul class="space-y-4 font-['Inter'] text-xs uppercase tracking-wider">
+<li><a class="text-slate-400 hover:text-orange-500 hover:translate-x-1 transition-transform inline-block" href="#chinh-sach" title="Sắp ra mắt">Chính sách bảo mật</a></li>
+<li><a class="text-slate-400 hover:text-orange-500 hover:translate-x-1 transition-transform inline-block" href="#dieu-khoan" title="Sắp ra mắt">Điều khoản sử dụng</a></li>
+<li><a class="text-slate-400 hover:text-orange-500 hover:translate-x-1 transition-transform inline-block" href="#">Sơ đồ trang web</a></li>
+<li><a class="text-slate-400 hover:text-orange-500 hover:translate-x-1 transition-transform inline-block" href="#tuyen-dung" title="Sắp ra mắt">Tuyển dụng</a></li>
+</ul>
+</div>
+<div>
+<h4 class="font-label-bold text-orange-500 uppercase mb-8">Địa chỉ liên hệ</h4>
+<div class="mb-6">
+<img class="w-full h-32 object-cover border border-slate-700" data-alt="styled satellite map view showing urban city layout in muted blue and grey tones" data-location="Hanoi, Vietnam" src="https://lh3.googleusercontent.com/aida-public/AB6AXuANGGydjqGRgVJYusQiMfmD_Fh3okVStbqUMLiHmfydK9UQ3lVQJ5Th-YtEbF7lmgWEavcrwbKDWocfadMm1Y_CyaZoEz2AsyiGjLq7eRpUz-N3a0wbZPsEC5Vay8GzoDCtY8X7ICZ5ctXmlRRUU2XcQ2AM-GmbwHc5b1C37qaK-59FFNQ8MOfgPE_OLj0xlzvyeGrAd-16iqN9FRqCZWv0-WNohALr13WsPXDT2kwx9Z0ZZyIYZfmKvsNB03mN7VcxLuQyUWJfBB0q"/>
+</div>
+<div class="space-y-2 text-xs font-['Inter'] text-slate-400">
+<p class="flex items-start gap-2"><span class="material-symbols-outlined text-sm">location_on</span> KCN Quang Minh, Mê Linh, Hà Nội</p>
+<p class="flex items-center gap-2"><span class="material-symbols-outlined text-sm">call</span> Hotline: 1900 8888</p>
+<p class="flex items-center gap-2"><span class="material-symbols-outlined text-sm">mail</span> contact@concreteelite.vn</p>
+</div>
+</div>
+</div>
+<div class="border-t border-slate-800 py-6">
+<div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center font-['Inter'] text-xs uppercase tracking-wider text-slate-500">
+<span>© 2024 Concrete Elite SME. Tất cả quyền được bảo lưu.</span>
+<div class="flex space-x-6 mt-4 md:mt-0">
+<span>Hotline: 1900 8888</span>
+<span>MST: 0101234567</span>
+</div>
+</div>
+</div>
+</footer>
+<script>
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('/sw.js').catch(() => {});
+  });
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+
+<html class="light" lang="vi"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Invoice Management - CONCRETEPRO</title>
+<link href="/manifest.json" rel="manifest"/>
+<link href="/favicon.ico" rel="icon" sizes="any"/>
+<link href="/favicon-32.png" rel="icon" type="image/png" sizes="32x32"/>
+<link href="/apple-touch-icon.png" rel="apple-touch-icon" sizes="180x180"/>
+<meta content="#041627" name="theme-color"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-variant": "#e0e3e5",
+                        "surface": "#f8f9fb",
+                        "on-secondary": "#ffffff",
+                        "on-tertiary-fixed-variant": "#7a3000",
+                        "surface-tint": "#4f6073",
+                        "secondary-fixed": "#e3e2e2",
+                        "on-error-container": "#93000a",
+                        "surface-container-low": "#f2f4f6",
+                        "on-tertiary": "#ffffff",
+                        "on-primary-fixed": "#0b1d2d",
+                        "secondary": "#5e5e5e",
+                        "error-container": "#ffdad6",
+                        "on-primary": "#ffffff",
+                        "primary-fixed-dim": "#b7c8de",
+                        "on-secondary-fixed": "#1b1c1c",
+                        "inverse-primary": "#b7c8de",
+                        "background": "#f8f9fb",
+                        "on-surface": "#191c1e",
+                        "on-secondary-container": "#646464",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-container": "#eceef0",
+                        "on-tertiary-container": "#eb6a1b",
+                        "primary-container": "#1a2b3c",
+                        "outline-variant": "#c4c6cd",
+                        "on-secondary-fixed-variant": "#464747",
+                        "on-background": "#191c1e",
+                        "on-primary-fixed-variant": "#38485a",
+                        "secondary-container": "#e3e2e2",
+                        "tertiary": "#2a0c00",
+                        "tertiary-fixed": "#ffdbcb",
+                        "tertiary-container": "#4b1b00",
+                        "on-error": "#ffffff",
+                        "inverse-surface": "#2d3133",
+                        "on-primary-container": "#8192a7",
+                        "inverse-on-surface": "#eff1f3",
+                        "tertiary-fixed-dim": "#ffb693",
+                        "on-tertiary-fixed": "#341000",
+                        "error": "#ba1a1a",
+                        "on-surface-variant": "#44474c",
+                        "surface-container-highest": "#e0e3e5",
+                        "secondary-fixed-dim": "#c7c6c6",
+                        "outline": "#74777d",
+                        "surface-bright": "#f8f9fb",
+                        "surface-container-high": "#e6e8ea",
+                        "primary": "#041627",
+                        "primary-fixed": "#d2e4fb",
+                        "surface-dim": "#d8dadc"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "max_width": "1280px",
+                        "lg": "2.5rem",
+                        "md": "1.5rem",
+                        "margin": "32px",
+                        "sm": "1rem",
+                        "xs": "0.5rem",
+                        "gutter": "24px",
+                        "base": "4px",
+                        "xl": "4rem"
+                    },
+                    "fontFamily": {
+                        "table-data": ["Inter"],
+                        "display-lg": ["Inter"],
+                        "body-sm": ["Inter"],
+                        "body-md": ["Inter"],
+                        "label-bold": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "headline-md": ["Inter"],
+                        "headline-sm": ["Inter"]
+                    },
+                    "fontSize": {
+                        "table-data": ["14px", {"lineHeight": "1.2", "fontWeight": "500"}],
+                        "display-lg": ["48px", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "body-sm": ["14px", {"lineHeight": "1.5", "fontWeight": "400"}],
+                        "body-md": ["16px", {"lineHeight": "1.5", "fontWeight": "400"}],
+                        "label-bold": ["12px", {"lineHeight": "1", "letterSpacing": "0.05em", "fontWeight": "700"}],
+                        "body-lg": ["18px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                        "headline-md": ["32px", {"lineHeight": "1.2", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                        "headline-sm": ["24px", {"lineHeight": "1.3", "fontWeight": "600"}]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; background-color: #f8f9fb; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; vertical-align: middle; }
+    </style>
+</head>
+<body class="flex min-h-screen">
+<!-- SideNavBar -->
+<aside class="flex flex-col h-screen fixed left-0 top-0 py-6 px-4 h-screen w-64 border-r border-slate-700 bg-[#1A2B3C] text-white z-50">
+<div class="mb-10 px-2">
+<h1 class="text-lg font-black text-white uppercase tracking-widest">CONCRETEPRO</h1>
+<div class="mt-4 flex items-center gap-3">
+<img alt="Admin Portrait" class="w-10 h-10 rounded-full border-2 border-slate-600" data-alt="professional portrait of a middle-aged male architect in a modern office with natural light" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCjKWV4a4w670wxI3K0Ip7IU5HxY1HqldGeT8iQlN2hcsJNoDQY6ci-XgBKFml1zur_EGtn_em3vPaU3Fdo6pNdRHhhwBLyuKv8d_8-6Pfrmgr4dcTk7zRT9GJoS1-nSUUovShL79BuS62dY6ErBnPZeV6iMx-vwSIgXiJTHq94Zkb3bMvfMT3b64T7gL6MRUxoXoooD3u3rinwzJxpc7xKvaIIdu3Mkw6B8OOgHcL-mKg3hP0a2XrIXiQnX4gVF4LYgwnFyxECrkKS"/>
+<div>
+<p class="font-sans text-sm font-medium tracking-wide">Quản trị hệ thống</p>
+<p class="text-xs text-slate-400">Vật liệu & Bê tông</p>
+</div>
+</div>
+</div>
+<nav class="flex-1 space-y-1">
+<a class="flex items-center gap-3 px-4 py-3 text-slate-300 hover:text-white hover:bg-slate-800 transition-all duration-200 font-sans text-sm font-medium tracking-wide" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span>Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-slate-300 hover:text-white hover:bg-slate-800 transition-all duration-200 font-sans text-sm font-medium tracking-wide" href="/nhtkhthngccuhnhtngadmincms2.html">
+<span class="material-symbols-outlined" data-icon="inventory_2">inventory_2</span>
+<span>Sản phẩm</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-slate-300 hover:text-white hover:bg-slate-800 transition-all duration-200 font-sans text-sm font-medium tracking-wide" href="#">
+<span class="material-symbols-outlined" data-icon="architecture">architecture</span>
+<span>Dự án</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-slate-300 hover:text-white hover:bg-slate-800 transition-all duration-200 font-sans text-sm font-medium tracking-wide" href="#">
+<span class="material-symbols-outlined" data-icon="request_quote">request_quote</span>
+<span>Báo giá</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 bg-orange-600 text-white rounded-sm font-sans text-sm font-medium tracking-wide active:scale-[0.98] transition-transform" href="#">
+<span class="material-symbols-outlined" data-icon="receipt_long">receipt_long</span>
+<span>Hóa đơn</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-slate-300 hover:text-white hover:bg-slate-800 transition-all duration-200 font-sans text-sm font-medium tracking-wide" href="/cuhnhthngboemailadmincms1.html">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+<span>Cài đặt</span>
+</a>
+</nav>
+<div class="mt-auto border-t border-slate-700 pt-6 space-y-4">
+<a class="flex items-center gap-3 px-4 py-2 text-slate-300 hover:text-white hover:bg-slate-800 transition-all duration-200 font-sans text-sm font-medium tracking-wide" href="#">
+<span class="material-symbols-outlined" data-icon="help">help</span>
+<span>Hỗ trợ</span>
+</a>
+<button class="w-full bg-orange-600 text-white py-3 px-4 rounded-sm text-sm font-bold active:scale-[0.98] transition-transform flex items-center justify-center gap-2">
+<span class="material-symbols-outlined" data-icon="add">add</span>
+                Tạo hóa đơn mới
+            </button>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="ml-64 flex-1 flex flex-col">
+<!-- TopNavBar -->
+<header class="flex justify-between items-center px-6 h-16 w-full sticky top-0 z-40 bg-white border-b border-slate-200">
+<div class="flex items-center gap-4 flex-1">
+<div class="relative w-full max-w-md">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-lg">search</span>
+<input class="w-full pl-10 pr-4 py-2 bg-slate-50 border border-slate-200 focus:outline-none focus:border-primary-container text-sm" placeholder="Tìm kiếm hóa đơn, khách hàng..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<button class="p-2 text-slate-500 hover:bg-slate-50 transition-colors cursor-pointer active:opacity-80">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+<button class="p-2 text-slate-500 hover:bg-slate-50 transition-colors cursor-pointer active:opacity-80">
+<span class="material-symbols-outlined" data-icon="account_circle">account_circle</span>
+</button>
+</div>
+</header>
+<!-- Page Canvas -->
+<section class="p-8 max-w-[1280px] w-full mx-auto">
+<!-- Page Header Actions -->
+<div class="flex justify-between items-end mb-8">
+<div>
+<h2 class="font-headline-md text-primary-container">Quản lý Hóa đơn</h2>
+<p class="text-body-sm text-on-surface-variant">Theo dõi và quản lý các giao dịch tài chính xây dựng.</p>
+</div>
+<div class="flex gap-3">
+<button class="flex items-center gap-2 px-4 py-2 border border-slate-200 text-primary-container font-label-bold hover:bg-slate-50 transition-colors">
+<span class="material-symbols-outlined text-lg" data-icon="download">download</span>
+                        XUẤT EXCEL
+                    </button>
+<button class="flex items-center gap-2 px-6 py-2 bg-primary-container text-white font-label-bold hover:bg-primary transition-colors">
+<span class="material-symbols-outlined text-lg" data-icon="add_circle">add_circle</span>
+                        TẠO HÓA ĐƠN
+                    </button>
+</div>
+</div>
+<!-- Widgets Bento Grid -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
+<div class="bg-white p-6 border border-slate-200">
+<div class="flex justify-between items-start mb-4">
+<div class="p-2 bg-slate-50">
+<span class="material-symbols-outlined text-primary-container" data-icon="payments">payments</span>
+</div>
+<span class="text-xs font-bold text-green-600 bg-green-50 px-2 py-1">+12.5%</span>
+</div>
+<p class="text-label-bold text-on-surface-variant mb-1">TỔNG DOANH THU</p>
+<h3 class="font-headline-sm text-primary-container">2.450.000.000 <span class="text-sm font-medium">VNĐ</span></h3>
+<div class="mt-4 h-1 w-full bg-slate-100">
+<div class="h-1 bg-orange-600 w-3/4"></div>
+</div>
+</div>
+<div class="bg-white p-6 border border-slate-200">
+<div class="flex justify-between items-start mb-4">
+<div class="p-2 bg-slate-50">
+<span class="material-symbols-outlined text-primary-container" data-icon="schedule">schedule</span>
+</div>
+<span class="text-xs font-bold text-orange-600 bg-orange-50 px-2 py-1">14 hóa đơn</span>
+</div>
+<p class="text-label-bold text-on-surface-variant mb-1">CHỜ THANH TOÁN</p>
+<h3 class="font-headline-sm text-primary-container">842.000.000 <span class="text-sm font-medium">VNĐ</span></h3>
+<div class="mt-4 h-1 w-full bg-slate-100">
+<div class="h-1 bg-primary-container w-1/3"></div>
+</div>
+</div>
+<div class="bg-white p-6 border border-slate-200">
+<div class="flex justify-between items-start mb-4">
+<div class="p-2 bg-slate-50 text-error">
+<span class="material-symbols-outlined" data-icon="warning">warning</span>
+</div>
+<span class="text-xs font-bold text-error bg-error-container px-2 py-1">Cần xử lý</span>
+</div>
+<p class="text-label-bold text-on-surface-variant mb-1">QUÁ HẠN</p>
+<h3 class="font-headline-sm text-error">156.400.000 <span class="text-sm font-medium">VNĐ</span></h3>
+<div class="mt-4 h-1 w-full bg-slate-100">
+<div class="h-1 bg-error w-1/4"></div>
+</div>
+</div>
+</div>
+<!-- Filters Section -->
+<div class="bg-white p-4 border border-slate-200 mb-6 flex flex-wrap gap-4 items-center">
+<div class="flex items-center gap-2">
+<span class="text-label-bold text-on-surface-variant">LỌC THEO:</span>
+</div>
+<select class="bg-white border border-slate-200 text-sm py-1.5 px-3 focus:border-primary-container outline-none">
+<option>Tất cả trạng thái</option>
+<option>Đã thanh toán</option>
+<option>Chờ thanh toán</option>
+<option>Quá hạn</option>
+</select>
+<div class="flex items-center bg-white border border-slate-200 px-3 py-1.5 gap-2">
+<span class="material-symbols-outlined text-sm text-slate-400" data-icon="calendar_today">calendar_today</span>
+<span class="text-sm text-slate-600">Tháng này (01/10 - 31/10)</span>
+</div>
+<button class="ml-auto text-sm font-semibold text-primary-container hover:underline">Xóa bộ lọc</button>
+</div>
+<!-- Data Table Container -->
+<div class="bg-white border border-slate-200 overflow-hidden">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-primary-container text-white">
+<th class="px-6 py-4 font-label-bold uppercase tracking-wider text-xs">Mã hóa đơn</th>
+<th class="px-6 py-4 font-label-bold uppercase tracking-wider text-xs">Khách hàng</th>
+<th class="px-6 py-4 font-label-bold uppercase tracking-wider text-xs">Ngày phát hành</th>
+<th class="px-6 py-4 font-label-bold uppercase tracking-wider text-xs text-right">Tổng tiền</th>
+<th class="px-6 py-4 font-label-bold uppercase tracking-wider text-xs text-center">Trạng thái</th>
+<th class="px-6 py-4 font-label-bold uppercase tracking-wider text-xs text-right">Hành động</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-slate-100">
+<!-- Row 1 -->
+<tr class="hover:bg-slate-50 transition-colors group">
+<td class="px-6 py-4 font-table-data text-primary-container">INV-2023-089</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 bg-slate-100 flex items-center justify-center font-bold text-primary-container text-xs">VH</div>
+<div>
+<p class="font-table-data text-primary-container">Vinhomes Grand Park</p>
+<p class="text-[10px] text-slate-400">Phân khu The Beverly</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-4 font-table-data text-slate-600">12/10/2023</td>
+<td class="px-6 py-4 font-table-data text-primary-container text-right">450.000.000 VNĐ</td>
+<td class="px-6 py-4 text-center">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                                    Đã thanh toán
+                                </span>
+</td>
+<td class="px-6 py-4 text-right">
+<div class="flex justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="p-1.5 text-slate-400 hover:text-primary-container" title="Xem"><span class="material-symbols-outlined text-lg" data-icon="visibility">visibility</span></button>
+<button class="p-1.5 text-slate-400 hover:text-primary-container" title="In"><span class="material-symbols-outlined text-lg" data-icon="print">print</span></button>
+<button class="p-1.5 text-slate-400 hover:text-orange-600" title="Xuất E-invoice"><span class="material-symbols-outlined text-lg" data-icon="receipt">receipt</span></button>
+</div>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="hover:bg-slate-50 transition-colors group">
+<td class="px-6 py-4 font-table-data text-primary-container">INV-2023-090</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 bg-slate-100 flex items-center justify-center font-bold text-primary-container text-xs">SC</div>
+<div>
+<p class="font-table-data text-primary-container">Sungroup Catalyst</p>
+<p class="text-[10px] text-slate-400">Dự án Hòn Thơm</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-4 font-table-data text-slate-600">14/10/2023</td>
+<td class="px-6 py-4 font-table-data text-primary-container text-right">1.200.000.000 VNĐ</td>
+<td class="px-6 py-4 text-center">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-orange-100 text-orange-800">
+                                    Chờ thanh toán
+                                </span>
+</td>
+<td class="px-6 py-4 text-right">
+<div class="flex justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="p-1.5 text-slate-400 hover:text-primary-container" title="Xem"><span class="material-symbols-outlined text-lg" data-icon="visibility">visibility</span></button>
+<button class="p-1.5 text-slate-400 hover:text-orange-600" title="Gửi nhắc nợ"><span class="material-symbols-outlined text-lg" data-icon="notification_important">notification_important</span></button>
+<button class="p-1.5 text-slate-400 hover:text-primary-container" title="In"><span class="material-symbols-outlined text-lg" data-icon="print">print</span></button>
+</div>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="hover:bg-slate-50 transition-colors group">
+<td class="px-6 py-4 font-table-data text-primary-container">INV-2023-078</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 bg-slate-100 flex items-center justify-center font-bold text-primary-container text-xs">NV</div>
+<div>
+<p class="font-table-data text-primary-container">Novaland Group</p>
+<p class="text-[10px] text-slate-400">Aqua City Center</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-4 font-table-data text-slate-600">25/09/2023</td>
+<td class="px-6 py-4 font-table-data text-error text-right">156.400.000 VNĐ</td>
+<td class="px-6 py-4 text-center">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800">
+                                    Quá hạn
+                                </span>
+</td>
+<td class="px-6 py-4 text-right">
+<div class="flex justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="p-1.5 text-slate-400 hover:text-primary-container" title="Xem"><span class="material-symbols-outlined text-lg" data-icon="visibility">visibility</span></button>
+<button class="p-1.5 text-error hover:scale-110 transition-transform" title="Gửi nhắc nợ khẩn cấp"><span class="material-symbols-outlined text-lg" data-icon="priority_high">priority_high</span></button>
+<button class="p-1.5 text-slate-400 hover:text-primary-container" title="In"><span class="material-symbols-outlined text-lg" data-icon="print">print</span></button>
+</div>
+</td>
+</tr>
+<!-- Row 4 -->
+<tr class="hover:bg-slate-50 transition-colors group">
+<td class="px-6 py-4 font-table-data text-primary-container">INV-2023-091</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 bg-slate-100 flex items-center justify-center font-bold text-primary-container text-xs">KH</div>
+<div>
+<p class="font-table-data text-primary-container">Khang Điền House</p>
+<p class="text-[10px] text-slate-400">Dự án The Privia</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-4 font-table-data text-slate-600">18/10/2023</td>
+<td class="px-6 py-4 font-table-data text-primary-container text-right">620.000.000 VNĐ</td>
+<td class="px-6 py-4 text-center">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-orange-100 text-orange-800">
+                                    Chờ thanh toán
+                                </span>
+</td>
+<td class="px-6 py-4 text-right">
+<div class="flex justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="p-1.5 text-slate-400 hover:text-primary-container" title="Xem"><span class="material-symbols-outlined text-lg" data-icon="visibility">visibility</span></button>
+<button class="p-1.5 text-slate-400 hover:text-primary-container" title="In"><span class="material-symbols-outlined text-lg" data-icon="print">print</span></button>
+<button class="p-1.5 text-slate-400 hover:text-orange-600" title="Xuất E-invoice"><span class="material-symbols-outlined text-lg" data-icon="receipt">receipt</span></button>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+<!-- Pagination Footer -->
+<div class="px-6 py-4 border-t border-slate-100 flex items-center justify-between">
+<p class="text-xs text-on-surface-variant font-medium">Hiển thị 1 - 4 trong số 156 hóa đơn</p>
+<div class="flex items-center gap-2">
+<button class="p-1 hover:bg-slate-50 disabled:opacity-30" disabled="">
+<span class="material-symbols-outlined text-lg" data-icon="chevron_left">chevron_left</span>
+</button>
+<div class="flex gap-1">
+<span class="w-8 h-0.5 bg-orange-600"></span>
+<span class="w-8 h-0.5 bg-slate-200"></span>
+<span class="w-8 h-0.5 bg-slate-200"></span>
+</div>
+<button class="p-1 hover:bg-slate-50">
+<span class="material-symbols-outlined text-lg" data-icon="chevron_right">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Additional Professional Layout Element (Decorative Asset) -->
+<div class="mt-12 grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+<div class="relative h-64 overflow-hidden rounded-sm group">
+<img alt="Concrete site" class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-500" data-alt="dramatic industrial shot of a large-scale concrete pouring site at twilight with heavy machinery and sharp structural lines" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBVx6HMY51CkUD4ASeiQcIoViE4d9Q7jeU9hQYutQOzWDgC7oX1wK2xmYNJaaM4M0jLawqtm-klu5-ftKzIbxPafnLEiQiox27F8NhECwG3pyqYjT43374vKOcLZPQEZ4497ea_tkEB5u3-N9CV4pFFmEK5oiCFxsT_HIsLZDyd68ngXwdJF2ktENrFLtxZEGVIBAtgUH-yIC4XNzE6pGTqSM_jfm95dkybQkR_Uh0J2kCFGUJz1sVBVIPppPRvI3118t65F-2xeETs"/>
+<div class="absolute inset-0 bg-primary-container/60 p-8 flex flex-col justify-end">
+<h4 class="text-white font-bold text-lg mb-2">Đối tác tin cậy cho mọi công trình</h4>
+<p class="text-slate-300 text-sm">CONCRETEPRO cung cấp giải pháp bê tông tươi và vật liệu xây dựng hàng đầu Việt Nam.</p>
+</div>
+</div>
+<div class="space-y-6">
+<h4 class="font-headline-sm text-primary-container">Hướng dẫn Xuất Hóa đơn Điện tử</h4>
+<ul class="space-y-4">
+<li class="flex gap-4 items-start">
+<span class="w-6 h-6 flex-shrink-0 bg-orange-600 text-white flex items-center justify-center text-xs font-bold">1</span>
+<p class="text-body-sm text-on-surface-variant">Chọn các hóa đơn ở trạng thái "Đã thanh toán" từ danh sách phía trên.</p>
+</li>
+<li class="flex gap-4 items-start">
+<span class="w-6 h-6 flex-shrink-0 bg-orange-600 text-white flex items-center justify-center text-xs font-bold">2</span>
+<p class="text-body-sm text-on-surface-variant">Nhấn vào biểu tượng "Xuất E-invoice" hoặc chọn hàng loạt để xử lý tập trung.</p>
+</li>
+<li class="flex gap-4 items-start">
+<span class="w-6 h-6 flex-shrink-0 bg-orange-600 text-white flex items-center justify-center text-xs font-bold">3</span>
+<p class="text-body-sm text-on-surface-variant">Hệ thống sẽ tự động đồng bộ dữ liệu với cơ quan Thuế và gửi email cho khách hàng.</p>
+</li>
+</ul>
+</div>
+</div>
+</section>
+</main>
+<script>
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('/sw.js').catch(() => {});
+  });
+}
+</script>
+</body>
+</html>

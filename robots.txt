@@ -1,0 +1,14 @@
+User-agent: *
+Allow: /
+Disallow: /admindashboardquntrhthng.html
+Disallow: /cmsdashboardquntr.html
+Disallow: /qunl*
+Disallow: /boco*
+Disallow: /nhtkh*
+Disallow: /cuhnhthng*
+Disallow: /lchsgi*
+Disallow: /muemailbo*
+Disallow: /tolchmi*
+Disallow: /ngnhpquntrhthng.html
+
+Sitemap: /sitemap.xml

@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+
+<html class="light" lang="vi"><head>
+<title>Quản lý báo cáo hàng tuần — CMS Admin</title>
+<link href="/manifest.json" rel="manifest"/>
+<link href="/favicon.ico" rel="icon" sizes="any"/>
+<link href="/favicon-32.png" rel="icon" type="image/png" sizes="32x32"/>
+<link href="/apple-touch-icon.png" rel="apple-touch-icon" sizes="180x180"/>
+<meta content="#041627" name="theme-color"/>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "primary-container": "#1a2b3c",
+                        "outline-variant": "#c4c6cd",
+                        "on-primary-fixed": "#0b1d2d",
+                        "on-primary-container": "#8192a7",
+                        "secondary-fixed-dim": "#c7c6c6",
+                        "inverse-surface": "#2d3133",
+                        "surface-container-lowest": "#ffffff",
+                        "on-tertiary-container": "#eb6a1b",
+                        "on-secondary-container": "#646464",
+                        "on-secondary-fixed": "#1b1c1c",
+                        "surface-bright": "#f8f9fb",
+                        "surface-variant": "#e0e3e5",
+                        "tertiary-fixed": "#ffdbcb",
+                        "on-tertiary-fixed": "#341000",
+                        "on-tertiary": "#ffffff",
+                        "surface": "#f8f9fb",
+                        "secondary": "#5e5e5e",
+                        "tertiary-container": "#4b1b00",
+                        "on-error-container": "#93000a",
+                        "on-secondary-fixed-variant": "#464747",
+                        "secondary-fixed": "#e3e2e2",
+                        "on-secondary": "#ffffff",
+                        "tertiary-fixed-dim": "#ffb693",
+                        "on-tertiary-fixed-variant": "#7a3000",
+                        "surface-container-highest": "#e0e3e5",
+                        "outline": "#74777d",
+                        "surface-dim": "#d8dadc",
+                        "surface-container": "#eceef0",
+                        "inverse-on-surface": "#eff1f3",
+                        "surface-tint": "#4f6073",
+                        "surface-container-low": "#f2f4f6",
+                        "on-primary": "#ffffff",
+                        "primary-fixed": "#d2e4fb",
+                        "on-error": "#ffffff",
+                        "background": "#f8f9fb",
+                        "on-background": "#191c1e",
+                        "on-primary-fixed-variant": "#38485a",
+                        "surface-container-high": "#e6e8ea",
+                        "inverse-primary": "#b7c8de",
+                        "tertiary": "#2a0c00",
+                        "error-container": "#ffdad6",
+                        "primary-fixed-dim": "#b7c8de",
+                        "on-surface": "#191c1e",
+                        "primary": "#041627",
+                        "on-surface-variant": "#44474c",
+                        "secondary-container": "#e3e2e2",
+                        "error": "#ba1a1a"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "gutter": "24px",
+                        "sm": "1rem",
+                        "xs": "0.5rem",
+                        "xl": "4rem",
+                        "base": "4px",
+                        "md": "1.5rem",
+                        "lg": "2.5rem",
+                        "max_width": "1280px",
+                        "margin": "32px"
+                    },
+                    "fontFamily": {
+                        "headline-md": ["Inter"],
+                        "body-md": ["Inter"],
+                        "label-bold": ["Inter"],
+                        "display-lg": ["Inter"],
+                        "headline-sm": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "table-data": ["Inter"],
+                        "body-sm": ["Inter"]
+                    },
+                    "fontSize": {
+                        "headline-md": ["32px", {"lineHeight": "1.2", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                        "body-md": ["16px", {"lineHeight": "1.5", "fontWeight": "400"}],
+                        "label-bold": ["12px", {"lineHeight": "1", "letterSpacing": "0.05em", "fontWeight": "700"}],
+                        "display-lg": ["48px", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "headline-sm": ["24px", {"lineHeight": "1.3", "fontWeight": "600"}],
+                        "body-lg": ["18px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                        "table-data": ["14px", {"lineHeight": "1.2", "fontWeight": "500"}],
+                        "body-sm": ["14px", {"lineHeight": "1.5", "fontWeight": "400"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body { font-family: 'Inter', sans-serif; }
+    </style>
+</head>
+<body class="bg-background text-on-background antialiased">
+<!-- TopNavBar -->
+<nav class="flex justify-between items-center px-8 py-3 w-full sticky top-0 z-50 bg-white dark:bg-slate-950 border-b border-slate-200 dark:border-slate-800 font-['Inter'] antialiased tracking-tight">
+<div class="flex items-center gap-8">
+<span class="text-xl font-black uppercase tracking-wider text-slate-900 dark:text-white">Industrial Admin</span>
+<div class="hidden md:flex items-center gap-6">
+<a class="text-slate-500 dark:text-slate-400 font-medium hover:text-slate-700 transition-colors" href="#">Dashboard</a>
+<a class="text-slate-500 dark:text-slate-400 font-medium hover:text-slate-700 transition-colors" href="#">Analytics</a>
+<a class="text-slate-900 dark:text-white font-bold border-b-2 border-[#1A2B3C] pb-1" href="#">Reports</a>
+<a class="text-slate-500 dark:text-slate-400 font-medium hover:text-slate-700 transition-colors" href="#">Logs</a>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<div class="relative hidden sm:block">
+<input class="bg-surface-container border-none text-body-sm px-4 py-2 rounded-lg w-64 focus:ring-2 focus:ring-primary-container" placeholder="Search..." type="text"/>
+<span class="material-symbols-outlined absolute right-3 top-2 text-on-surface-variant" data-icon="search">search</span>
+</div>
+<button class="p-2 hover:bg-slate-50 dark:hover:bg-slate-900 transition-colors rounded-full">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+<button class="p-2 hover:bg-slate-50 dark:hover:bg-slate-900 transition-colors rounded-full">
+<span class="material-symbols-outlined" data-icon="help_outline">help_outline</span>
+</button>
+<div class="w-8 h-8 rounded-full overflow-hidden border border-slate-200">
+<img alt="Administrator Profile" class="w-full h-full object-cover" data-alt="Close-up portrait of a professional male administrator in a clean office setting, soft professional lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA0uCh2gYbgybCwcQ7TigOPxUXru65K8X4Xcxaaw2xXhxahe7RfGu_fRvZRI3Y_WbPCOzGLtX4CDD6UM3fdiKJDwEve5WvfExLVgDhJTalzSJPmhEvq-Q2H7SNWxcb5-Ueq-l0SgpOJVUYa3TaE9i4PfGcvMx3t5CdfOiymvHCV3i9srcObsID-CcVhGDpw_XDgbRqM7VWM0K4TCmCIrZOd9_vjIXDMQK6k1hTiipVt4hz8ihmARfYJfsX5a3si5ylOdvljDXWPsMir"/>
+</div>
+</div>
+</nav>
+<div class="flex">
+<!-- SideNavBar -->
+<aside class="fixed left-0 top-16 h-[calc(100vh-64px)] w-64 bg-slate-50 dark:bg-slate-900 border-r border-slate-200 dark:border-slate-800 flex flex-col py-6 font-['Inter'] text-sm font-semibold">
+<div class="px-6 mb-8">
+<div class="flex items-center gap-3 p-3 bg-white dark:bg-slate-800 rounded-lg shadow-sm">
+<div class="w-10 h-10 rounded bg-primary-container flex items-center justify-center text-white">
+<span class="material-symbols-outlined" data-icon="precision_manufacturing">precision_manufacturing</span>
+</div>
+<div>
+<p class="text-[#1A2B3C] dark:text-white font-bold">Project Alpha</p>
+<p class="text-xs text-slate-500">Site Lead Access</p>
+</div>
+</div>
+</div>
+<div class="flex-1 space-y-1">
+<a class="flex items-center gap-3 px-6 py-3 text-slate-600 dark:text-slate-400 border-l-4 border-transparent hover:bg-slate-100 dark:hover:bg-slate-800/50 transition-all duration-150" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span>Overview</span>
+</a>
+<a class="flex items-center gap-3 px-6 py-3 text-slate-600 dark:text-slate-400 border-l-4 border-transparent hover:bg-slate-100 dark:hover:bg-slate-800/50 transition-all duration-150" href="#">
+<span class="material-symbols-outlined" data-icon="precision_manufacturing">precision_manufacturing</span>
+<span>Materials</span>
+</a>
+<a class="flex items-center gap-3 px-6 py-3 bg-white dark:bg-slate-800 text-[#1A2B3C] dark:text-white border-l-4 border-[#1A2B3C] shadow-sm transition-all duration-150" href="#">
+<span class="material-symbols-outlined" data-icon="pending_actions">pending_actions</span>
+<span>Scheduled Reports</span>
+</a>
+<a class="flex items-center gap-3 px-6 py-3 text-slate-600 dark:text-slate-400 border-l-4 border-transparent hover:bg-slate-100 dark:hover:bg-slate-800/50 transition-all duration-150" href="#">
+<span class="material-symbols-outlined" data-icon="badge">badge</span>
+<span>Team</span>
+</a>
+<a class="flex items-center gap-3 px-6 py-3 text-slate-600 dark:text-slate-400 border-l-4 border-transparent hover:bg-slate-100 dark:hover:bg-slate-800/50 transition-all duration-150" href="#">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+<span>Configuration</span>
+</a>
+</div>
+<div class="mt-auto px-6 pt-6 border-t border-slate-200 dark:border-slate-800">
+<button class="w-full flex items-center justify-center gap-2 bg-on-tertiary-container text-white py-3 rounded-lg font-bold hover:opacity-90 transition-opacity mb-4">
+<span class="material-symbols-outlined" data-icon="add">add</span>
+<span>New Report</span>
+</button>
+<a class="flex items-center gap-3 py-3 text-slate-600 dark:text-slate-400 hover:text-error transition-colors" href="#">
+<span class="material-symbols-outlined" data-icon="logout">logout</span>
+<span>Logout</span>
+</a>
+</div>
+</aside>
+<!-- Main Content Canvas -->
+<main class="ml-64 flex-1 p-8 min-h-screen">
+<header class="flex justify-between items-end mb-10">
+<div>
+<h1 class="text-headline-md font-headline-md text-primary mb-2">Báo cáo Định kỳ</h1>
+<p class="text-body-md text-on-surface-variant">Quản lý và thiết lập lịch trình tự động gửi báo cáo hệ thống.</p>
+</div>
+<button class="bg-primary text-on-primary px-6 py-3 rounded flex items-center gap-2 font-bold hover:bg-primary-container transition-colors shadow-sm">
+<span class="material-symbols-outlined" data-icon="add_circle">add_circle</span>
+<span>+ Tạo Lịch mới</span>
+</button>
+</header>
+<!-- KPI Cards Section -->
+<section class="grid grid-cols-1 md:grid-cols-3 gap-gutter mb-xl">
+<!-- KPI 1 -->
+<div class="bg-white border border-outline-variant/30 p-6 flex flex-col gap-2">
+<div class="flex justify-between items-start">
+<span class="text-label-bold font-label-bold text-on-primary-container uppercase">Tổng lịch trình hoạt động</span>
+<span class="material-symbols-outlined text-[#1A2B3C]" data-icon="schedule">schedule</span>
+</div>
+<div class="text-display-lg font-display-lg text-primary">24</div>
+<div class="flex items-center gap-2 text-body-sm text-green-600">
+<span class="material-symbols-outlined text-sm" data-icon="trending_up">trending_up</span>
+<span>+2 so với tháng trước</span>
+</div>
+</div>
+<!-- KPI 2 -->
+<div class="bg-white border border-outline-variant/30 p-6 flex flex-col gap-2">
+<div class="flex justify-between items-start">
+<span class="text-label-bold font-label-bold text-on-primary-container uppercase">Báo cáo đã gửi (30 ngày)</span>
+<span class="material-symbols-outlined text-[#1A2B3C]" data-icon="mail">mail</span>
+</div>
+<div class="text-display-lg font-display-lg text-primary">1,402</div>
+<div class="flex items-center gap-2 text-body-sm text-on-secondary-container">
+<span class="material-symbols-outlined text-sm" data-icon="check_circle">check_circle</span>
+<span>Tỷ lệ thành công 99.8%</span>
+</div>
+</div>
+<!-- KPI 3 -->
+<div class="bg-white border border-outline-variant/30 p-6 flex flex-col gap-2">
+<div class="flex justify-between items-start">
+<span class="text-label-bold font-label-bold text-on-primary-container uppercase">Lần gửi dự kiến tiếp theo</span>
+<span class="material-symbols-outlined text-[#1A2B3C]" data-icon="event">event</span>
+</div>
+<div class="text-display-lg font-display-lg text-primary">08:00</div>
+<div class="flex items-center gap-2 text-body-sm text-on-tertiary-container">
+<span class="material-symbols-outlined text-sm" data-icon="timer">timer</span>
+<span>Còn lại 14 giờ 20 phút</span>
+</div>
+</div>
+</section>
+<!-- Data Table Section -->
+<section class="bg-white border border-outline-variant/30 overflow-hidden">
+<div class="bg-[#F5F7F9] px-6 py-4 border-b border-outline-variant/30 flex justify-between items-center">
+<h2 class="text-headline-sm font-headline-sm text-primary">Danh sách Lịch trình</h2>
+<div class="flex gap-2">
+<button class="p-2 border border-outline-variant bg-white hover:bg-slate-50 transition-colors">
+<span class="material-symbols-outlined" data-icon="filter_list">filter_list</span>
+</button>
+<button class="p-2 border border-outline-variant bg-white hover:bg-slate-50 transition-colors">
+<span class="material-symbols-outlined" data-icon="download">download</span>
+</button>
+</div>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full border-collapse text-left">
+<thead>
+<tr class="bg-primary text-white">
+<th class="px-6 py-4 text-label-bold font-label-bold uppercase tracking-wider">Tên báo cáo</th>
+<th class="px-6 py-4 text-label-bold font-label-bold uppercase tracking-wider">Loại</th>
+<th class="px-6 py-4 text-label-bold font-label-bold uppercase tracking-wider">Tần suất</th>
+<th class="px-6 py-4 text-label-bold font-label-bold uppercase tracking-wider">Người nhận</th>
+<th class="px-6 py-4 text-label-bold font-label-bold uppercase tracking-wider">Định dạng</th>
+<th class="px-6 py-4 text-label-bold font-label-bold uppercase tracking-wider">Trạng thái</th>
+<th class="px-6 py-4 text-label-bold font-label-bold uppercase tracking-wider text-right">Thao tác</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-slate-200">
+<!-- Row 1 -->
+<tr class="hover:bg-slate-50 transition-colors">
+<td class="px-6 py-4">
+<div class="font-table-data text-table-data text-primary">Báo cáo So sánh Vật liệu</div>
+<div class="text-xs text-on-surface-variant">Mã: RPT-2024-001</div>
+</td>
+<td class="px-6 py-4 text-table-data text-on-surface">Monthly Comparison</td>
+<td class="px-6 py-4 text-table-data text-on-surface">Hàng tháng (Ngày 01)</td>
+<td class="px-6 py-4 text-table-data text-on-surface">6 Nhân sự</td>
+<td class="px-6 py-4">
+<span class="bg-red-50 text-red-700 px-2 py-1 text-xs font-bold rounded">PDF</span>
+</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-2">
+<div class="w-10 h-5 bg-green-500 rounded-full relative p-1 cursor-pointer">
+<div class="w-3 h-3 bg-white rounded-full absolute right-1"></div>
+</div>
+<span class="text-xs font-bold text-green-600">Active</span>
+</div>
+</td>
+<td class="px-6 py-4 text-right">
+<div class="flex justify-end gap-2">
+<button class="p-1 text-on-tertiary-container hover:bg-orange-50 transition-colors" title="Gửi ngay">
+<span class="material-symbols-outlined" data-icon="send">send</span>
+</button>
+<button class="p-1 text-[#1A2B3C] hover:bg-slate-100 transition-colors" title="Sửa">
+<span class="material-symbols-outlined" data-icon="edit">edit</span>
+</button>
+<button class="p-1 text-error hover:bg-red-50 transition-colors" title="Xóa">
+<span class="material-symbols-outlined" data-icon="delete">delete</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="hover:bg-slate-50 transition-colors">
+<td class="px-6 py-4">
+<div class="font-table-data text-table-data text-primary">Hiệu suất Đội ngũ Dự án</div>
+<div class="text-xs text-on-surface-variant">Mã: RPT-2024-002</div>
+</td>
+<td class="px-6 py-4 text-table-data text-on-surface">Year Over Year</td>
+<td class="px-6 py-4 text-table-data text-on-surface">Hàng tuần (Thứ 2)</td>
+<td class="px-6 py-4 text-table-data text-on-surface">Ban Quản lý</td>
+<td class="px-6 py-4">
+<span class="bg-green-50 text-green-700 px-2 py-1 text-xs font-bold rounded">EXCEL</span>
+</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-2">
+<div class="w-10 h-5 bg-slate-300 rounded-full relative p-1 cursor-pointer">
+<div class="w-3 h-3 bg-white rounded-full absolute left-1"></div>
+</div>
+<span class="text-xs font-bold text-slate-500">Inactive</span>
+</div>
+</td>
+<td class="px-6 py-4 text-right">
+<div class="flex justify-end gap-2">
+<button class="p-1 text-on-tertiary-container hover:bg-orange-50 transition-colors" title="Gửi ngay">
+<span class="material-symbols-outlined" data-icon="send">send</span>
+</button>
+<button class="p-1 text-[#1A2B3C] hover:bg-slate-100 transition-colors" title="Sửa">
+<span class="material-symbols-outlined" data-icon="edit">edit</span>
+</button>
+<button class="p-1 text-error hover:bg-red-50 transition-colors" title="Xóa">
+<span class="material-symbols-outlined" data-icon="delete">delete</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="hover:bg-slate-50 transition-colors">
+<td class="px-6 py-4">
+<div class="font-table-data text-table-data text-primary">Nhật ký Kho bãi Daily</div>
+<div class="text-xs text-on-surface-variant">Mã: RPT-2024-005</div>
+</td>
+<td class="px-6 py-4 text-table-data text-on-surface">Logs Analysis</td>
+<td class="px-6 py-4 text-table-data text-on-surface">Hàng ngày</td>
+<td class="px-6 py-4 text-table-data text-on-surface">Admin</td>
+<td class="px-6 py-4">
+<span class="bg-red-50 text-red-700 px-2 py-1 text-xs font-bold rounded">PDF</span>
+</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-2">
+<div class="w-10 h-5 bg-green-500 rounded-full relative p-1 cursor-pointer">
+<div class="w-3 h-3 bg-white rounded-full absolute right-1"></div>
+</div>
+<span class="text-xs font-bold text-green-600">Active</span>
+</div>
+</td>
+<td class="px-6 py-4 text-right">
+<div class="flex justify-end gap-2">
+<button class="p-1 text-on-tertiary-container hover:bg-orange-50 transition-colors" title="Gửi ngay">
+<span class="material-symbols-outlined" data-icon="send">send</span>
+</button>
+<button class="p-1 text-[#1A2B3C] hover:bg-slate-100 transition-colors" title="Sửa">
+<span class="material-symbols-outlined" data-icon="edit">edit</span>
+</button>
+<button class="p-1 text-error hover:bg-red-50 transition-colors" title="Xóa">
+<span class="material-symbols-outlined" data-icon="delete">delete</span>
+</button>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="px-6 py-4 bg-white border-t border-slate-200 flex justify-between items-center">
+<span class="text-body-sm text-on-surface-variant">Hiển thị 3 trong tổng số 24 lịch trình</span>
+<div class="flex gap-1 items-center">
+<button class="p-2 text-slate-400 hover:text-primary transition-colors">
+<span class="material-symbols-outlined" data-icon="chevron_left">chevron_left</span>
+</button>
+<div class="flex gap-2 mx-4">
+<div class="w-8 h-1 bg-on-tertiary-container"></div>
+<div class="w-8 h-1 bg-slate-200"></div>
+<div class="w-8 h-1 bg-slate-200"></div>
+</div>
+<button class="p-2 text-slate-400 hover:text-primary transition-colors">
+<span class="material-symbols-outlined" data-icon="chevron_right">chevron_right</span>
+</button>
+</div>
+</div>
+</section>
+</main>
+</div>
+<script>
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('/sw.js').catch(() => {});
+  });
+}
+</script>
+</body>
+</html>

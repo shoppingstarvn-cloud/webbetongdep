@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Email Notification Configuration</title>
+<link href="/manifest.json" rel="manifest"/>
+<link href="/favicon.ico" rel="icon" sizes="any"/>
+<link href="/favicon-32.png" rel="icon" type="image/png" sizes="32x32"/>
+<link href="/apple-touch-icon.png" rel="apple-touch-icon" sizes="180x180"/>
+<meta content="#041627" name="theme-color"/>
+<!-- Fonts & Icons -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Tailwind Config -->
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-background": "#191c1e",
+                        "primary-fixed": "#d2e4fb",
+                        "surface-variant": "#e0e3e5",
+                        "surface-tint": "#4f6073",
+                        "on-secondary-fixed": "#1b1c1c",
+                        "background": "#f8f9fb",
+                        "error": "#ba1a1a",
+                        "error-container": "#ffdad6",
+                        "surface-container-highest": "#e0e3e5",
+                        "secondary": "#5e5e5e",
+                        "surface-container-low": "#f2f4f6",
+                        "outline": "#74777d",
+                        "on-surface": "#191c1e",
+                        "primary-fixed-dim": "#b7c8de",
+                        "primary-container": "#1a2b3c",
+                        "on-error-container": "#93000a",
+                        "on-tertiary-fixed": "#341000",
+                        "surface-dim": "#d8dadc",
+                        "secondary-fixed-dim": "#c7c6c6",
+                        "tertiary-container": "#4b1b00",
+                        "on-secondary-container": "#646464",
+                        "on-primary-fixed-variant": "#38485a",
+                        "on-primary-container": "#8192a7",
+                        "tertiary": "#2a0c00",
+                        "surface-container-high": "#e6e8ea",
+                        "on-primary-fixed": "#0b1d2d",
+                        "surface-container": "#eceef0",
+                        "on-tertiary-container": "#eb6a1b",
+                        "inverse-on-surface": "#eff1f3",
+                        "on-secondary": "#ffffff",
+                        "surface-container-lowest": "#ffffff",
+                        "outline-variant": "#c4c6cd",
+                        "primary": "#041627",
+                        "on-tertiary-fixed-variant": "#7a3000",
+                        "surface": "#f8f9fb",
+                        "secondary-container": "#e3e2e2",
+                        "on-tertiary": "#ffffff",
+                        "secondary-fixed": "#e3e2e2",
+                        "tertiary-fixed-dim": "#ffb693",
+                        "inverse-surface": "#2d3133",
+                        "inverse-primary": "#b7c8de",
+                        "on-primary": "#ffffff",
+                        "surface-bright": "#f8f9fb",
+                        "on-secondary-fixed-variant": "#464747",
+                        "tertiary-fixed": "#ffdbcb",
+                        "on-surface-variant": "#44474c",
+                        "on-error": "#ffffff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "md": "1.5rem",
+                        "xl": "4rem",
+                        "max_width": "1280px",
+                        "lg": "2.5rem",
+                        "gutter": "24px",
+                        "xs": "0.5rem",
+                        "margin": "32px",
+                        "sm": "1rem",
+                        "base": "4px"
+                    },
+                    "fontFamily": {
+                        "label-bold": ["Inter"],
+                        "body-md": ["Inter"],
+                        "headline-sm": ["Inter"],
+                        "display-lg": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "headline-md": ["Inter"],
+                        "body-sm": ["Inter"],
+                        "table-data": ["Inter"]
+                    },
+                    "fontSize": {
+                        "label-bold": ["12px", { "lineHeight": "1", "letterSpacing": "0.05em", "fontWeight": "700" }],
+                        "body-md": ["16px", { "lineHeight": "1.5", "fontWeight": "400" }],
+                        "headline-sm": ["24px", { "lineHeight": "1.3", "fontWeight": "600" }],
+                        "display-lg": ["48px", { "lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "body-lg": ["18px", { "lineHeight": "1.6", "fontWeight": "400" }],
+                        "headline-md": ["32px", { "lineHeight": "1.2", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+                        "body-sm": ["14px", { "lineHeight": "1.5", "fontWeight": "400" }],
+                        "table-data": ["14px", { "lineHeight": "1.2", "fontWeight": "500" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+</head>
+<body class="bg-surface-bright text-on-surface font-body-md text-body-md min-h-screen flex">
+<!-- SideNavBar (from JSON) -->
+<nav class="bg-slate-50 dark:bg-slate-950 text-[#1A2B3C] dark:text-slate-100 font-['Inter'] text-xs font-semibold uppercase tracking-widest h-full border-r border-slate-200 dark:border-slate-800 flat no-shadows fixed left-0 top-0 w-64 h-screen flex flex-col pt-20 pb-6 z-40 transition-all duration-200 ease-in-out hidden md:flex">
+<div class="px-6 mb-8 flex flex-col gap-2">
+<div class="w-10 h-10 bg-primary rounded-DEFAULT flex items-center justify-center text-on-primary">
+<span class="material-symbols-outlined">domain</span>
+</div>
+<h1 class="text-lg font-bold text-[#1A2B3C] dark:text-white mt-2">Operations Hub</h1>
+<p class="text-on-surface-variant font-label-bold text-label-bold">Material Management</p>
+</div>
+<div class="px-4 mb-6">
+<button class="w-full bg-primary text-on-primary font-table-data text-table-data py-sm rounded-DEFAULT flex items-center justify-center gap-2 hover:bg-primary-fixed-variant transition-colors">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">add</span>
+                New Quote
+            </button>
+</div>
+<ul class="flex-1 flex flex-col gap-1 w-full">
+<li><a class="text-slate-600 dark:text-slate-400 hover:text-[#1A2B3C] dark:hover:text-white px-4 py-3 flex items-center gap-3 hover:bg-slate-200/50 dark:hover:bg-slate-800/50 transition-colors" href="#"><span class="material-symbols-outlined">dashboard</span>Dashboard</a></li>
+<li><a class="text-slate-600 dark:text-slate-400 hover:text-[#1A2B3C] dark:hover:text-white px-4 py-3 flex items-center gap-3 hover:bg-slate-200/50 dark:hover:bg-slate-800/50 transition-colors" href="#"><span class="material-symbols-outlined">inventory_2</span>Inventory</a></li>
+<li><a class="text-slate-600 dark:text-slate-400 hover:text-[#1A2B3C] dark:hover:text-white px-4 py-3 flex items-center gap-3 hover:bg-slate-200/50 dark:hover:bg-slate-800/50 transition-colors" href="#"><span class="material-symbols-outlined">request_quote</span>Project Quotes</a></li>
+<!-- Active Tab -->
+<li><a class="bg-[#1A2B3C] text-white dark:bg-slate-100 dark:text-slate-900 rounded-none border-l-4 border-orange-500 px-4 py-3 flex items-center gap-3 transition-all" href="#"><span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">mail</span>Email Alerts</a></li>
+<li><a class="text-slate-600 dark:text-slate-400 hover:text-[#1A2B3C] dark:hover:text-white px-4 py-3 flex items-center gap-3 hover:bg-slate-200/50 dark:hover:bg-slate-800/50 transition-colors" href="#"><span class="material-symbols-outlined">settings</span>System Config</a></li>
+<li><a class="text-slate-600 dark:text-slate-400 hover:text-[#1A2B3C] dark:hover:text-white px-4 py-3 flex items-center gap-3 hover:bg-slate-200/50 dark:hover:bg-slate-800/50 transition-colors" href="#"><span class="material-symbols-outlined">history</span>User Logs</a></li>
+</ul>
+<ul class="mt-auto flex flex-col gap-1 w-full border-t border-slate-200 dark:border-slate-800 pt-4">
+<li><a class="text-slate-600 dark:text-slate-400 hover:text-[#1A2B3C] dark:hover:text-white px-4 py-3 flex items-center gap-3 hover:bg-slate-200/50 dark:hover:bg-slate-800/50 transition-colors" href="#"><span class="material-symbols-outlined">contact_support</span>Support</a></li>
+<li><a class="text-slate-600 dark:text-slate-400 hover:text-[#1A2B3C] dark:hover:text-white px-4 py-3 flex items-center gap-3 hover:bg-slate-200/50 dark:hover:bg-slate-800/50 transition-colors" href="#"><span class="material-symbols-outlined">logout</span>Logout</a></li>
+</ul>
+</nav>
+<!-- Main Content Canvas -->
+<main class="flex-1 flex flex-col md:pl-64 min-h-screen relative">
+<!-- TopAppBar (from JSON) -->
+<header class="bg-white dark:bg-slate-900 text-[#1A2B3C] dark:text-slate-100 font-['Inter'] antialiased text-sm tracking-tight docked full-width top-0 border-b border-slate-200 dark:border-slate-800 flat no-shadows flex items-center justify-between w-full h-16 px-6 sticky top-0 z-50">
+<div class="flex items-center gap-4">
+<span class="text-xl font-black text-[#1A2B3C] dark:text-white uppercase tracking-wider">BuildIndustrial CMS</span>
+</div>
+<div class="flex items-center gap-6">
+<!-- Search Bar Placeholder based on "search_bar": "on_left" (moved relative to brand) -->
+<div class="hidden lg:flex items-center bg-surface-container-low border border-outline-variant rounded-DEFAULT px-3 py-1.5 focus-within:border-primary transition-colors">
+<span class="material-symbols-outlined text-outline text-[18px]">search</span>
+<input class="bg-transparent border-none outline-none text-body-sm font-body-sm ml-2 w-48 text-on-surface placeholder:text-outline" placeholder="Search resources..." type="text"/>
+</div>
+<div class="flex items-center gap-4">
+<button class="text-slate-500 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors p-2 rounded-full flex items-center justify-center">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="text-slate-500 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors p-2 rounded-full flex items-center justify-center">
+<span class="material-symbols-outlined">help</span>
+</button>
+<button class="text-slate-500 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors p-2 rounded-full flex items-center justify-center">
+<span class="material-symbols-outlined">settings</span>
+</button>
+<div class="w-8 h-8 rounded-full bg-primary-fixed-dim overflow-hidden border border-outline-variant flex items-center justify-center">
+<span class="material-symbols-outlined text-primary">person</span>
+</div>
+</div>
+</div>
+</header>
+<!-- Page Content -->
+<div class="p-margin max-w-max_width mx-auto w-full flex-1 flex flex-col gap-xl">
+<!-- Page Header -->
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-outline-variant pb-sm">
+<div>
+<h2 class="font-headline-md text-headline-md text-primary">System Notification Routing</h2>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-1">Configure SMTP endpoints and monitor automated dispatch health.</p>
+</div>
+<div class="flex gap-3">
+<button class="px-md py-sm bg-surface-container-lowest border border-outline text-on-surface font-table-data text-table-data rounded-DEFAULT hover:bg-surface-container-low transition-colors shadow-sm">
+                        Send Test Ping
+                    </button>
+<button class="px-md py-sm bg-primary text-on-primary font-table-data text-table-data rounded-DEFAULT hover:bg-primary-fixed-variant transition-colors shadow-sm">
+                        Save Configuration
+                    </button>
+</div>
+</div>
+<!-- Configuration Grid -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-gutter">
+<!-- Primary Settings (Col 8) -->
+<div class="md:col-span-8 flex flex-col gap-gutter">
+<!-- SMTP Settings Card -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-DEFAULT shadow-sm overflow-hidden flex flex-col">
+<div class="bg-surface-container-low px-md py-sm border-b border-outline-variant flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-[18px]">router</span>
+<h3 class="font-table-data text-table-data text-primary uppercase tracking-wider">Primary SMTP Gateway</h3>
+</div>
+<div class="p-md grid grid-cols-1 md:grid-cols-2 gap-x-gutter gap-y-sm">
+<div class="flex flex-col gap-1 md:col-span-2">
+<label class="font-label-bold text-label-bold text-on-surface-variant uppercase">Provider Preset</label>
+<select class="w-full bg-surface-container-lowest border border-outline-variant rounded-DEFAULT px-sm py-2 text-body-sm font-body-sm text-on-surface focus:border-primary focus:ring-1 focus:ring-primary outline-none">
+<option>Custom Enterprise Relay</option>
+<option>AWS SES (us-east-1)</option>
+<option>SendGrid API</option>
+</select>
+</div>
+<div class="flex flex-col gap-1">
+<label class="font-label-bold text-label-bold text-on-surface-variant uppercase">Host Address</label>
+<input class="w-full bg-surface-container-lowest border border-outline-variant rounded-DEFAULT px-sm py-2 text-body-sm font-body-sm text-on-surface focus:border-primary focus:ring-1 focus:ring-primary outline-none" type="text" value="smtp.internal-corp.net"/>
+</div>
+<div class="flex flex-col gap-1">
+<label class="font-label-bold text-label-bold text-on-surface-variant uppercase">Port / Protocol</label>
+<div class="flex gap-2">
+<input class="w-24 bg-surface-container-lowest border border-outline-variant rounded-DEFAULT px-sm py-2 text-body-sm font-body-sm text-on-surface focus:border-primary focus:ring-1 focus:ring-primary outline-none text-center" type="text" value="587"/>
+<select class="flex-1 bg-surface-container-lowest border border-outline-variant rounded-DEFAULT px-sm py-2 text-body-sm font-body-sm text-on-surface focus:border-primary focus:ring-1 focus:ring-primary outline-none">
+<option>TLS (Recommended)</option>
+<option>SSL</option>
+<option>None (Insecure)</option>
+</select>
+</div>
+</div>
+<div class="flex flex-col gap-1">
+<label class="font-label-bold text-label-bold text-on-surface-variant uppercase">Service Account Username</label>
+<input class="w-full bg-surface-container-lowest border border-outline-variant rounded-DEFAULT px-sm py-2 text-body-sm font-body-sm text-on-surface focus:border-primary focus:ring-1 focus:ring-primary outline-none" type="text" value="svc_alerts@buildindustrial.com"/>
+</div>
+<div class="flex flex-col gap-1">
+<label class="font-label-bold text-label-bold text-on-surface-variant uppercase">Authentication Token</label>
+<div class="relative">
+<input class="w-full bg-surface-container-lowest border border-outline-variant rounded-DEFAULT px-sm py-2 pr-10 text-body-sm font-body-sm text-on-surface focus:border-primary focus:ring-1 focus:ring-primary outline-none" type="password" value="****************"/>
+<button class="absolute right-2 top-1/2 -translate-y-1/2 text-outline hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-[18px]">visibility</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Automatic Rotation Config Card -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-DEFAULT shadow-sm overflow-hidden flex flex-col">
+<div class="bg-surface-container-low px-md py-sm border-b border-outline-variant flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-[18px]">sync</span>
+<h3 class="font-table-data text-table-data text-primary uppercase tracking-wider">Credential Rotation Policy</h3>
+</div>
+<div class="p-md flex flex-col gap-4">
+<div class="flex items-start justify-between gap-4">
+<div>
+<p class="font-table-data text-table-data text-on-surface">Enforce Automated Key Rotation</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-1 max-w-lg">Requires integration with HashiCorp Vault or AWS Secrets Manager. If disabled, tokens must be updated manually prior to expiration.</p>
+</div>
+<!-- Toggle Switch CSS representation -->
+<div class="w-12 h-6 bg-primary rounded-full relative cursor-pointer border border-primary">
+<div class="w-5 h-5 bg-white rounded-full absolute right-0.5 top-0.5 shadow-sm"></div>
+</div>
+</div>
+<div class="h-px bg-outline-variant w-full"></div>
+<div class="flex flex-col gap-1 w-64">
+<label class="font-label-bold text-label-bold text-on-surface-variant uppercase">Rotation Frequency (Days)</label>
+<input class="w-full bg-surface-container-lowest border border-outline-variant rounded-DEFAULT px-sm py-2 text-body-sm font-body-sm text-on-surface focus:border-primary focus:ring-1 focus:ring-primary outline-none" type="number" value="90"/>
+</div>
+</div>
+</div>
+</div>
+<!-- Secondary/Monitoring (Col 4) -->
+<div class="md:col-span-4 flex flex-col gap-gutter">
+<!-- Dispatch Health Chart Card -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-DEFAULT shadow-sm overflow-hidden flex flex-col h-full">
+<div class="bg-surface-container-low px-md py-sm border-b border-outline-variant flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-[18px]">monitoring</span>
+<h3 class="font-table-data text-table-data text-primary uppercase tracking-wider">7-Day Dispatch Health</h3>
+</div>
+<div class="p-md flex-1 flex flex-col justify-center gap-6">
+<div class="text-center">
+<p class="font-display-lg text-display-lg text-primary">98.2%</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Overall Delivery Success Rate</p>
+</div>
+<!-- Structural Bar Chart -->
+<div class="flex flex-col gap-2 w-full">
+<div class="flex justify-between items-end">
+<span class="font-label-bold text-label-bold text-on-surface-variant uppercase">Volume Ratio</span>
+<span class="font-label-bold text-label-bold text-on-surface-variant uppercase">12,450 Total</span>
+</div>
+<div class="w-full h-3 bg-surface-variant rounded-sm overflow-hidden flex">
+<!-- Success Segment -->
+<div class="h-full bg-primary" style="width: 98.2%;"></div>
+<!-- Failed Segment -->
+<div class="h-full bg-error" style="width: 1.8%;"></div>
+</div>
+<div class="flex justify-between mt-2">
+<div class="flex items-center gap-2">
+<div class="w-2 h-2 rounded-full bg-primary"></div>
+<span class="font-table-data text-table-data text-on-surface">Delivered (12,226)</span>
+</div>
+<div class="flex items-center gap-2">
+<div class="w-2 h-2 rounded-full bg-error"></div>
+<span class="font-table-data text-table-data text-on-surface">Bounced/Failed (224)</span>
+</div>
+</div>
+</div>
+<div class="mt-auto bg-surface px-sm py-xs border border-outline-variant rounded-sm flex items-start gap-2">
+<span class="material-symbols-outlined text-error text-[16px] mt-0.5">warning</span>
+<p class="font-body-sm text-body-sm text-on-surface text-xs">Spike in bounce rates detected on 10/24 related to @legacy-domain.com filters.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Logging Section (Full Width) -->
+<div class="flex flex-col gap-sm">
+<div class="flex justify-between items-end">
+<div>
+<h3 class="font-headline-sm text-headline-sm text-primary">Recent Dispatch Logs</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Real-time telemetry of system-generated notifications.</p>
+</div>
+<div class="flex gap-2">
+<button class="px-sm py-xs bg-surface border border-outline-variant text-on-surface font-table-data text-table-data rounded-DEFAULT hover:bg-surface-container-low transition-colors flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">download</span> CSV
+                        </button>
+<button class="px-sm py-xs bg-surface border border-outline-variant text-on-surface font-table-data text-table-data rounded-DEFAULT hover:bg-surface-container-low transition-colors flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">picture_as_pdf</span> PDF
+                        </button>
+</div>
+</div>
+<div class="bg-surface-container-lowest border border-outline-variant rounded-DEFAULT shadow-sm overflow-hidden">
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse min-w-[800px]">
+<thead class="bg-primary text-on-primary">
+<tr>
+<th class="font-table-data text-table-data px-md py-sm font-semibold border-b border-primary-fixed-dim w-48">Timestamp (UTC)</th>
+<th class="font-table-data text-table-data px-md py-sm font-semibold border-b border-primary-fixed-dim">Recipient</th>
+<th class="font-table-data text-table-data px-md py-sm font-semibold border-b border-primary-fixed-dim">Event Type</th>
+<th class="font-table-data text-table-data px-md py-sm font-semibold border-b border-primary-fixed-dim w-32">Status</th>
+<th class="font-table-data text-table-data px-md py-sm font-semibold border-b border-primary-fixed-dim w-24 text-right">Latency</th>
+</tr>
+</thead>
+<tbody class="text-on-surface">
+<tr class="border-b border-outline-variant hover:bg-surface-container-low transition-colors">
+<td class="font-body-sm text-body-sm px-md py-sm text-on-surface-variant">2023-10-26 14:32:01</td>
+<td class="font-body-sm text-body-sm px-md py-sm">procurement@steelworks.inc</td>
+<td class="font-body-sm text-body-sm px-md py-sm">Quote Approval Request</td>
+<td class="px-md py-sm">
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-sm bg-surface border border-outline-variant text-primary font-table-data text-xs">
+<span class="w-1.5 h-1.5 rounded-full bg-primary"></span> Delivered
+                                        </span>
+</td>
+<td class="font-body-sm text-body-sm px-md py-sm text-right text-on-surface-variant">120ms</td>
+</tr>
+<tr class="border-b border-outline-variant hover:bg-surface-container-low transition-colors">
+<td class="font-body-sm text-body-sm px-md py-sm text-on-surface-variant">2023-10-26 14:15:44</td>
+<td class="font-body-sm text-body-sm px-md py-sm">admin@buildindustrial.com</td>
+<td class="font-body-sm text-body-sm px-md py-sm">System Health Alert</td>
+<td class="px-md py-sm">
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-sm bg-surface border border-outline-variant text-primary font-table-data text-xs">
+<span class="w-1.5 h-1.5 rounded-full bg-primary"></span> Delivered
+                                        </span>
+</td>
+<td class="font-body-sm text-body-sm px-md py-sm text-right text-on-surface-variant">85ms</td>
+</tr>
+<tr class="border-b border-outline-variant hover:bg-surface-container-low transition-colors bg-error-container/10">
+<td class="font-body-sm text-body-sm px-md py-sm text-on-surface-variant">2023-10-26 13:05:12</td>
+<td class="font-body-sm text-body-sm px-md py-sm">j.doe@legacy-vendor.co</td>
+<td class="font-body-sm text-body-sm px-md py-sm">Invoice Submission</td>
+<td class="px-md py-sm">
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-sm bg-surface border border-outline-variant text-error font-table-data text-xs">
+<span class="w-1.5 h-1.5 rounded-full bg-error"></span> Bounced (550)
+                                        </span>
+</td>
+<td class="font-body-sm text-body-sm px-md py-sm text-right text-on-surface-variant">450ms</td>
+</tr>
+<tr class="border-b border-outline-variant hover:bg-surface-container-low transition-colors">
+<td class="font-body-sm text-body-sm px-md py-sm text-on-surface-variant">2023-10-26 11:22:00</td>
+<td class="font-body-sm text-body-sm px-md py-sm">site-manager@project-alpha.com</td>
+<td class="font-body-sm text-body-sm px-md py-sm">Material Delivery Confirmation</td>
+<td class="px-md py-sm">
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-sm bg-surface border border-outline-variant text-primary font-table-data text-xs">
+<span class="w-1.5 h-1.5 rounded-full bg-primary"></span> Delivered
+                                        </span>
+</td>
+<td class="font-body-sm text-body-sm px-md py-sm text-right text-on-surface-variant">110ms</td>
+</tr>
+<tr class="hover:bg-surface-container-low transition-colors">
+<td class="font-body-sm text-body-sm px-md py-sm text-on-surface-variant">2023-10-26 09:00:05</td>
+<td class="font-body-sm text-body-sm px-md py-sm">all-staff@buildindustrial.com</td>
+<td class="font-body-sm text-body-sm px-md py-sm">Weekly Inventory Digest</td>
+<td class="px-md py-sm">
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-sm bg-surface border border-outline-variant text-primary font-table-data text-xs">
+<span class="w-1.5 h-1.5 rounded-full bg-primary"></span> Delivered
+                                        </span>
+</td>
+<td class="font-body-sm text-body-sm px-md py-sm text-right text-on-surface-variant">320ms</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="bg-surface-container-low px-md py-sm border-t border-outline-variant flex items-center justify-between">
+<span class="font-body-sm text-body-sm text-on-surface-variant">Showing 5 of 12,450 records</span>
+<div class="flex gap-1">
+<button class="w-8 h-8 flex items-center justify-center rounded-sm hover:bg-surface-variant text-on-surface-variant transition-colors disabled:opacity-50"><span class="material-symbols-outlined text-[18px]">chevron_left</span></button>
+<button class="w-8 h-8 flex items-center justify-center rounded-sm bg-primary text-on-primary font-table-data text-table-data">1</button>
+<button class="w-8 h-8 flex items-center justify-center rounded-sm hover:bg-surface-variant text-on-surface-variant font-table-data text-table-data transition-colors">2</button>
+<button class="w-8 h-8 flex items-center justify-center rounded-sm hover:bg-surface-variant text-on-surface-variant font-table-data text-table-data transition-colors">3</button>
+<span class="w-8 h-8 flex items-center justify-center text-on-surface-variant">...</span>
+<button class="w-8 h-8 flex items-center justify-center rounded-sm hover:bg-surface-variant text-on-surface-variant transition-colors"><span class="material-symbols-outlined text-[18px]">chevron_right</span></button>
+</div>
+</div>
+</div>
+</div>
+<!-- Bottom Spacing -->
+<div class="pb-xl"></div>
+</div>
+</main>
+<script>
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('/sw.js').catch(() => {});
+  });
+}
+</script>
+</body>
+</html>

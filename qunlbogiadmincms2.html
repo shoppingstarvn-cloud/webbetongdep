@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Inquiry Management - BUILDCORE CMS</title>
+<link href="/manifest.json" rel="manifest"/>
+<link href="/favicon.ico" rel="icon" sizes="any"/>
+<link href="/favicon-32.png" rel="icon" type="image/png" sizes="32x32"/>
+<link href="/apple-touch-icon.png" rel="apple-touch-icon" sizes="180x180"/>
+<meta content="#041627" name="theme-color"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "error-container": "#ffdad6",
+                        "secondary-container": "#e3e2e2",
+                        "on-tertiary-fixed": "#341000",
+                        "on-secondary": "#ffffff",
+                        "surface-container-low": "#f2f4f6",
+                        "error": "#ba1a1a",
+                        "surface-dim": "#d8dadc",
+                        "primary": "#041627",
+                        "on-surface": "#191c1e",
+                        "on-primary-fixed": "#0b1d2d",
+                        "surface-container-highest": "#e0e3e5",
+                        "secondary-fixed-dim": "#c7c6c6",
+                        "on-error-container": "#93000a",
+                        "on-tertiary": "#ffffff",
+                        "on-surface-variant": "#44474c",
+                        "primary-fixed": "#d2e4fb",
+                        "inverse-on-surface": "#eff1f3",
+                        "surface-tint": "#4f6073",
+                        "surface-container-lowest": "#ffffff",
+                        "on-primary-fixed-variant": "#38485a",
+                        "inverse-surface": "#2d3133",
+                        "tertiary-fixed": "#ffdbcb",
+                        "on-secondary-container": "#646464",
+                        "on-primary-container": "#8192a7",
+                        "tertiary-fixed-dim": "#ffb693",
+                        "surface-variant": "#e0e3e5",
+                        "outline": "#74777d",
+                        "on-primary": "#ffffff",
+                        "surface-bright": "#f8f9fb",
+                        "outline-variant": "#c4c6cd",
+                        "surface-container": "#eceef0",
+                        "secondary-fixed": "#e3e2e2",
+                        "background": "#f8f9fb",
+                        "secondary": "#5e5e5e",
+                        "on-secondary-fixed": "#1b1c1c",
+                        "inverse-primary": "#b7c8de",
+                        "on-tertiary-container": "#eb6a1b",
+                        "surface-container-high": "#e6e8ea",
+                        "on-secondary-fixed-variant": "#464747",
+                        "tertiary": "#2a0c00",
+                        "on-background": "#191c1e",
+                        "tertiary-container": "#4b1b00",
+                        "primary-fixed-dim": "#b7c8de",
+                        "on-tertiary-fixed-variant": "#7a3000",
+                        "surface": "#f8f9fb",
+                        "on-error": "#ffffff",
+                        "primary-container": "#1a2b3c"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "max_width": "1280px",
+                        "md": "1.5rem",
+                        "gutter": "24px",
+                        "lg": "2.5rem",
+                        "margin": "32px",
+                        "xl": "4rem",
+                        "base": "4px",
+                        "xs": "0.5rem",
+                        "sm": "1rem"
+                    },
+                    "fontFamily": {
+                        "headline-sm": ["Inter"],
+                        "body-sm": ["Inter"],
+                        "table-data": ["Inter"],
+                        "headline-md": ["Inter"],
+                        "display-lg": ["Inter"],
+                        "label-bold": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "body-md": ["Inter"]
+                    },
+                    "fontSize": {
+                        "headline-sm": ["24px", {"lineHeight": "1.3", "fontWeight": "600"}],
+                        "body-sm": ["14px", {"lineHeight": "1.5", "fontWeight": "400"}],
+                        "table-data": ["14px", {"lineHeight": "1.2", "fontWeight": "500"}],
+                        "headline-md": ["32px", {"lineHeight": "1.2", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                        "display-lg": ["48px", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "label-bold": ["12px", {"lineHeight": "1", "letterSpacing": "0.05em", "fontWeight": "700"}],
+                        "body-lg": ["18px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                        "body-md": ["16px", {"lineHeight": "1.5", "fontWeight": "400"}]
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-background text-on-background flex h-screen overflow-hidden antialiased">
+<nav class="flex flex-col fixed left-0 top-0 h-screen w-64 z-50 py-6 bg-[#1A2B3C] dark:bg-slate-950 border-r border-slate-800">
+<div class="px-6 mb-10">
+<h2 class="text-lg font-black text-white italic">BUILDCORE</h2>
+<p class="text-slate-400 font-['Inter'] text-xs mt-1">Admin Portal</p>
+</div>
+<div class="flex-1 flex flex-col gap-1">
+<a class="text-slate-400 flex items-center gap-3 py-3 px-4 font-['Inter'] font-bold text-[11px] uppercase tracking-widest hover:bg-slate-800 hover:text-white transition-all duration-200 active:scale-[0.98] transition-transform" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+                Dashboard
+            </a>
+<a class="text-slate-400 flex items-center gap-3 py-3 px-4 font-['Inter'] font-bold text-[11px] uppercase tracking-widest hover:bg-slate-800 hover:text-white transition-all duration-200 active:scale-[0.98] transition-transform" href="#">
+<span class="material-symbols-outlined" data-icon="inventory_2">inventory_2</span>
+                Product Catalog
+            </a>
+<a class="text-slate-400 flex items-center gap-3 py-3 px-4 font-['Inter'] font-bold text-[11px] uppercase tracking-widest hover:bg-slate-800 hover:text-white transition-all duration-200 active:scale-[0.98] transition-transform" href="#">
+<span class="material-symbols-outlined" data-icon="group">group</span>
+                User Directory
+            </a>
+<a class="bg-orange-600 text-white rounded-r-md mr-4 flex items-center gap-3 py-3 px-4 shadow-[4px_0px_0px_0px_rgba(255,255,255,0.2)] font-['Inter'] font-bold text-[11px] uppercase tracking-widest active:scale-[0.98] transition-transform" href="#">
+<span class="material-symbols-outlined" data-icon="request_quote">request_quote</span>
+                Inquiry Management
+            </a>
+</div>
+<div class="mt-auto flex flex-col gap-1">
+<a class="text-slate-400 flex items-center gap-3 py-3 px-4 font-['Inter'] font-bold text-[11px] uppercase tracking-widest hover:bg-slate-800 hover:text-white transition-all duration-200 active:scale-[0.98] transition-transform" href="#">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+                Settings
+            </a>
+<a class="text-slate-400 flex items-center gap-3 py-3 px-4 font-['Inter'] font-bold text-[11px] uppercase tracking-widest hover:bg-slate-800 hover:text-white transition-all duration-200 active:scale-[0.98] transition-transform" href="#">
+<span class="material-symbols-outlined" data-icon="logout">logout</span>
+                Logout
+            </a>
+</div>
+</nav>
+<div class="flex-1 ml-64 flex flex-col h-screen relative bg-surface">
+<header class="flex justify-between items-center h-16 px-8 w-full sticky top-0 z-40 bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800">
+<div class="flex items-center gap-4">
+<span class="text-xl font-black text-slate-900 dark:text-white tracking-tighter">Industrial CMS</span>
+</div>
+<div class="flex items-center gap-4">
+<div class="relative hidden md:block">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" data-icon="search">search</span>
+<input class="pl-10 pr-4 py-2 bg-slate-100 dark:bg-slate-800 border-none rounded text-sm focus:ring-2 focus:ring-orange-600 outline-none w-64 text-slate-900 dark:text-white placeholder-slate-400" placeholder="Search..." type="text"/>
+</div>
+<div class="flex items-center gap-2">
+<button class="p-2 text-slate-500 dark:text-slate-400 hover:text-orange-600 dark:hover:text-orange-400 transition-colors scale-95 duration-200 transition-transform">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+<button class="p-2 text-slate-500 dark:text-slate-400 hover:text-orange-600 dark:hover:text-orange-400 transition-colors scale-95 duration-200 transition-transform">
+<span class="material-symbols-outlined" data-icon="help_outline">help_outline</span>
+</button>
+<button class="p-2 text-slate-500 dark:text-slate-400 hover:text-orange-600 dark:hover:text-orange-400 transition-colors scale-95 duration-200 transition-transform">
+<span class="material-symbols-outlined" data-icon="account_circle">account_circle</span>
+</button>
+</div>
+</div>
+</header>
+<main class="flex-1 overflow-y-auto p-8 lg:p-12">
+<div class="max-w-[1280px] mx-auto space-y-xl">
+<section>
+<h1 class="font-display-lg text-display-lg text-primary tracking-tight">Quản lý Báo giá & Liên hệ</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant mt-2 max-w-2xl">Theo dõi và phản hồi các yêu cầu từ khách hàng tiềm năng. Quản lý trạng thái để đảm bảo phản hồi kịp thời cho mọi dự án.</p>
+</section>
+<section class="bg-surface-container-lowest border border-outline-variant rounded-DEFAULT p-lg shadow-sm">
+<div class="flex flex-col md:flex-row gap-md justify-between items-end mb-lg">
+<div class="flex-1 w-full max-w-md relative">
+<label class="block font-label-bold text-label-bold text-on-surface mb-2 uppercase">Tìm kiếm</label>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline" data-icon="search">search</span>
+<input class="w-full pl-10 pr-4 py-3 bg-surface border border-outline-variant rounded-DEFAULT font-body-md text-body-md text-on-surface focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-colors" placeholder="Tên khách hàng, Email, Số điện thoại..." type="text"/>
+</div>
+</div>
+<div class="flex flex-wrap gap-4 w-full md:w-auto">
+<div>
+<label class="block font-label-bold text-label-bold text-on-surface mb-2 uppercase">Trạng thái</label>
+<select class="w-full md:w-48 px-4 py-3 bg-surface border border-outline-variant rounded-DEFAULT font-body-md text-body-md text-on-surface focus:border-primary focus:ring-1 focus:ring-primary outline-none appearance-none">
+<option>Tất cả trạng thái</option>
+<option>New</option>
+<option>Contacted</option>
+<option>Quoted</option>
+<option>Closed</option>
+</select>
+</div>
+<div>
+<label class="block font-label-bold text-label-bold text-on-surface mb-2 uppercase">Thời gian</label>
+<input class="w-full md:w-48 px-4 py-3 bg-surface border border-outline-variant rounded-DEFAULT font-body-md text-body-md text-on-surface focus:border-primary focus:ring-1 focus:ring-primary outline-none" type="date"/>
+</div>
+</div>
+</div>
+<div class="overflow-x-auto border border-outline-variant rounded-DEFAULT">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-primary text-on-primary">
+<th class="py-4 px-6 font-label-bold text-label-bold uppercase tracking-wider">Customer Name</th>
+<th class="py-4 px-6 font-label-bold text-label-bold uppercase tracking-wider">Contact Info</th>
+<th class="py-4 px-6 font-label-bold text-label-bold uppercase tracking-wider">Requested Service</th>
+<th class="py-4 px-6 font-label-bold text-label-bold uppercase tracking-wider">Submission Date</th>
+<th class="py-4 px-6 font-label-bold text-label-bold uppercase tracking-wider">Status</th>
+<th class="py-4 px-6 font-label-bold text-label-bold uppercase tracking-wider text-right">Actions</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant bg-surface-container-lowest">
+<tr class="hover:bg-surface-container-low transition-colors group">
+<td class="py-4 px-6 font-table-data text-table-data text-on-surface">Công ty XD Hòa Bình</td>
+<td class="py-4 px-6">
+<div class="font-table-data text-table-data text-on-surface">090 123 4567</div>
+<div class="font-body-sm text-body-sm text-on-surface-variant">contact@hoabinh.com</div>
+</td>
+<td class="py-4 px-6 font-table-data text-table-data text-on-surface">Concrete M300 - 500m3</td>
+<td class="py-4 px-6 font-body-sm text-body-sm text-on-surface-variant">24 Oct, 2023</td>
+<td class="py-4 px-6">
+<span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-bold bg-primary-fixed text-on-primary-fixed-variant uppercase tracking-wider">New</span>
+</td>
+<td class="py-4 px-6 text-right space-x-2">
+<button class="text-on-surface-variant hover:text-primary transition-colors" title="View Details">
+<span class="material-symbols-outlined" data-icon="visibility">visibility</span>
+</button>
+<button class="text-on-surface-variant hover:text-on-tertiary-container transition-colors" title="Update Status">
+<span class="material-symbols-outlined" data-icon="edit">edit</span>
+</button>
+<button class="text-on-surface-variant hover:text-error transition-colors" title="Delete">
+<span class="material-symbols-outlined" data-icon="delete">delete</span>
+</button>
+<button class="text-on-surface-variant hover:text-primary transition-colors" onclick="document.getElementById('quick-reply-modal').classList.remove('hidden')" title="Quick Reply">
+<span class="material-symbols-outlined" data-icon="reply">reply</span>
+</button></td>
+</tr>
+<tr class="hover:bg-surface-container-low transition-colors group">
+<td class="py-4 px-6 font-table-data text-table-data text-on-surface">Phát Đạt Corp</td>
+<td class="py-4 px-6">
+<div class="font-table-data text-table-data text-on-surface">091 987 6543</div>
+<div class="font-body-sm text-body-sm text-on-surface-variant">purchasing@phatdat.vn</div>
+</td>
+<td class="py-4 px-6 font-table-data text-table-data text-on-surface">Structural Steel Rebar</td>
+<td class="py-4 px-6 font-body-sm text-body-sm text-on-surface-variant">22 Oct, 2023</td>
+<td class="py-4 px-6">
+<span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-bold bg-secondary-container text-on-secondary-container uppercase tracking-wider">Contacted</span>
+</td>
+<td class="py-4 px-6 text-right space-x-2">
+<button class="text-on-surface-variant hover:text-primary transition-colors" title="View Details">
+<span class="material-symbols-outlined" data-icon="visibility">visibility</span>
+</button>
+<button class="text-on-surface-variant hover:text-on-tertiary-container transition-colors" title="Update Status">
+<span class="material-symbols-outlined" data-icon="edit">edit</span>
+</button>
+<button class="text-on-surface-variant hover:text-error transition-colors" title="Delete">
+<span class="material-symbols-outlined" data-icon="delete">delete</span>
+</button>
+<button class="text-on-surface-variant hover:text-primary transition-colors" onclick="document.getElementById('quick-reply-modal').classList.remove('hidden')" title="Quick Reply">
+<span class="material-symbols-outlined" data-icon="reply">reply</span>
+</button></td>
+</tr>
+<tr class="hover:bg-surface-container-low transition-colors group">
+<td class="py-4 px-6 font-table-data text-table-data text-on-surface">Nam Long Group</td>
+<td class="py-4 px-6">
+<div class="font-table-data text-table-data text-on-surface">098 333 2211</div>
+<div class="font-body-sm text-body-sm text-on-surface-variant">info@namlong.com</div>
+</td>
+<td class="py-4 px-6 font-table-data text-table-data text-on-surface">Foundation Piling Services</td>
+<td class="py-4 px-6 font-body-sm text-body-sm text-on-surface-variant">18 Oct, 2023</td>
+<td class="py-4 px-6">
+<span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-bold bg-tertiary-fixed text-on-tertiary-fixed-variant uppercase tracking-wider">Quoted</span>
+</td>
+<td class="py-4 px-6 text-right space-x-2">
+<button class="text-on-surface-variant hover:text-primary transition-colors" title="View Details">
+<span class="material-symbols-outlined" data-icon="visibility">visibility</span>
+</button>
+<button class="text-on-surface-variant hover:text-on-tertiary-container transition-colors" title="Update Status">
+<span class="material-symbols-outlined" data-icon="edit">edit</span>
+</button>
+<button class="text-on-surface-variant hover:text-error transition-colors" title="Delete">
+<span class="material-symbols-outlined" data-icon="delete">delete</span>
+</button>
+<button class="text-on-surface-variant hover:text-primary transition-colors" onclick="document.getElementById('quick-reply-modal').classList.remove('hidden')" title="Quick Reply">
+<span class="material-symbols-outlined" data-icon="reply">reply</span>
+</button></td>
+</tr>
+<tr class="hover:bg-surface-container-low transition-colors group">
+<td class="py-4 px-6 font-table-data text-table-data text-on-surface">Vinaconex JSC</td>
+<td class="py-4 px-6">
+<div class="font-table-data text-table-data text-on-surface">024 3888 9999</div>
+<div class="font-body-sm text-body-sm text-on-surface-variant">tender@vinaconex.vn</div>
+</td>
+<td class="py-4 px-6 font-table-data text-table-data text-on-surface">Cement PCB40 - 1000 Tons</td>
+<td class="py-4 px-6 font-body-sm text-body-sm text-on-surface-variant">10 Oct, 2023</td>
+<td class="py-4 px-6">
+<span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-bold bg-surface-variant text-on-surface-variant uppercase tracking-wider">Closed</span>
+</td>
+<td class="py-4 px-6 text-right space-x-2">
+<button class="text-on-surface-variant hover:text-primary transition-colors" title="View Details">
+<span class="material-symbols-outlined" data-icon="visibility">visibility</span>
+</button>
+<button class="text-on-surface-variant hover:text-on-tertiary-container transition-colors" title="Update Status">
+<span class="material-symbols-outlined" data-icon="edit">edit</span>
+</button>
+<button class="text-on-surface-variant hover:text-error transition-colors" title="Delete">
+<span class="material-symbols-outlined" data-icon="delete">delete</span>
+</button>
+<button class="text-on-surface-variant hover:text-primary transition-colors" onclick="document.getElementById('quick-reply-modal').classList.remove('hidden')" title="Quick Reply">
+<span class="material-symbols-outlined" data-icon="reply">reply</span>
+</button></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="flex items-center justify-between mt-6 pt-4 border-t border-outline-variant">
+<span class="font-body-sm text-body-sm text-on-surface-variant">Showing 1 to 4 of 48 entries</span>
+<div class="flex items-center gap-1">
+<button class="px-3 py-1 border border-outline-variant rounded-DEFAULT text-on-surface hover:bg-surface-container-low transition-colors disabled:opacity-50 font-body-sm text-body-sm" disabled="">Prev</button>
+<button class="px-3 py-1 bg-primary text-on-primary rounded-DEFAULT font-body-sm text-body-sm">1</button>
+<button class="px-3 py-1 border border-outline-variant rounded-DEFAULT text-on-surface hover:bg-surface-container-low transition-colors font-body-sm text-body-sm">2</button>
+<button class="px-3 py-1 border border-outline-variant rounded-DEFAULT text-on-surface hover:bg-surface-container-low transition-colors font-body-sm text-body-sm">3</button>
+<span class="px-2 text-on-surface-variant">...</span>
+<button class="px-3 py-1 border border-outline-variant rounded-DEFAULT text-on-surface hover:bg-surface-container-low transition-colors font-body-sm text-body-sm">Next</button>
+</div>
+</div>
+</section>
+</div>
+</main>
+</div>
+<div class="hidden fixed inset-0 z-[100] flex items-center justify-center bg-black/50 backdrop-blur-sm" id="quick-reply-modal">
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl shadow-2xl w-full max-w-xl mx-4 overflow-hidden">
+<div class="bg-primary text-on-primary px-6 py-4 flex justify-between items-center">
+<h3 class="font-headline-sm text-lg uppercase tracking-wider">Quick Reply</h3>
+<button class="hover:rotate-90 transition-transform" onclick="document.getElementById('quick-reply-modal').classList.add('hidden')">
+<span class="material-symbols-outlined">close</span>
+</button>
+</div>
+<div class="p-6 space-y-6">
+<div class="bg-surface-container-low p-4 rounded-lg border border-outline-variant">
+<p class="text-xs font-label-bold text-on-surface-variant uppercase mb-1">Inquiry Context</p>
+<p class="font-table-data text-on-surface">Customer: <span class="font-bold" id="modal-customer-name">Công ty XD Hòa Bình</span></p>
+<p class="font-body-sm text-on-surface-variant">Service: Concrete M300 - 500m3</p>
+</div>
+<div>
+<label class="block text-xs font-label-bold text-on-surface uppercase mb-3">Quick Templates</label>
+<div class="flex flex-wrap gap-2">
+<button class="px-3 py-1.5 bg-surface border border-outline-variant rounded-full text-xs font-medium hover:border-primary hover:text-primary transition-colors">Thank you for your interest</button>
+<button class="px-3 py-1.5 bg-surface border border-outline-variant rounded-full text-xs font-medium hover:border-primary hover:text-primary transition-colors">Schedule a consultation</button>
+<button class="px-3 py-1.5 bg-surface border border-outline-variant rounded-full text-xs font-medium hover:border-primary hover:text-primary transition-colors">Request more details</button>
+</div>
+</div>
+<div>
+<label class="block text-xs font-label-bold text-on-surface uppercase mb-2">Your Message</label>
+<textarea class="w-full p-4 bg-surface border border-outline-variant rounded-lg font-body-md text-on-surface focus:ring-1 focus:ring-primary focus:border-primary outline-none min-h-[150px] resize-none" placeholder="Type your reply here..."></textarea>
+</div>
+<div class="flex justify-end gap-3 pt-2">
+<button class="px-6 py-2.5 border border-outline-variant rounded text-sm font-bold text-on-surface hover:bg-surface-container-low transition-colors uppercase" onclick="document.getElementById('quick-reply-modal').classList.add('hidden')">Cancel</button>
+<button class="px-6 py-2.5 bg-orange-600 text-white rounded text-sm font-bold hover:bg-orange-700 shadow-md transition-all uppercase">Send Reply</button>
+</div>
+</div>
+</div>
+</div><script>
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('/sw.js').catch(() => {});
+  });
+}
+</script>
+</body>
+</html>

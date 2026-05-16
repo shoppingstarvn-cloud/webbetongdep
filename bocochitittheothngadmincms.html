@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+
+<html lang="vi"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Báo cáo Chi tiết theo Tháng - ConstruxAdmin</title>
+<link href="/manifest.json" rel="manifest"/>
+<link href="/favicon.ico" rel="icon" sizes="any"/>
+<link href="/favicon-32.png" rel="icon" type="image/png" sizes="32x32"/>
+<link href="/apple-touch-icon.png" rel="apple-touch-icon" sizes="180x180"/>
+<meta content="#041627" name="theme-color"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "primary": "#041627",
+                      "surface-tint": "#4f6073",
+                      "on-primary": "#ffffff",
+                      "on-surface": "#191c1e",
+                      "on-tertiary-fixed-variant": "#7a3000",
+                      "secondary-fixed": "#e3e2e2",
+                      "surface-bright": "#f8f9fb",
+                      "inverse-primary": "#b7c8de",
+                      "surface-container-low": "#f2f4f6",
+                      "on-surface-variant": "#44474c",
+                      "surface-container-lowest": "#ffffff",
+                      "on-tertiary": "#ffffff",
+                      "on-secondary-fixed-variant": "#464747",
+                      "surface-variant": "#e0e3e5",
+                      "surface-container-highest": "#e0e3e5",
+                      "surface-container-high": "#e6e8ea",
+                      "primary-container": "#1a2b3c",
+                      "on-primary-fixed-variant": "#38485a",
+                      "secondary-container": "#e3e2e2",
+                      "background": "#f8f9fb",
+                      "tertiary": "#2a0c00",
+                      "primary-fixed-dim": "#b7c8de",
+                      "error-container": "#ffdad6",
+                      "on-secondary": "#ffffff",
+                      "outline-variant": "#c4c6cd",
+                      "on-tertiary-container": "#eb6a1b",
+                      "surface-dim": "#d8dadc",
+                      "secondary": "#5e5e5e",
+                      "on-tertiary-fixed": "#341000",
+                      "primary-fixed": "#d2e4fb",
+                      "on-secondary-container": "#646464",
+                      "surface": "#f8f9fb",
+                      "on-primary-fixed": "#0b1d2d",
+                      "tertiary-fixed-dim": "#ffb693",
+                      "on-error": "#ffffff",
+                      "inverse-on-surface": "#eff1f3",
+                      "on-error-container": "#93000a",
+                      "on-primary-container": "#8192a7",
+                      "surface-container": "#eceef0",
+                      "on-secondary-fixed": "#1b1c1c",
+                      "on-background": "#191c1e",
+                      "tertiary-fixed": "#ffdbcb",
+                      "outline": "#74777d",
+                      "inverse-surface": "#2d3133",
+                      "tertiary-container": "#4b1b00",
+                      "secondary-fixed-dim": "#c7c6c6",
+                      "error": "#ba1a1a"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.125rem",
+                      "lg": "0.25rem",
+                      "xl": "0.5rem",
+                      "full": "0.75rem"
+              },
+              "spacing": {
+                      "xl": "4rem",
+                      "md": "1.5rem",
+                      "xs": "0.5rem",
+                      "gutter": "24px",
+                      "lg": "2.5rem",
+                      "sm": "1rem",
+                      "margin": "32px",
+                      "base": "4px",
+                      "max_width": "1280px"
+              },
+              "fontFamily": {
+                      "label-bold": [
+                              "Inter"
+                      ],
+                      "display-lg": [
+                              "Inter"
+                      ],
+                      "body-md": [
+                              "Inter"
+                      ],
+                      "table-data": [
+                              "Inter"
+                      ],
+                      "headline-sm": [
+                              "Inter"
+                      ],
+                      "headline-md": [
+                              "Inter"
+                      ],
+                      "body-lg": [
+                              "Inter"
+                      ],
+                      "body-sm": [
+                              "Inter"
+                      ]
+              },
+              "fontSize": {
+                      "label-bold": [
+                              "12px",
+                              {
+                                      "lineHeight": "1",
+                                      "letterSpacing": "0.05em",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "display-lg": [
+                              "48px",
+                              {
+                                      "lineHeight": "1.1",
+                                      "letterSpacing": "-0.02em",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "body-md": [
+                              "16px",
+                              {
+                                      "lineHeight": "1.5",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "table-data": [
+                              "14px",
+                              {
+                                      "lineHeight": "1.2",
+                                      "fontWeight": "500"
+                              }
+                      ],
+                      "headline-sm": [
+                              "24px",
+                              {
+                                      "lineHeight": "1.3",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "headline-md": [
+                              "32px",
+                              {
+                                      "lineHeight": "1.2",
+                                      "letterSpacing": "-0.01em",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "body-lg": [
+                              "18px",
+                              {
+                                      "lineHeight": "1.6",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "body-sm": [
+                              "14px",
+                              {
+                                      "lineHeight": "1.5",
+                                      "fontWeight": "400"
+                              }
+                      ]
+              }
+      },
+          },
+        }
+      </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body-md min-h-screen">
+<!-- TopNavBar -->
+<nav class="fixed top-0 w-full z-50 flex justify-between items-center px-6 h-16 bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 transition-all duration-200 ease-in-out">
+<div class="flex items-center gap-md">
+<span class="text-xl font-black tracking-tighter text-[#1A2B3C] dark:text-white uppercase">ConstruxAdmin</span>
+<div class="hidden md:flex items-center gap-sm ml-md">
+<a class="font-['Inter'] antialiased text-sm font-medium text-slate-500 dark:text-slate-400 hover:text-[#1A2B3C] dark:hover:text-white transition-colors hover:bg-slate-50 dark:hover:bg-slate-800 px-3 py-2" href="#">Dashboard</a>
+<a class="font-['Inter'] antialiased text-sm font-medium text-[#1A2B3C] dark:text-white border-b-2 border-[#1A2B3C] dark:border-white pb-1 px-3 py-2" href="/bocososnhtheothngadmincms.html">Báo cáo</a>
+<a class="font-['Inter'] antialiased text-sm font-medium text-slate-500 dark:text-slate-400 hover:text-[#1A2B3C] dark:hover:text-white transition-colors hover:bg-slate-50 dark:hover:bg-slate-800 px-3 py-2" href="/snphmvtliuxydng.html">Sản phẩm</a>
+<a class="font-['Inter'] antialiased text-sm font-medium text-slate-500 dark:text-slate-400 hover:text-[#1A2B3C] dark:hover:text-white transition-colors hover:bg-slate-50 dark:hover:bg-slate-800 px-3 py-2" href="#">Dự án</a>
+</div>
+</div>
+<div class="flex items-center gap-sm text-[#1A2B3C] dark:text-slate-100">
+<button class="p-2 hover:bg-slate-50 dark:hover:bg-slate-800 rounded-DEFAULT transition-colors">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+<button class="p-2 hover:bg-slate-50 dark:hover:bg-slate-800 rounded-DEFAULT transition-colors">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+</button>
+<img alt="Admin Profile" class="w-8 h-8 rounded-full border border-outline-variant ml-2" data-alt="Professional headshot of a man with short hair wearing a dark blazer, suitable for a corporate admin profile picture" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBjgT5jitDnU1GqPLZMzfKB14VIMqd4BDrmv8v1rNes-YJ2biMyDDrgixOi-mSGYg-QfYOCt8RwuCBle0Gq0lXCFSCHOYRUbnwN8xYEPMRB-49ZNLhv8GyxsMZDCP0uy_PKarlm08-nY0Fw1RpkwnnH_srYrcY0cAFzn-guVzAlWYWDoc42c_WmRNG3srG-Q5gDrRR17exiCz_Tv8wARMJLjlxUaTLImv4diKuCecRoRKEWCD-NlEdjTvNM5sIWL3YWuCGDyw7d5oAt"/>
+</div>
+</nav>
+<!-- Main Layout Container -->
+<div class="pt-16 flex">
+<!-- SideNavBar -->
+<aside class="fixed left-0 top-16 h-[calc(100vh-64px)] flex flex-col p-4 space-y-2 w-64 border-r border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950 z-40">
+<div class="mb-lg px-2">
+<div class="flex items-center gap-xs mb-1">
+<div class="w-8 h-8 bg-primary-container rounded-DEFAULT flex items-center justify-center text-on-primary font-bold">C</div>
+<span class="text-lg font-bold text-[#1A2B3C] dark:text-white font-['Inter'] text-sm font-semibold">Hệ thống Quản trị</span>
+</div>
+<span class="text-xs text-on-surface-variant block px-10">Vật liệu Xây dựng</span>
+</div>
+<nav class="flex-1 space-y-1">
+<a class="flex items-center gap-sm px-3 py-2 cursor-pointer select-none text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-800 hover:translate-x-1 transition-transform duration-150 rounded-sm" href="#">
+<span class="material-symbols-outlined text-[20px]" data-icon="dashboard">dashboard</span>
+<span class="font-['Inter'] text-sm font-semibold">Tổng quan</span>
+</a>
+<a class="flex items-center gap-sm px-3 py-2 cursor-pointer select-none bg-[#1A2B3C] text-white rounded-sm shadow-sm transition-transform duration-150" href="#">
+<span class="material-symbols-outlined text-[20px]" data-icon="analytics" style="font-variation-settings: 'FILL' 1;">analytics</span>
+<span class="font-['Inter'] text-sm font-semibold">Lượt truy cập</span>
+</a>
+<a class="flex items-center gap-sm px-3 py-2 cursor-pointer select-none text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-800 hover:translate-x-1 transition-transform duration-150 rounded-sm" href="#">
+<span class="material-symbols-outlined text-[20px]" data-icon="request_quote">request_quote</span>
+<span class="font-['Inter'] text-sm font-semibold">Yêu cầu báo giá</span>
+</a>
+<a class="flex items-center gap-sm px-3 py-2 cursor-pointer select-none text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-800 hover:translate-x-1 transition-transform duration-150 rounded-sm" href="#">
+<span class="material-symbols-outlined text-[20px]" data-icon="inventory_2">inventory_2</span>
+<span class="font-['Inter'] text-sm font-semibold">Hiệu quả sản phẩm</span>
+</a>
+<a class="flex items-center gap-sm px-3 py-2 cursor-pointer select-none text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-800 hover:translate-x-1 transition-transform duration-150 rounded-sm" href="#">
+<span class="material-symbols-outlined text-[20px]" data-icon="architecture">architecture</span>
+<span class="font-['Inter'] text-sm font-semibold">Dự án công trình</span>
+</a>
+</nav>
+<div class="mt-auto pt-4 border-t border-slate-200 dark:border-slate-800 space-y-1">
+<a class="flex items-center gap-sm px-3 py-2 cursor-pointer select-none text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-800 hover:translate-x-1 transition-transform duration-150 rounded-sm" href="#">
+<span class="material-symbols-outlined text-[20px]" data-icon="help">help</span>
+<span class="font-['Inter'] text-sm font-semibold">Hỗ trợ</span>
+</a>
+<a class="flex items-center gap-sm px-3 py-2 cursor-pointer select-none text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-800 hover:translate-x-1 transition-transform duration-150 rounded-sm" href="#">
+<span class="material-symbols-outlined text-[20px]" data-icon="logout">logout</span>
+<span class="font-['Inter'] text-sm font-semibold">Đăng xuất</span>
+</a>
+</div>
+</aside>
+<!-- Main Content Canvas -->
+<main class="ml-64 flex-1 p-margin min-h-[calc(100vh-64px)]">
+<div class="max-w-[1280px] mx-auto space-y-xl">
+<!-- Page Header -->
+<header class="flex flex-col md:flex-row md:items-center justify-between gap-sm border-b border-surface-variant pb-sm">
+<div>
+<h1 class="font-headline-md text-headline-md text-primary-container">Báo cáo Chi tiết</h1>
+</div>
+<div class="flex items-center gap-sm">
+<select class="bg-surface border border-outline-variant text-on-surface text-body-sm font-body-sm rounded-DEFAULT px-3 py-2 focus:border-primary-container focus:ring-0">
+<option>Tháng 10/2023</option>
+<option>Tháng 09/2023</option>
+<option>Tháng 08/2023</option>
+</select>
+<button class="bg-on-tertiary-container hover:bg-primary-container text-white font-label-bold text-label-bold px-4 py-2 rounded-DEFAULT flex items-center gap-xs transition-colors">
+<span class="material-symbols-outlined text-[18px]">download</span>
+                            Xuất Báo cáo
+                        </button>
+</div>
+</header>
+<!-- Key Metrics Cards -->
+<section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-gutter">
+<!-- Card 1 -->
+<div class="bg-surface-container-lowest border border-outline-variant/30 rounded-DEFAULT p-md hover:shadow-[0px_4px_12px_rgba(26,43,60,0.08)] transition-shadow">
+<div class="flex justify-between items-start mb-2">
+<span class="text-on-surface-variant font-body-sm text-body-sm">Lượt truy cập</span>
+<span class="material-symbols-outlined text-on-tertiary-container" data-icon="visibility">visibility</span>
+</div>
+<div class="flex items-end gap-2">
+<span class="font-headline-md text-headline-md text-primary-container">12,450</span>
+<span class="text-sm text-green-600 font-medium mb-1">+15%</span>
+</div>
+</div>
+<!-- Card 2 -->
+<div class="bg-surface-container-lowest border border-outline-variant/30 rounded-DEFAULT p-md hover:shadow-[0px_4px_12px_rgba(26,43,60,0.08)] transition-shadow">
+<div class="flex justify-between items-start mb-2">
+<span class="text-on-surface-variant font-body-sm text-body-sm">Tổng YCBG</span>
+<span class="material-symbols-outlined text-primary-container" data-icon="request_quote">request_quote</span>
+</div>
+<div class="flex items-end gap-2">
+<span class="font-headline-md text-headline-md text-primary-container">342</span>
+<span class="text-sm text-green-600 font-medium mb-1">+8%</span>
+</div>
+</div>
+<!-- Card 3 -->
+<div class="bg-surface-container-lowest border border-outline-variant/30 rounded-DEFAULT p-md hover:shadow-[0px_4px_12px_rgba(26,43,60,0.08)] transition-shadow">
+<div class="flex justify-between items-start mb-2">
+<span class="text-on-surface-variant font-body-sm text-body-sm">SP xem nhiều nhất</span>
+<span class="material-symbols-outlined text-primary-container" data-icon="star">star</span>
+</div>
+<div class="flex items-end gap-2">
+<span class="font-headline-sm text-headline-sm text-primary-container leading-tight">Bê tông Mác 300</span>
+</div>
+</div>
+<!-- Card 4 -->
+<div class="bg-surface-container-lowest border border-outline-variant/30 rounded-DEFAULT p-md hover:shadow-[0px_4px_12px_rgba(26,43,60,0.08)] transition-shadow">
+<div class="flex justify-between items-start mb-2">
+<span class="text-on-surface-variant font-body-sm text-body-sm">Tỷ lệ chuyển đổi</span>
+<span class="material-symbols-outlined text-primary-container" data-icon="trending_up">trending_up</span>
+</div>
+<div class="flex items-end gap-2">
+<span class="font-headline-md text-headline-md text-primary-container">2.7%</span>
+<span class="text-sm text-red-600 font-medium mb-1">-0.3%</span>
+</div>
+</div>
+</section>
+<!-- Charts Bento Grid -->
+<section class="grid grid-cols-1 lg:grid-cols-3 gap-gutter">
+<!-- Line Chart (Span 2 cols) -->
+<div class="lg:col-span-2 bg-surface-container-lowest border border-outline-variant/30 rounded-DEFAULT p-md flex flex-col min-h-[300px]">
+<h3 class="font-headline-sm text-headline-sm text-primary-container mb-md">Xu hướng Lượt truy cập</h3>
+<div class="flex-1 bg-surface-container-low flex items-center justify-center border border-dashed border-outline-variant">
+<!-- Placeholder for actual chart rendering -->
+<span class="text-on-surface-variant font-body-sm text-body-sm flex flex-col items-center gap-2">
+<span class="material-symbols-outlined text-[32px] text-outline">show_chart</span>
+                                Biểu đồ đường (Line Chart Area)
+                             </span>
+</div>
+</div>
+<!-- Pie Chart -->
+<div class="bg-surface-container-lowest border border-outline-variant/30 rounded-DEFAULT p-md flex flex-col min-h-[300px]">
+<h3 class="font-headline-sm text-headline-sm text-primary-container mb-md">Tỷ lệ Quan tâm theo Danh mục</h3>
+<div class="flex-1 bg-surface-container-low flex items-center justify-center border border-dashed border-outline-variant">
+<!-- Placeholder for actual chart rendering -->
+<span class="text-on-surface-variant font-body-sm text-body-sm flex flex-col items-center gap-2">
+<span class="material-symbols-outlined text-[32px] text-outline">pie_chart</span>
+                                Biểu đồ hình quạt (Pie Chart Area)
+                            </span>
+</div>
+</div>
+<!-- Bar Chart (Span full width below) -->
+<div class="lg:col-span-3 bg-surface-container-lowest border border-outline-variant/30 rounded-DEFAULT p-md flex flex-col min-h-[250px]">
+<h3 class="font-headline-sm text-headline-sm text-primary-container mb-md">Yêu cầu Báo giá theo Tuần</h3>
+<div class="flex-1 bg-surface-container-low flex items-center justify-center border border-dashed border-outline-variant">
+<!-- Placeholder for actual chart rendering -->
+<span class="text-on-surface-variant font-body-sm text-body-sm flex flex-col items-center gap-2">
+<span class="material-symbols-outlined text-[32px] text-outline">bar_chart</span>
+                                Biểu đồ cột (Bar Chart Area)
+                             </span>
+</div>
+</div>
+</section>
+<!-- Data Table -->
+<section class="bg-surface-container-lowest border border-outline-variant/30 rounded-DEFAULT overflow-hidden">
+<div class="bg-[#F5F7F9] p-sm border-b border-outline-variant/30">
+<h3 class="font-headline-sm text-headline-sm text-primary-container">Chi tiết Hiệu quả Sản phẩm</h3>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-primary-container text-white font-table-data text-table-data">
+<th class="py-3 px-4 font-semibold border-b border-outline-variant/30">Tên Sản phẩm</th>
+<th class="py-3 px-4 font-semibold border-b border-outline-variant/30">Danh mục</th>
+<th class="py-3 px-4 font-semibold border-b border-outline-variant/30 text-right">Lượt xem</th>
+<th class="py-3 px-4 font-semibold border-b border-outline-variant/30 text-right">YCBG</th>
+<th class="py-3 px-4 font-semibold border-b border-outline-variant/30 text-right">Tỷ lệ CĐ</th>
+</tr>
+</thead>
+<tbody class="font-body-sm text-body-sm text-on-surface">
+<tr class="border-b border-outline-variant/30 hover:bg-surface-container-low transition-colors">
+<td class="py-3 px-4 font-medium">Bê tông tươi Mác 250</td>
+<td class="py-3 px-4 text-on-surface-variant">Bê tông tươi</td>
+<td class="py-3 px-4 text-right">3,240</td>
+<td class="py-3 px-4 text-right">85</td>
+<td class="py-3 px-4 text-right">2.6%</td>
+</tr>
+<tr class="border-b border-outline-variant/30 hover:bg-surface-container-low transition-colors bg-surface-bright">
+<td class="py-3 px-4 font-medium">Cọc ống bê tông ly tâm D300</td>
+<td class="py-3 px-4 text-on-surface-variant">Bê tông đúc sẵn</td>
+<td class="py-3 px-4 text-right">2,150</td>
+<td class="py-3 px-4 text-right">62</td>
+<td class="py-3 px-4 text-right">2.8%</td>
+</tr>
+<tr class="border-b border-outline-variant/30 hover:bg-surface-container-low transition-colors">
+<td class="py-3 px-4 font-medium">Bê tông nhựa nóng Hạt mịn</td>
+<td class="py-3 px-4 text-on-surface-variant">Nhựa đường</td>
+<td class="py-3 px-4 text-right">1,890</td>
+<td class="py-3 px-4 text-right">41</td>
+<td class="py-3 px-4 text-right">2.1%</td>
+</tr>
+<tr class="border-b border-outline-variant/30 hover:bg-surface-container-low transition-colors bg-surface-bright">
+<td class="py-3 px-4 font-medium">Bê tông tươi Mác 300</td>
+<td class="py-3 px-4 text-on-surface-variant">Bê tông tươi</td>
+<td class="py-3 px-4 text-right">4,500</td>
+<td class="py-3 px-4 text-right">120</td>
+<td class="py-3 px-4 text-right">2.6%</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+</div>
+</main>
+</div>
+<script>
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('/sw.js').catch(() => {});
+  });
+}
+</script>
+</body>
+</html>

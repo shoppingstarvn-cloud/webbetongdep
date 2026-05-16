@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Email Alert History</title>
+<link href="/manifest.json" rel="manifest"/>
+<link href="/favicon.ico" rel="icon" sizes="any"/>
+<link href="/favicon-32.png" rel="icon" type="image/png" sizes="32x32"/>
+<link href="/apple-touch-icon.png" rel="apple-touch-icon" sizes="180x180"/>
+<meta content="#041627" name="theme-color"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "on-primary-container": "#8192a7",
+                      "on-error-container": "#93000a",
+                      "secondary-fixed": "#e3e2e2",
+                      "surface-tint": "#4f6073",
+                      "secondary-fixed-dim": "#c7c6c6",
+                      "on-secondary": "#ffffff",
+                      "on-background": "#191c1e",
+                      "tertiary-container": "#4b1b00",
+                      "secondary": "#5e5e5e",
+                      "on-secondary-fixed": "#1b1c1c",
+                      "on-primary-fixed-variant": "#38485a",
+                      "tertiary": "#2a0c00",
+                      "on-surface": "#191c1e",
+                      "error-container": "#ffdad6",
+                      "surface": "#f8f9fb",
+                      "surface-bright": "#f8f9fb",
+                      "surface-container": "#eceef0",
+                      "surface-container-high": "#e6e8ea",
+                      "outline": "#74777d",
+                      "inverse-surface": "#2d3133",
+                      "on-tertiary-fixed-variant": "#7a3000",
+                      "tertiary-fixed": "#ffdbcb",
+                      "on-surface-variant": "#44474c",
+                      "on-primary-fixed": "#0b1d2d",
+                      "surface-dim": "#d8dadc",
+                      "on-secondary-container": "#646464",
+                      "surface-variant": "#e0e3e5",
+                      "inverse-primary": "#b7c8de",
+                      "error": "#ba1a1a",
+                      "tertiary-fixed-dim": "#ffb693",
+                      "on-tertiary-container": "#eb6a1b",
+                      "on-secondary-fixed-variant": "#464747",
+                      "background": "#f8f9fb",
+                      "primary-fixed-dim": "#b7c8de",
+                      "primary-fixed": "#d2e4fb",
+                      "on-tertiary": "#ffffff",
+                      "surface-container-lowest": "#ffffff",
+                      "primary": "#041627",
+                      "surface-container-highest": "#e0e3e5",
+                      "secondary-container": "#e3e2e2",
+                      "primary-container": "#1a2b3c",
+                      "on-error": "#ffffff",
+                      "outline-variant": "#c4c6cd",
+                      "on-tertiary-fixed": "#341000",
+                      "on-primary": "#ffffff",
+                      "inverse-on-surface": "#eff1f3",
+                      "surface-container-low": "#f2f4f6"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.125rem",
+                      "lg": "0.25rem",
+                      "xl": "0.5rem",
+                      "full": "0.75rem"
+              },
+              "spacing": {
+                      "max_width": "1280px",
+                      "lg": "2.5rem",
+                      "base": "4px",
+                      "xl": "4rem",
+                      "margin": "32px",
+                      "md": "1.5rem",
+                      "gutter": "24px",
+                      "xs": "0.5rem",
+                      "sm": "1rem"
+              },
+              "fontFamily": {
+                      "body-lg": [
+                              "Inter"
+                      ],
+                      "label-bold": [
+                              "Inter"
+                      ],
+                      "body-md": [
+                              "Inter"
+                      ],
+                      "table-data": [
+                              "Inter"
+                      ],
+                      "headline-md": [
+                              "Inter"
+                      ],
+                      "display-lg": [
+                              "Inter"
+                      ],
+                      "body-sm": [
+                              "Inter"
+                      ],
+                      "headline-sm": [
+                              "Inter"
+                      ]
+              },
+              "fontSize": {
+                      "body-lg": [
+                              "18px",
+                              {
+                                      "lineHeight": "1.6",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "label-bold": [
+                              "12px",
+                              {
+                                      "lineHeight": "1",
+                                      "letterSpacing": "0.05em",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "body-md": [
+                              "16px",
+                              {
+                                      "lineHeight": "1.5",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "table-data": [
+                              "14px",
+                              {
+                                      "lineHeight": "1.2",
+                                      "fontWeight": "500"
+                              }
+                      ],
+                      "headline-md": [
+                              "32px",
+                              {
+                                      "lineHeight": "1.2",
+                                      "letterSpacing": "-0.01em",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "display-lg": [
+                              "48px",
+                              {
+                                      "lineHeight": "1.1",
+                                      "letterSpacing": "-0.02em",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "body-sm": [
+                              "14px",
+                              {
+                                      "lineHeight": "1.5",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "headline-sm": [
+                              "24px",
+                              {
+                                      "lineHeight": "1.3",
+                                      "fontWeight": "600"
+                              }
+                      ]
+              }
+            },
+          },
+        }
+    </script>
+</head>
+<body class="bg-background text-on-background font-body-md text-body-md antialiased flex">
+<!-- SideNavBar Component -->
+<nav class="bg-slate-900 dark:bg-black fixed left-0 top-0 h-screen w-64 border-r border-slate-800 flex flex-col h-full py-6 z-50 font-['Inter'] text-sm font-medium">
+<div class="px-6 mb-8 flex items-center gap-3">
+<div class="w-8 h-8 rounded bg-primary-fixed flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-on-primary-fixed" data-icon="domain">domain</span>
+</div>
+<div>
+<h1 class="text-white font-bold text-xl leading-none">Concrete Corp</h1>
+<span class="text-slate-400 text-xs">Material CMS</span>
+</div>
+</div>
+<div class="flex-1 flex flex-col gap-1 px-2">
+<a class="text-slate-400 hover:text-white px-4 py-3 flex items-center gap-3 hover:bg-slate-800 transition-all duration-200 group rounded" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span>Dashboard</span>
+</a>
+<a class="text-slate-400 hover:text-white px-4 py-3 flex items-center gap-3 hover:bg-slate-800 transition-all duration-200 group rounded" href="#">
+<span class="material-symbols-outlined" data-icon="receipt_long">receipt_long</span>
+<span>Audit Logs</span>
+</a>
+<a class="text-slate-400 hover:text-white px-4 py-3 flex items-center gap-3 hover:bg-slate-800 transition-all duration-200 group rounded" href="#">
+<span class="material-symbols-outlined" data-icon="group">group</span>
+<span>Users</span>
+</a>
+<!-- Active Tab -->
+<a class="bg-slate-800 text-orange-500 border-r-4 border-orange-500 px-4 py-3 flex items-center gap-3 group transition-all rounded-l" href="#">
+<span class="material-symbols-outlined" data-icon="mail">mail</span>
+<span>Email Alerts</span>
+</a>
+</div>
+<div class="px-2 mt-auto flex flex-col gap-1 border-t border-slate-800 pt-4">
+<a class="text-slate-400 hover:text-white px-4 py-3 flex items-center gap-3 hover:bg-slate-800 transition-all duration-200 group rounded" href="#">
+<span class="material-symbols-outlined" data-icon="help">help</span>
+<span>Support</span>
+</a>
+<a class="text-slate-400 hover:text-white px-4 py-3 flex items-center gap-3 hover:bg-slate-800 transition-all duration-200 group rounded" href="#">
+<span class="material-symbols-outlined" data-icon="logout">logout</span>
+<span>Sign Out</span>
+</a>
+</div>
+</nav>
+<!-- Main Content Area -->
+<div class="flex-1 flex flex-col ml-64 min-h-screen">
+<!-- TopNavBar Component -->
+<header class="bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-50 font-['Inter'] antialiased text-sm tracking-tight flex items-center justify-between px-6 h-16 w-full docked full-width top-0 z-40 border-b border-slate-200 dark:border-slate-800 sticky">
+<div class="flex items-center gap-4 w-1/3">
+<div class="relative w-full max-w-md">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" data-icon="search">search</span>
+<input class="w-full pl-10 pr-4 py-2 bg-slate-50 dark:bg-slate-800 border-none rounded focus:ring-1 focus:ring-orange-500 outline-none text-sm" placeholder="Search..." type="text"/>
+</div>
+</div>
+<div class="flex items-center justify-center">
+<span class="text-lg font-black tracking-tighter text-slate-900 dark:text-white uppercase">MaterialAdmin</span>
+</div>
+<div class="flex items-center justify-end gap-2 w-1/3">
+<button class="p-2 text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors rounded-full cursor-pointer active:opacity-80 transition-opacity">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+<button class="p-2 text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors rounded-full cursor-pointer active:opacity-80 transition-opacity">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+</button>
+<div class="w-8 h-8 ml-2 rounded-full bg-slate-300 overflow-hidden cursor-pointer">
+<img alt="Administrator Profile" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDl_v2r-IwLsN2ewq8I1amoqQJeEMRCkUm05wVK8DjWkQbfmQ8m1LEN0EpndqR34ju9HTpqH74DS2jdKoLkKVKvn_IZ5EWBOVIxQQpsPJdMI4yJs8pXpqRwiZzfuNy05tOxWE2gJ22DKnXxjAlwlXmO4kBYi7Pdq8ZMKyIgeH7s95E5_VprpSa3kFjXP1H2ZyIO6kolQ6ZBGM4BaFUT25jJXfeD4ZkKp47kHaEEAvAWL5ZjQSTya5rbUvquSNC0yN-dBmDL9whorYZN"/>
+</div>
+</div>
+</header>
+<!-- Page Content Canvas -->
+<main class="flex-1 p-margin overflow-y-auto">
+<div class="max-w-[max_width] mx-auto">
+<!-- Header Section -->
+<div class="mb-xl">
+<h2 class="font-headline-md text-headline-md text-on-surface">Lịch sử Gửi Cảnh báo Email</h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant mt-xs max-w-2xl">Theo dõi danh sách các thông báo email tự động đã được gửi từ hệ thống. Quản lý trạng thái và rà soát lỗi truyền dẫn.</p>
+</div>
+<!-- Filter Bar (Level 1 Element) -->
+<div class="bg-surface-container-lowest border border-outline-variant p-md rounded flex flex-wrap items-end gap-gutter mb-lg">
+<div class="flex-1 min-w-[200px]">
+<label class="block font-label-bold text-label-bold text-on-surface-variant mb-xs">TÌM KIẾM</label>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline" data-icon="search">search</span>
+<input class="w-full pl-10 pr-3 py-2 border border-outline-variant rounded bg-surface focus:border-primary focus:ring-1 focus:ring-primary outline-none font-body-sm text-body-sm" placeholder="Người nhận hoặc tiêu đề..." type="text"/>
+</div>
+</div>
+<div class="w-48">
+<label class="block font-label-bold text-label-bold text-on-surface-variant mb-xs">TỪ NGÀY</label>
+<input class="w-full px-3 py-2 border border-outline-variant rounded bg-surface focus:border-primary focus:ring-1 focus:ring-primary outline-none font-body-sm text-body-sm" type="date"/>
+</div>
+<div class="w-48">
+<label class="block font-label-bold text-label-bold text-on-surface-variant mb-xs">ĐẾN NGÀY</label>
+<input class="w-full px-3 py-2 border border-outline-variant rounded bg-surface focus:border-primary focus:ring-1 focus:ring-primary outline-none font-body-sm text-body-sm" type="date"/>
+</div>
+<div class="w-48">
+<label class="block font-label-bold text-label-bold text-on-surface-variant mb-xs">TRẠNG THÁI</label>
+<select class="w-full px-3 py-2 border border-outline-variant rounded bg-surface focus:border-primary focus:ring-1 focus:ring-primary outline-none font-body-sm text-body-sm appearance-none">
+<option value="all">Tất cả (All)</option>
+<option value="success">Thành công (Success)</option>
+<option value="failed">Thất bại (Failed)</option>
+</select>
+</div>
+<button class="bg-primary hover:bg-on-primary-fixed text-on-primary px-6 py-2 rounded font-label-bold text-label-bold transition-colors h-[42px] flex items-center justify-center">
+                        LỌC DỮ LIỆU
+                    </button>
+</div>
+<!-- Data Table Container -->
+<div class="mb-sm p-sm bg-primary-container/10 border-l-4 border-primary rounded-r flex items-center gap-3">
+<span class="material-symbols-outlined text-primary" data-icon="info">info</span>
+<p class="text-body-sm text-on-surface-variant">
+<strong class="text-primary">Chính sách gửi lại:</strong> Hệ thống sẽ tự động thử lại các email gửi lỗi tối đa <strong>3 lần</strong> trước khi xác định trạng thái thất bại cuối cùng.
+    </p>
+</div><div class="bg-surface-container-lowest border border-outline-variant rounded overflow-hidden">
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-primary text-on-primary border-b border-primary h-[48px]">
+<th class="px-md py-sm font-label-bold text-label-bold w-48">TIMESTAMP</th>
+<th class="px-md py-sm font-label-bold text-label-bold">RECIPIENT EMAIL</th>
+<th class="px-md py-sm font-label-bold text-label-bold">ALERT SUBJECT</th>
+<th class="px-md py-sm font-label-bold text-label-bold w-48">TRIGGER TYPE</th>
+<th class="px-md py-sm font-label-bold text-label-bold w-32">RETRY ATTEMPTS</th><th class="px-md py-sm font-label-bold text-label-bold w-32">STATUS</th>
+<th class="px-md py-sm font-label-bold text-label-bold w-24 text-center">ACTIONS</th>
+</tr>
+</thead>
+<tbody class="font-table-data text-table-data text-on-surface">
+<tr class="border-b border-outline-variant hover:bg-surface-container-low transition-colors group">
+<td class="px-md py-sm text-on-surface-variant text-xs">2023-10-27 14:32:01</td>
+<td class="px-md py-sm">admin.ops@concretecorp.com</td>
+<td class="px-md py-sm font-medium">Lỗi vượt ngưỡng 10% - Kho NVL A</td>
+<td class="px-md py-sm text-on-surface-variant">Error Threshold</td>
+<td class="px-md py-sm text-on-surface-variant text-xs">0/3</td><td class="px-md py-sm">
+<span class="inline-flex items-center gap-1 px-2 py-1 rounded bg-secondary-container text-on-secondary-container text-[11px] font-bold uppercase tracking-wider">
+<span class="w-1.5 h-1.5 rounded-full bg-primary"></span> Success
+                                        </span>
+</td>
+<td class="px-md py-sm text-center">
+<button class="text-on-surface-variant hover:text-on-tertiary-container transition-colors" title="View Content">
+<span class="material-symbols-outlined text-[20px]" data-icon="visibility">visibility</span>
+</button>
+</td>
+</tr>
+<tr class="border-b border-outline-variant hover:bg-surface-container-low transition-colors group">
+<td class="px-md py-sm text-on-surface-variant text-xs">2023-10-27 08:00:00</td>
+<td class="px-md py-sm">management@concretecorp.com</td>
+<td class="px-md py-sm font-medium">Báo cáo ngày: Sản lượng ca đêm</td>
+<td class="px-md py-sm text-on-surface-variant">Scheduled Report</td>
+<td class="px-md py-sm text-on-surface-variant text-xs">0/3</td><td class="px-md py-sm">
+<span class="inline-flex items-center gap-1 px-2 py-1 rounded bg-secondary-container text-on-secondary-container text-[11px] font-bold uppercase tracking-wider">
+<span class="w-1.5 h-1.5 rounded-full bg-primary"></span> Success
+                                        </span>
+</td>
+<td class="px-md py-sm text-center">
+<button class="text-on-surface-variant hover:text-on-tertiary-container transition-colors" title="View Content">
+<span class="material-symbols-outlined text-[20px]" data-icon="visibility">visibility</span>
+</button>
+</td>
+</tr>
+<tr class="border-b border-outline-variant hover:bg-surface-container-low transition-colors group">
+<td class="px-md py-sm text-on-surface-variant text-xs">2023-10-26 23:15:44</td>
+<td class="px-md py-sm">it.support@concretecorp.com</td>
+<td class="px-md py-sm font-medium">Cảnh báo: Mất kết nối trạm trộn #3</td>
+<td class="px-md py-sm text-on-surface-variant">System Alert</td>
+<td class="px-md py-sm font-medium text-error">
+<span class="flex items-center gap-1">
+<span class="material-symbols-outlined text-sm">replay</span> 1/3
+    </span>
+</td><td class="px-md py-sm">
+<span class="inline-flex items-center gap-1 px-2 py-1 rounded bg-error-container text-on-error-container text-[11px] font-bold uppercase tracking-wider border border-error-container">
+<span class="w-1.5 h-1.5 rounded-full bg-error"></span> Failed
+                                        </span>
+</td>
+<td class="px-md py-sm text-center"><button class="text-orange-500 hover:text-orange-700 transition-colors mr-2" title="Gửi lại (Resend)"><span class="material-symbols-outlined text-[20px]" data-icon="refresh">refresh</span></button>
+<button class="text-on-surface-variant hover:text-on-tertiary-container transition-colors" title="View Content">
+<span class="material-symbols-outlined text-[20px]" data-icon="visibility">visibility</span>
+</button>
+</td>
+</tr>
+<tr class="border-b border-outline-variant hover:bg-surface-container-low transition-colors group">
+<td class="px-md py-sm text-on-surface-variant text-xs">2023-10-26 15:45:12</td>
+<td class="px-md py-sm">qa.lead@concretecorp.com</td>
+<td class="px-md py-sm font-medium">Yêu cầu duyệt mẫu mẻ trộn X-992</td>
+<td class="px-md py-sm text-on-surface-variant">Workflow Action</td>
+<td class="px-md py-sm text-on-surface-variant text-xs">0/3</td><td class="px-md py-sm">
+<span class="inline-flex items-center gap-1 px-2 py-1 rounded bg-secondary-container text-on-secondary-container text-[11px] font-bold uppercase tracking-wider">
+<span class="w-1.5 h-1.5 rounded-full bg-primary"></span> Success
+                                        </span>
+</td>
+<td class="px-md py-sm text-center">
+<button class="text-on-surface-variant hover:text-on-tertiary-container transition-colors" title="View Content">
+<span class="material-symbols-outlined text-[20px]" data-icon="visibility">visibility</span>
+</button>
+</td>
+</tr>
+<tr class="hover:bg-surface-container-low transition-colors group">
+<td class="px-md py-sm text-on-surface-variant text-xs">2023-10-26 10:05:00</td>
+<td class="px-md py-sm">finance.dept@concretecorp.com</td>
+<td class="px-md py-sm font-medium">Báo cáo chênh lệch chi phí vận chuyển</td>
+<td class="px-md py-sm text-on-surface-variant">Scheduled Report</td>
+<td class="px-md py-sm text-on-surface-variant text-xs">0/3</td><td class="px-md py-sm">
+<span class="inline-flex items-center gap-1 px-2 py-1 rounded bg-secondary-container text-on-secondary-container text-[11px] font-bold uppercase tracking-wider">
+<span class="w-1.5 h-1.5 rounded-full bg-primary"></span> Success
+                                        </span>
+</td>
+<td class="px-md py-sm text-center">
+<button class="text-on-surface-variant hover:text-on-tertiary-container transition-colors" title="View Content">
+<span class="material-symbols-outlined text-[20px]" data-icon="visibility">visibility</span>
+</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Pagination (Slide Indicators Style) -->
+<div class="bg-surface-container border-t border-outline-variant px-md py-sm flex items-center justify-between">
+<span class="font-body-sm text-body-sm text-on-surface-variant">Showing 1 to 5 of 128 entries</span>
+<div class="flex items-center gap-4">
+<button class="text-on-surface-variant hover:text-primary transition-colors flex items-center cursor-pointer disabled:opacity-50" disabled="">
+<span class="material-symbols-outlined text-[20px]" data-icon="chevron_left">chevron_left</span>
+</button>
+<div class="flex gap-base items-center h-full">
+<div class="w-lg h-base bg-on-tertiary-container cursor-pointer transition-colors" title="Page 1"></div>
+<div class="w-lg h-base bg-surface-variant hover:bg-outline-variant cursor-pointer transition-colors" title="Page 2"></div>
+<div class="w-lg h-base bg-surface-variant hover:bg-outline-variant cursor-pointer transition-colors" title="Page 3"></div>
+<div class="w-lg h-base bg-surface-variant hover:bg-outline-variant cursor-pointer transition-colors" title="Page 4"></div>
+<div class="w-lg h-base bg-surface-variant hover:bg-outline-variant cursor-pointer transition-colors" title="Page 5"></div>
+</div>
+<button class="text-on-surface-variant hover:text-primary transition-colors flex items-center cursor-pointer">
+<span class="material-symbols-outlined text-[20px]" data-icon="chevron_right">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+<script>
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('/sw.js').catch(() => {});
+  });
+}
+</script>
+</body>
+</html>

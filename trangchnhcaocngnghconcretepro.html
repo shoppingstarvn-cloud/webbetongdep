@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>IndustrialCore | Structural Precision</title>
+<link href="/manifest.json" rel="manifest"/>
+<link href="/favicon.ico" rel="icon" sizes="any"/>
+<link href="/favicon-32.png" rel="icon" type="image/png" sizes="32x32"/>
+<link href="/apple-touch-icon.png" rel="apple-touch-icon" sizes="180x180"/>
+<meta content="#041627" name="theme-color"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-container": "#eceef0",
+                        "on-error": "#ffffff",
+                        "surface-bright": "#f8f9fb",
+                        "tertiary-container": "#4b1b00",
+                        "on-error-container": "#93000a",
+                        "surface": "#f8f9fb",
+                        "secondary-fixed": "#e3e2e2",
+                        "on-surface": "#191c1e",
+                        "on-primary-fixed-variant": "#38485a",
+                        "on-primary": "#ffffff",
+                        "error-container": "#ffdad6",
+                        "secondary-fixed-dim": "#c7c6c6",
+                        "on-secondary": "#ffffff",
+                        "primary-fixed-dim": "#b7c8de",
+                        "surface-container-low": "#f2f4f6",
+                        "surface-tint": "#4f6073",
+                        "inverse-primary": "#b7c8de",
+                        "surface-container-lowest": "#ffffff",
+                        "primary-container": "#1a2b3c",
+                        "on-tertiary": "#ffffff",
+                        "on-surface-variant": "#44474c",
+                        "error": "#ba1a1a",
+                        "surface-variant": "#e0e3e5",
+                        "on-secondary-fixed": "#1b1c1c",
+                        "on-secondary-container": "#646464",
+                        "on-background": "#191c1e",
+                        "secondary-container": "#e3e2e2",
+                        "surface-container-highest": "#e0e3e5",
+                        "outline-variant": "#c4c6cd",
+                        "primary": "#041627",
+                        "inverse-surface": "#2d3133",
+                        "background": "#f8f9fb",
+                        "tertiary-fixed-dim": "#ffb693",
+                        "surface-dim": "#d8dadc",
+                        "secondary": "#5e5e5e",
+                        "on-tertiary-container": "#eb6a1b",
+                        "tertiary-fixed": "#ffdbcb",
+                        "on-tertiary-fixed-variant": "#7a3000",
+                        "on-primary-fixed": "#0b1d2d",
+                        "on-tertiary-fixed": "#341000",
+                        "primary-fixed": "#d2e4fb",
+                        "on-primary-container": "#8192a7",
+                        "outline": "#74777d",
+                        "on-secondary-fixed-variant": "#464747",
+                        "surface-container-high": "#e6e8ea",
+                        "inverse-on-surface": "#eff1f3",
+                        "tertiary": "#2a0c00"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "margin": "32px",
+                        "lg": "2.5rem",
+                        "base": "4px",
+                        "xs": "0.5rem",
+                        "sm": "1rem",
+                        "xl": "4rem",
+                        "gutter": "24px",
+                        "md": "1.5rem",
+                        "max_width": "1280px"
+                    },
+                    "fontFamily": {
+                        "table-data": ["Inter"],
+                        "body-sm": ["Inter"],
+                        "body-md": ["Inter"],
+                        "label-bold": ["Inter"],
+                        "headline-md": ["Inter"],
+                        "display-lg": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "headline-sm": ["Inter"]
+                    },
+                    "fontSize": {
+                        "table-data": ["14px", {"lineHeight": "1.2", "fontWeight": "500"}],
+                        "body-sm": ["14px", {"lineHeight": "1.5", "fontWeight": "400"}],
+                        "body-md": ["16px", {"lineHeight": "1.5", "fontWeight": "400"}],
+                        "label-bold": ["12px", {"lineHeight": "1", "letterSpacing": "0.05em", "fontWeight": "700"}],
+                        "headline-md": ["32px", {"lineHeight": "1.2", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                        "display-lg": ["48px", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "body-lg": ["18px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                        "headline-sm": ["24px", {"lineHeight": "1.3", "fontWeight": "600"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .masonry-grid {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            gap: 24px;
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            height: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #eb6a1b;
+        }
+    </style>
+</head>
+<body class="bg-background font-body-md text-on-background">
+<!-- TopNavBar -->
+<header class="sticky top-0 z-50 flex justify-between items-center w-full px-6 py-4 max-w-screen-2xl mx-auto bg-white/95 dark:bg-slate-950/95 backdrop-blur-sm border-b border-slate-200 shadow-sm">
+<div class="text-xl font-black text-slate-900 dark:text-white uppercase tracking-wider">
+            IndustrialCore
+        </div>
+<nav class="hidden md:flex items-center space-x-8">
+<a class="font-sans antialiased tracking-tight text-sm font-semibold uppercase text-orange-600 dark:text-orange-500 border-b-2 border-orange-600" href="/linhbogi.html">Expertise</a>
+<a class="font-sans antialiased tracking-tight text-sm font-semibold uppercase text-slate-700 dark:text-slate-300 hover:text-orange-600 transition-colors duration-200" href="/snphmvtliuxydng.html">Materials</a>
+<a class="font-sans antialiased tracking-tight text-sm font-semibold uppercase text-slate-700 dark:text-slate-300 hover:text-orange-600 transition-colors duration-200" href="/hsdn.html">Projects</a>
+<a class="font-sans antialiased tracking-tight text-sm font-semibold uppercase text-slate-700 dark:text-slate-300 hover:text-orange-600 transition-colors duration-200" href="/giithiucngty.html">Contact</a>
+<a class="font-sans antialiased tracking-tight text-sm font-semibold uppercase text-slate-700 dark:text-slate-300 hover:text-orange-600 transition-colors duration-200" href="/muemailboconhkconcretepro.html">Quotes</a>
+</nav>
+<div class="flex items-center gap-4">
+<button class="px-6 py-2 bg-primary text-white font-label-bold text-label-bold uppercase rounded-none hover:bg-on-tertiary-container transition-all">
+                Request Quote
+            </button>
+</div>
+</header>
+<main>
+<!-- Hero Section -->
+<section class="relative h-screen w-full overflow-hidden bg-primary">
+<div class="absolute inset-0 z-0">
+<img class="w-full h-full object-cover opacity-60 brightness-75" data-alt="Massive industrial construction site with towering cranes and concrete skeletons of high-rise buildings at dusk with dramatic lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC4k05CCb36J_Mob1RzVRs5rnIq3BoP5X2-F0CR4n1AznlWcXBRHGdmVjNiW-gEAmKHao3E78h2IL8W7wCrBN1UWZwZ4Cg0HeeDe-Z3eUlFjYlHQfV0JSDgHByth7HKPatyjt8ITDE_a63uQEBLGrSpyDQ-HJ07AUQvGbOjmASY1yWBML5t1LVbYc_ir4ZUIZJYsod40_9dBO0IW7kMBeZxaa3JNEuP_C0L1snN3nIt0mmsAIBD5DfImtZC0IwzGA_8V2dBbiaIeKrS"/>
+</div>
+<div class="relative z-10 h-full flex flex-col justify-center px-margin max-w-max_width mx-auto">
+<div class="max-w-3xl space-y-md">
+<span class="inline-block bg-on-tertiary-container text-white px-4 py-1 text-label-bold font-label-bold uppercase tracking-widest">
+                        Industrial Engineering Excellence
+                    </span>
+<h1 class="text-white font-display-lg text-display-lg uppercase leading-tight">
+                        Built for <span class="text-on-tertiary-container">Permanence</span>. Engineered for Precision.
+                    </h1>
+<p class="text-primary-fixed-dim font-body-lg text-body-lg max-w-2xl">
+                        Delivering high-performance ready-mix and precast concrete solutions for the world's most ambitious infrastructure and industrial projects.
+                    </p>
+<div class="flex gap-4 pt-sm">
+<button class="px-8 py-4 bg-on-tertiary-container text-white font-label-bold text-label-bold uppercase flex items-center gap-2 hover:brightness-110 transition-all">
+                            Request a Quote <span class="material-symbols-outlined" data-icon="arrow_forward">arrow_forward</span>
+</button>
+<button class="px-8 py-4 bg-transparent border border-white text-white font-label-bold text-label-bold uppercase hover:bg-white/10 transition-all">
+                            Consult an Engineer
+                        </button>
+</div>
+</div>
+<!-- Hero Indicators -->
+<div class="absolute bottom-12 left-margin flex gap-2">
+<div class="w-16 h-1 bg-on-tertiary-container"></div>
+<div class="w-16 h-1 bg-white/30"></div>
+<div class="w-16 h-1 bg-white/30"></div>
+</div>
+</div>
+</section>
+<!-- Stats Section -->
+<section class="bg-primary-container py-xl border-b border-outline-variant/10">
+<div class="max-w-max_width mx-auto px-margin">
+<div class="grid grid-cols-1 md:grid-cols-3 gap-gutter text-center">
+<div class="space-y-base">
+<h2 class="text-on-tertiary-container font-display-lg text-display-lg">25+</h2>
+<p class="text-white font-label-bold text-label-bold uppercase tracking-widest">Years of Experience</p>
+</div>
+<div class="space-y-base">
+<h2 class="text-on-tertiary-container font-display-lg text-display-lg">1,400</h2>
+<p class="text-white font-label-bold text-label-bold uppercase tracking-widest">Major Projects Delivered</p>
+</div>
+<div class="space-y-base">
+<h2 class="text-on-tertiary-container font-display-lg text-display-lg">2.4M</h2>
+<p class="text-white font-label-bold text-label-bold uppercase tracking-widest">Annual m³ Capacity</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Product Innovation Slider -->
+<section class="py-xl bg-surface-bright">
+<div class="max-w-max_width mx-auto px-margin">
+<div class="flex justify-between items-end mb-lg">
+<div class="space-y-xs">
+<p class="text-on-tertiary-container font-label-bold text-label-bold uppercase">Our Materials</p>
+<h2 class="font-headline-md text-headline-md uppercase text-primary">Advanced Concrete Solutions</h2>
+</div>
+<div class="flex gap-2">
+<button class="p-2 border border-outline hover:bg-primary-container hover:text-white transition-all">
+<span class="material-symbols-outlined" data-icon="chevron_left">chevron_left</span>
+</button>
+<button class="p-2 border border-outline bg-primary-container text-white">
+<span class="material-symbols-outlined" data-icon="chevron_right">chevron_right</span>
+</button>
+</div>
+</div>
+<div class="flex gap-gutter overflow-x-auto pb-lg custom-scrollbar snap-x">
+<!-- Product 1 -->
+<div class="min-w-[400px] bg-white border border-outline-variant snap-start group cursor-pointer hover:border-on-tertiary-container transition-all">
+<div class="h-64 overflow-hidden">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="Macro photo of textured wet concrete being poured into a foundation formwork with steel reinforcement bars" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBdOAXE_8LarrXin4QxJXRWBE5s3u3X7Py5LPugq3xO6WfGLFxdiOHWYOutoxlec6ex7l0uwtbeI9M3390uEag8g_iTLeF6vbJNHDnQgdgbCbQqAHQh_i7G8L8e9Xs1cU87sj7GGI4HemRWxovaG-Y6pM8jSuej5lrRv8u4EjsNQyReAogEjvJ9eH697Mz77CM6qisuaHOrWk6qivRbCzzrRAl_hpep6MOPwRj-tEOG00cGE5Qeq1UG_oOIsRrMgHlGV6D6sDlu_Kb-"/>
+</div>
+<div class="p-md space-y-sm">
+<h3 class="font-headline-sm text-headline-sm uppercase text-primary">Ready-Mix Standard</h3>
+<p class="text-on-surface-variant font-body-sm text-body-sm">High-workability concrete with optimized curing times for standard slab and foundation work.</p>
+<div class="pt-sm border-t border-surface-container flex justify-between items-center">
+<span class="text-label-bold font-label-bold uppercase text-secondary">C30/37 Strength</span>
+<span class="material-symbols-outlined text-on-tertiary-container" data-icon="arrow_forward">arrow_forward</span>
+</div>
+</div>
+</div>
+<!-- Product 2 -->
+<div class="min-w-[400px] bg-white border border-outline-variant snap-start group cursor-pointer hover:border-on-tertiary-container transition-all">
+<div class="h-64 overflow-hidden">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="Architectural smooth concrete wall with precise geometric lines and shadows in a modern minimalist building" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC1hXaaVUtvs8zSAJGPoqFAhGeiM-RXPHsFVy-6LtJ-pbYwCa5slBSQuGCogtXRer1Ztupekbap88iNFK5TpU16CBxW3rU_RHWB-8f9EHaomRdwNpr7tKZhMvMGeUNoxg5AbEB9j1fXvTOosxwS6IfA3Uk_-bXqXjd8jMUpWo_m2ps98yU1wQzjZwLO0GtY9WVn4LtehHZMOkqvSN8BZ2_GTc0bKzY6W8kQXVKopjVhgeL3OtxvcxDtVBJNW92JQBN4dlRmJf1KuNp3"/>
+</div>
+<div class="p-md space-y-sm">
+<h3 class="font-headline-sm text-headline-sm uppercase text-primary">Precast Elements</h3>
+<p class="text-on-surface-variant font-body-sm text-body-sm">Precision-engineered bridge girders and structural columns manufactured in controlled environments.</p>
+<div class="pt-sm border-t border-surface-container flex justify-between items-center">
+<span class="text-label-bold font-label-bold uppercase text-secondary">AASHTO Compliant</span>
+<span class="material-symbols-outlined text-on-tertiary-container" data-icon="arrow_forward">arrow_forward</span>
+</div>
+</div>
+</div>
+<!-- Product 3 -->
+<div class="min-w-[400px] bg-white border border-outline-variant snap-start group cursor-pointer hover:border-on-tertiary-container transition-all">
+<div class="h-64 overflow-hidden">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="Industrial concrete mixing plant with large silos and conveyors against a clear blue sky" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD3Wo_-3YhvxInyPazlr7ox2WeY_5Jp4kYcPyekDzEq0vTUNseeejGv4fuAuDdY338HzpKByFbMYcpIZCq6yXPQYAF3pvH91gYZi05f-YxXj9bJovoa-fLGPl8ogNpTCFF3nWKgzwKC_TAoLz3SQdGU22-4z1jvbEpaQci7dEz9MZJpt6hzjy1p4oKq08qwQNJvPvTUPGiBjshXlQy7PxiXOa7tyCJLnfWccqW6XbTyAAcW2WGuffvwje81sQKgtuZcuRZLLB9kY542"/>
+</div>
+<div class="p-md space-y-sm">
+<h3 class="font-headline-sm text-headline-sm uppercase text-primary">High-Flow Concrete</h3>
+<p class="text-on-surface-variant font-body-sm text-body-sm">Self-compacting concrete technology for complex formwork and heavily reinforced sections.</p>
+<div class="pt-sm border-t border-surface-container flex justify-between items-center">
+<span class="text-label-bold font-label-bold uppercase text-secondary">SCC Technology</span>
+<span class="material-symbols-outlined text-on-tertiary-container" data-icon="arrow_forward">arrow_forward</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Featured Projects Showcase -->
+<section class="py-xl">
+<div class="max-w-max_width mx-auto px-margin">
+<div class="mb-lg text-center max-w-2xl mx-auto">
+<p class="text-on-tertiary-container font-label-bold text-label-bold uppercase">Global Portfolio</p>
+<h2 class="font-headline-md text-headline-md uppercase text-primary mt-xs">Structural Landmarks</h2>
+</div>
+<div class="masonry-grid">
+<!-- Large Project -->
+<div class="col-span-12 md:col-span-8 h-[500px] relative group overflow-hidden">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" data-alt="Wide shot of a massive concrete cable-stayed bridge spanning a wide river during morning fog" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDVdAQEbtzBBTffOfUsMvMLiJqLwMBmTbpf9Ajt2C8hM9D9ddKnzUw40TsD0SabiQLveha7w-8u8KA4e__pyAeUtmb2yMQj57hZYImBEmPtYLageceDgzBpLvR2jpF4nXoXYplzOzspWwAix8Xm2PpvEhTpIbP47qJVR-dd9X906Dqb4YAuMtO4mHF5H-p0Fsn94HXroqQovNKy_eX6kCoXqMNOdnpvWwJwjdloJWEGPssf_K8OUEs3uaTVXbv3lTVxa54cnSMVg84j"/>
+<div class="absolute inset-0 bg-gradient-to-t from-primary/90 to-transparent flex flex-col justify-end p-md text-white opacity-90 group-hover:opacity-100 transition-opacity">
+<span class="text-on-tertiary-container font-label-bold text-label-bold uppercase">Infrastructure</span>
+<h3 class="text-headline-sm font-headline-sm uppercase mt-base">The Northern Suspension Link</h3>
+</div>
+</div>
+<!-- Small Project 1 -->
+<div class="col-span-12 md:col-span-4 h-[500px] relative group overflow-hidden">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" data-alt="Architectural details of a brutalist concrete office building with deep recesses and shadow patterns" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCTAUoMTCL1Pxj46NkVoleunx61_8m20Rwpn4lZoZ0F0fLIgzRydtsyClT6cVkbELvvrE7giXZeDt2-c5SF_XDvC48Sk3_FR_845UyozbE2-tyjBxEt2NaEmMrdK7Nq3dUS9RVPmv9CsTJ-oo_7FXRjpP0LGSvceohNI2ofPxYjmcDOZ_FYtDC2y-lvodMWpEqTaNm7f2Yw9V7fiOtwgOnkz7hiZVyPYBTahgdOzdqg0NdMM-P1XUEzpNxkixJWcF3MbjinEUYff3n1"/>
+<div class="absolute inset-0 bg-gradient-to-t from-primary/90 to-transparent flex flex-col justify-end p-md text-white opacity-90 group-hover:opacity-100 transition-opacity">
+<span class="text-on-tertiary-container font-label-bold text-label-bold uppercase">Commercial</span>
+<h3 class="text-headline-sm font-headline-sm uppercase mt-base">Skyline Plaza Center</h3>
+</div>
+</div>
+<!-- Small Project 2 -->
+<div class="col-span-12 md:col-span-4 h-[400px] relative group overflow-hidden">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" data-alt="Modern high-rise skyscraper with glass and concrete facade reflecting a bright blue sky" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCpg-QC8dZliPpAZ5i6TENDKLYmC2o6kCmFPfvQQ-bpmW2rAv4J0gWq37sSzy1VjlzswXuFdWa0257UiNf_IiHXVqg6gdMoR-pAu8qT5cZmDEiGI6dIhCSZHLIXcRfQOlOlybGXk08njrQRjewFmfzuPNR3qibsujQFxhsvb76MwzgLU9FI1d3Y8ZGwEdmArilAaA687RsX3uwD4jZj3-IZyJ7Ptvfsqyb_NSL8gNnVLY2fzWIRXR6EdP1Yh05hCgkRU7th7b2n-xn1"/>
+<div class="absolute inset-0 bg-gradient-to-t from-primary/90 to-transparent flex flex-col justify-end p-md text-white opacity-90 group-hover:opacity-100 transition-opacity">
+<span class="text-on-tertiary-container font-label-bold text-label-bold uppercase">Residential</span>
+<h3 class="text-headline-sm font-headline-sm uppercase mt-base">Grand View Heights</h3>
+</div>
+</div>
+<!-- Wide Project -->
+<div class="col-span-12 md:col-span-8 h-[400px] relative group overflow-hidden">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" data-alt="Industrial logistic zone with massive concrete slabs and loading docks under a sunset sky" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBY9GRPJmX6SJCDTSt95hsskW9SWJVkWGMMhusaxYbOfNX3hHDe_4TPU6GJF_de3v4h5yylbvfVhzpT-V2Vy8379kBqFKNj3ZD4hsnqKLLr-6XsVUQ-k7UONDKul8Fxf-7yqo6q4-ScvEwKYEAz0AV-bmjKaqZ3SSTxB2Q20srLDjsWz6KbIbZA61urt-4tkGHOsjqr-Adv18a2VAmC_gmLVsjFrjccWbfWaZ7mKsFdmi7DMmhUvAsAjWLf0oaqASCw1QXI1lMaQ12-"/>
+<div class="absolute inset-0 bg-gradient-to-t from-primary/90 to-transparent flex flex-col justify-end p-md text-white opacity-90 group-hover:opacity-100 transition-opacity">
+<span class="text-on-tertiary-container font-label-bold text-label-bold uppercase">Industrial</span>
+<h3 class="text-headline-sm font-headline-sm uppercase mt-base">Logistics Hub West</h3>
+</div>
+</div>
+</div>
+<div class="mt-lg text-center">
+<button class="px-8 py-4 bg-transparent border border-primary text-primary font-label-bold text-label-bold uppercase hover:bg-primary hover:text-white transition-all">
+                        View Full Project Gallery
+                    </button>
+</div>
+</div>
+</section>
+<!-- CTA Section -->
+<section class="bg-on-tertiary-container py-xl">
+<div class="max-w-max_width mx-auto px-margin text-center text-white">
+<h2 class="font-display-lg text-display-lg uppercase mb-md">Ready to break ground?</h2>
+<p class="font-body-lg text-body-lg max-w-2xl mx-auto mb-lg opacity-90">
+                    Our technical team is ready to assist with mix designs, structural logistics, and supply chain management for your next landmark project.
+                </p>
+<div class="flex flex-col md:flex-row gap-4 justify-center items-center">
+<button class="w-full md:w-auto px-10 py-5 bg-primary text-white font-label-bold text-label-bold uppercase shadow-xl hover:translate-y-[-2px] transition-all">
+                        Request Quote
+                    </button>
+<button class="w-full md:w-auto px-10 py-5 bg-white text-primary font-label-bold text-label-bold uppercase hover:bg-surface-container transition-all">
+                        Talk to an Expert
+                    </button>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="w-full py-12 px-8 flex flex-col md:flex-row justify-between items-center gap-6 bg-slate-900 dark:bg-black border-t border-slate-800">
+<div class="flex flex-col items-center md:items-start gap-2">
+<div class="text-lg font-bold text-white uppercase">IndustrialCore</div>
+<p class="font-sans text-xs tracking-wide text-slate-400">© 2024 IndustrialCore SME. Structural Precision Guaranteed.</p>
+</div>
+<nav class="flex flex-wrap justify-center gap-8">
+<a class="font-sans text-xs tracking-wide text-slate-400 hover:text-white transition-colors hover:underline decoration-orange-500 underline-offset-4" href="#privacy" title="Coming soon">Privacy Policy</a>
+<a class="font-sans text-xs tracking-wide text-slate-400 hover:text-white transition-colors hover:underline decoration-orange-500 underline-offset-4" href="#safety" title="Coming soon">Safety Protocols</a>
+<a class="font-sans text-xs tracking-wide text-slate-400 hover:text-white transition-colors hover:underline decoration-orange-500 underline-offset-4" href="#">Supplier Portal</a>
+<a class="font-sans text-xs tracking-wide text-slate-400 hover:text-white transition-colors hover:underline decoration-orange-500 underline-offset-4" href="#">Career Hub</a>
+</nav>
+<div class="flex gap-4">
+<span class="material-symbols-outlined text-slate-400 cursor-pointer hover:text-orange-500" data-icon="public">public</span>
+<span class="material-symbols-outlined text-slate-400 cursor-pointer hover:text-orange-500" data-icon="shield">shield</span>
+<span class="material-symbols-outlined text-slate-400 cursor-pointer hover:text-orange-500" data-icon="factory">factory</span>
+</div>
+</footer>
+<script>
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('/sw.js').catch(() => {});
+  });
+}
+</script>
+</body>
+</html>

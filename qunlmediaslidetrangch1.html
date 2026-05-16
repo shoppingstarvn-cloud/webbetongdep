@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+
+<html lang="vi"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Media & Home Slider Management - BuildCorp CMS</title>
+<link href="/manifest.json" rel="manifest"/>
+<link href="/favicon.ico" rel="icon" sizes="any"/>
+<link href="/favicon-32.png" rel="icon" type="image/png" sizes="32x32"/>
+<link href="/apple-touch-icon.png" rel="apple-touch-icon" sizes="180x180"/>
+<meta content="#041627" name="theme-color"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "surface": "#f8f9fb",
+                      "error": "#ba1a1a",
+                      "tertiary": "#2a0c00",
+                      "tertiary-fixed": "#ffdbcb",
+                      "outline": "#74777d",
+                      "on-primary-fixed": "#0b1d2d",
+                      "on-tertiary-fixed": "#341000",
+                      "outline-variant": "#c4c6cd",
+                      "tertiary-container": "#4b1b00",
+                      "surface-container-lowest": "#ffffff",
+                      "on-surface": "#191c1e",
+                      "tertiary-fixed-dim": "#ffb693",
+                      "primary-container": "#1a2b3c",
+                      "inverse-surface": "#2d3133",
+                      "on-secondary-fixed": "#1b1c1c",
+                      "on-tertiary-fixed-variant": "#7a3000",
+                      "surface-dim": "#d8dadc",
+                      "primary-fixed-dim": "#b7c8de",
+                      "primary-fixed": "#d2e4fb",
+                      "on-background": "#191c1e",
+                      "surface-variant": "#e0e3e5",
+                      "surface-container": "#eceef0",
+                      "surface-tint": "#4f6073",
+                      "on-secondary-fixed-variant": "#464747",
+                      "secondary-container": "#e3e2e2",
+                      "primary": "#041627",
+                      "on-secondary": "#ffffff",
+                      "on-primary-fixed-variant": "#38485a",
+                      "surface-bright": "#f8f9fb",
+                      "on-primary": "#ffffff",
+                      "inverse-primary": "#b7c8de",
+                      "secondary-fixed": "#e3e2e2",
+                      "secondary": "#5e5e5e",
+                      "inverse-on-surface": "#eff1f3",
+                      "secondary-fixed-dim": "#c7c6c6",
+                      "on-tertiary": "#ffffff",
+                      "on-error-container": "#93000a",
+                      "on-surface-variant": "#44474c",
+                      "on-error": "#ffffff",
+                      "on-primary-container": "#8192a7",
+                      "surface-container-low": "#f2f4f6",
+                      "surface-container-highest": "#e0e3e5",
+                      "on-tertiary-container": "#eb6a1b",
+                      "background": "#f8f9fb",
+                      "on-secondary-container": "#646464",
+                      "surface-container-high": "#e6e8ea",
+                      "error-container": "#ffdad6"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.125rem",
+                      "lg": "0.25rem",
+                      "xl": "0.5rem",
+                      "full": "0.75rem"
+              },
+              "spacing": {
+                      "md": "1.5rem",
+                      "lg": "2.5rem",
+                      "xs": "0.5rem",
+                      "margin": "32px",
+                      "base": "4px",
+                      "gutter": "24px",
+                      "xl": "4rem",
+                      "sm": "1rem",
+                      "max_width": "1280px"
+              },
+              "fontFamily": {
+                      "table-data": [
+                              "Inter"
+                      ],
+                      "headline-md": [
+                              "Inter"
+                      ],
+                      "display-lg": [
+                              "Inter"
+                      ],
+                      "body-sm": [
+                              "Inter"
+                      ],
+                      "headline-sm": [
+                              "Inter"
+                      ],
+                      "label-bold": [
+                              "Inter"
+                      ],
+                      "body-lg": [
+                              "Inter"
+                      ],
+                      "body-md": [
+                              "Inter"
+                      ]
+              },
+              "fontSize": {
+                      "table-data": [
+                              "14px",
+                              {
+                                      "lineHeight": "1.2",
+                                      "fontWeight": "500"
+                              }
+                      ],
+                      "headline-md": [
+                              "32px",
+                              {
+                                      "lineHeight": "1.2",
+                                      "letterSpacing": "-0.01em",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "display-lg": [
+                              "48px",
+                              {
+                                      "lineHeight": "1.1",
+                                      "letterSpacing": "-0.02em",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "body-sm": [
+                              "14px",
+                              {
+                                      "lineHeight": "1.5",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "headline-sm": [
+                              "24px",
+                              {
+                                      "lineHeight": "1.3",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "label-bold": [
+                              "12px",
+                              {
+                                      "lineHeight": "1",
+                                      "letterSpacing": "0.05em",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "body-lg": [
+                              "18px",
+                              {
+                                      "lineHeight": "1.6",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "body-md": [
+                              "16px",
+                              {
+                                      "lineHeight": "1.5",
+                                      "fontWeight": "400"
+                              }
+                      }
+              }
+            },
+          }
+        }
+      </script>
+</head>
+<body class="bg-background min-h-screen text-on-background font-body-md">
+<!-- SideNavBar -->
+<nav class="fixed left-0 top-0 h-screen w-64 border-r border-r border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950 flex flex-col py-6 z-50">
+<div class="px-6 mb-8">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 bg-primary-container rounded flex items-center justify-center text-on-primary font-bold text-xl">B</div>
+<div>
+<h1 class="text-2xl font-bold text-slate-900 dark:text-white leading-tight">BuildCorp</h1>
+<span class="text-xs text-slate-500 uppercase tracking-widest">Admin Terminal</span>
+</div>
+</div>
+</div>
+<div class="flex flex-col gap-1 mt-4">
+<!-- Dashboard (Inactive) -->
+<a class="flex items-center gap-3 px-6 py-4 duration-200 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-900 transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span class="font-sans text-sm font-semibold uppercase tracking-wider">Dashboard</span>
+</a>
+<!-- Media (Active) -->
+<a class="flex items-center gap-3 px-6 py-4 duration-200 bg-white dark:bg-slate-900 text-slate-900 dark:text-white border-r-4 border-orange-600 shadow-sm" href="#">
+<span class="material-symbols-outlined" data-icon="perm_media" style="font-variation-settings: 'FILL' 1;">perm_media</span>
+<span class="font-sans text-sm font-semibold uppercase tracking-wider">Media</span>
+</a>
+<!-- Products (Inactive) -->
+<a class="flex items-center gap-3 px-6 py-4 duration-200 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-900 transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="inventory_2">inventory_2</span>
+<span class="font-sans text-sm font-semibold uppercase tracking-wider">Products</span>
+</a>
+<!-- Projects (Inactive) -->
+<a class="flex items-center gap-3 px-6 py-4 duration-200 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-900 transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="construction">construction</span>
+<span class="font-sans text-sm font-semibold uppercase tracking-wider">Projects</span>
+</a>
+<!-- News (Inactive) -->
+<a class="flex items-center gap-3 px-6 py-4 duration-200 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-900 transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="newspaper">newspaper</span>
+<span class="font-sans text-sm font-semibold uppercase tracking-wider">News</span>
+</a>
+<!-- Users (Inactive) -->
+<a class="flex items-center gap-3 px-6 py-4 duration-200 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-900 transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="group">group</span>
+<span class="font-sans text-sm font-semibold uppercase tracking-wider">Users</span>
+</a>
+<!-- Settings (Inactive) -->
+<a class="flex items-center gap-3 px-6 py-4 duration-200 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-900 transition-all mt-auto" href="#">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+<span class="font-sans text-sm font-semibold uppercase tracking-wider">Settings</span>
+</a>
+</div>
+</nav>
+<!-- TopAppBar -->
+<header class="fixed top-0 right-0 left-64 h-16 flex items-center justify-between px-8 z-40 bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800">
+<div class="flex items-center gap-4">
+<span class="text-xl font-black tracking-tighter text-slate-900 dark:text-white">BuildCorp CMS</span>
+</div>
+<div class="flex items-center gap-6">
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400">search</span>
+<input class="pl-10 pr-4 py-2 border border-slate-200 rounded text-sm w-64 focus:outline-none focus:border-primary-container focus:ring-1 focus:ring-primary-container" placeholder="Tìm kiếm..." type="text"/>
+</div>
+<div class="flex items-center gap-4">
+<button class="text-slate-500 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors p-2 rounded cursor-pointer active:opacity-70">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+<button class="text-slate-500 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors p-2 rounded cursor-pointer active:opacity-70">
+<span class="material-symbols-outlined" data-icon="help_outline">help_outline</span>
+</button>
+<div class="w-8 h-8 rounded bg-slate-200 overflow-hidden border border-slate-300">
+<img alt="User profile" class="w-full h-full object-cover" data-alt="professional headshot of a corporate admin user in a modern office setting, soft natural lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDBoVJ6nQ-i58iDpP_J7fLaQH_onVu1hoS9duYHPBjZu4fdfghgHfcky7RZcg7D_hS191wVKwS3rueTJ02sktd9gydhMXHM7HxOdAbb_weZatZ0rflblBTIKybovPxnceijNBqY885Vs32ReL9aDMRYPV7N2142v_TYaITJIb_NOfDMTkLc-F1MbjAh8EmzIO9adRPCjtKABkI61ZymSGALzTF0Y15QZR3AwcdsL48m6WFqBvS__3QlG9-UHgyS5VSxHKBf9OcNJveG"/>
+</div>
+</div>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="ml-64 mt-16 p-margin min-h-[calc(100vh-4rem)]">
+<div class="flex items-center justify-between mb-lg">
+<div>
+<h2 class="font-headline-md text-headline-md text-primary-container">Quản lý Media & Slider</h2>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-1">Cấu hình slider trang chủ và quản lý kho lưu trữ hình ảnh.</p>
+</div>
+<button class="bg-[#ea580c] hover:bg-[#c2410c] text-white px-6 py-2.5 rounded font-label-bold text-label-bold flex items-center gap-2 transition-colors">
+<span class="material-symbols-outlined text-[18px]">save</span>
+                Lưu thay đổi
+            </button>
+</div>
+<div class="grid grid-cols-1 xl:grid-cols-12 gap-gutter">
+<!-- Home Slider Management (Bento Box 1) -->
+<section class="xl:col-span-4 flex flex-col gap-md">
+<div class="bg-surface-container-lowest border border-outline-variant rounded-lg overflow-hidden flex flex-col h-full shadow-sm">
+<div class="bg-surface p-4 border-b border-outline-variant flex items-center justify-between">
+<h3 class="font-headline-sm text-headline-sm text-primary-container text-[18px]">Quản lý Slide Trang Chủ</h3>
+<button class="text-primary-container hover:text-[#ea580c] transition-colors p-1">
+<span class="material-symbols-outlined">add_circle</span>
+</button>
+</div>
+<div class="p-4 flex flex-col gap-3 flex-grow overflow-y-auto max-h-[600px]">
+<!-- Slide Item 1 -->
+<div class="border border-outline-variant rounded p-3 flex items-center gap-4 bg-white hover:shadow-md transition-shadow cursor-grab">
+<span class="material-symbols-outlined text-outline cursor-grab">drag_indicator</span>
+<div class="w-20 h-12 bg-surface-dim rounded overflow-hidden flex-shrink-0">
+<img alt="Hero Slide 1" class="w-full h-full object-cover" data-alt="high angle wide shot of an active large-scale industrial construction site with steel framework and yellow cranes under clear blue sky" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD8xGPUM9q0b0JT3WZ726MAlECfIptSzi7ld0hGmcujrJRhHN61by8Az-PJBK-a-DyU4wQcKJ1a3DPwin_i-5x03YQyCkPkKWS9e07230JHFfmn-qaRWI5ScUTw7YJiE7SGHu40WrBV4zqtcIiz7pR-KAJqEJ4JfAdRTf56ACfSByRPjsqsgpaMNN-4wT8psSbD7SEQtUqlNW00k2qqngI0XuaVjDWbdavu7Wq1o4yGzXkc1ukxehIbYpteGle17cCvLZ-k8CCcyZky"/>
+</div>
+<div class="flex-grow">
+<h4 class="font-table-data text-table-data text-on-surface truncate">Công trình thế kỷ 2024</h4>
+<p class="font-body-sm text-[12px] text-outline mt-0.5">Slider_Main_01.jpg</p>
+</div>
+<div class="flex flex-col items-end gap-2">
+<label class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only peer" type="checkbox" value=""/>
+<div class="w-9 h-5 bg-outline-variant peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-[#ea580c]"></div>
+</label>
+<button class="text-error hover:text-on-error-container text-[12px]">Xóa</button>
+</div>
+</div>
+<!-- Slide Item 2 -->
+<div class="border border-outline-variant rounded p-3 flex items-center gap-4 bg-white hover:shadow-md transition-shadow cursor-grab">
+<span class="material-symbols-outlined text-outline cursor-grab">drag_indicator</span>
+<div class="w-20 h-12 bg-surface-dim rounded overflow-hidden flex-shrink-0">
+<img alt="Hero Slide 2" class="w-full h-full object-cover" data-alt="architectural close up of modern concrete and glass building facade reflecting golden hour sunlight, sharp geometric lines" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAe3eP3rSULV5nm3shJ_rYdLPCjf-5SZe1DsJB83h7EmAvMGjudve8RLULs9A8hSGTBwI4cDbedNoBxJYMzJnWherfmSfSUZO4lW8e80SdCZpAHl150VF9tqS4P-j37Hxrea7W4zLc407sMO-VBor2Fe3wmDUOzDvtqetqw1LqN4aMKN4jjUiMvekJqWSHzsiPRvyvt2i4Rk-hPLZr6fTSJ-MF0sYBrzf3NCzm8nWT4dvO9IeRF7ngY1IaJS8-aHUFYoFumEefOv5AT"/>
+</div>
+<div class="flex-grow">
+<h4 class="font-table-data text-table-data text-on-surface truncate">Vật liệu tương lai</h4>
+<p class="font-body-sm text-[12px] text-outline mt-0.5">Materials_Hero.png</p>
+</div>
+<div class="flex flex-col items-end gap-2">
+<label class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only peer" type="checkbox" value=""/>
+<div class="w-9 h-5 bg-outline-variant peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-[#ea580c]"></div>
+</label>
+<button class="text-error hover:text-on-error-container text-[12px]">Xóa</button>
+</div>
+</div>
+<!-- Slide Item 3 -->
+<div class="border border-outline-variant rounded p-3 flex items-center gap-4 bg-white hover:shadow-md transition-shadow cursor-grab opacity-60">
+<span class="material-symbols-outlined text-outline cursor-grab">drag_indicator</span>
+<div class="w-20 h-12 bg-surface-dim rounded overflow-hidden flex-shrink-0">
+<img alt="Hero Slide 3" class="w-full h-full object-cover grayscale" data-alt="black and white photo of heavy industrial manufacturing equipment in a clean factory setting, precise engineering details" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDmtlyeCyyBQDVx4hT1LhDmqd8jzwN4qrkFUvUmUqc2aGelf9Gqc_GPBLkZ1gY3qCxd-DepWv-f50eK9omEnEvV-roTyIUomFFo4JgQIWLSmPnEnvGv44C2ZRWFN3dGinaS3E8M_GXu3j_5I2RNhCZb3oMaJH2ShiON2Itfx5RKzg4aZ-r6W8ZkvXxwD-5v1z8BHdFrTiB8jG6mKSFR4SVyXZmtk9nOzz5VoRvOqgeYNChpMAZrDyu5bnPyzeNry5QaUk4j7DV0PfIC"/>
+</div>
+<div class="flex-grow">
+<h4 class="font-table-data text-table-data text-on-surface truncate">Dự án nhà máy thủy điện</h4>
+<p class="font-body-sm text-[12px] text-outline mt-0.5">Project_Hydro.jpg</p>
+</div>
+<div class="flex flex-col items-end gap-2">
+<label class="relative inline-flex items-center cursor-pointer">
+<input class="sr-only peer" type="checkbox" value=""/>
+<div class="w-9 h-5 bg-outline-variant peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-[#ea580c]"></div>
+</label>
+<button class="text-error hover:text-on-error-container text-[12px]">Xóa</button>
+</div>
+</div>
+</div>
+<div class="p-4 border-t border-outline-variant bg-surface-container-low text-center">
+<p class="font-body-sm text-[12px] text-outline">Kéo thả để thay đổi thứ tự. Tối đa 5 slide hoạt động.</p>
+</div>
+</div>
+</section>
+<!-- Media Library (Bento Box 2) -->
+<section class="xl:col-span-8 flex flex-col gap-md">
+<div class="bg-surface-container-lowest border border-outline-variant rounded-lg overflow-hidden flex flex-col h-full shadow-sm">
+<!-- Media Header & Actions -->
+<div class="bg-surface p-4 border-b border-outline-variant flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+<div class="flex items-center gap-4">
+<h3 class="font-headline-sm text-headline-sm text-primary-container text-[18px]">Kho Media</h3>
+<div class="h-6 w-px bg-outline-variant hidden sm:block"></div>
+<div class="flex items-center gap-2">
+<button class="px-3 py-1 text-[13px] font-medium bg-primary-container text-white rounded-full">Tất cả</button>
+<button class="px-3 py-1 text-[13px] font-medium text-on-surface-variant hover:bg-surface-variant rounded-full transition-colors">Dự án</button>
+<button class="px-3 py-1 text-[13px] font-medium text-on-surface-variant hover:bg-surface-variant rounded-full transition-colors">Sản phẩm</button>
+<button class="px-3 py-1 text-[13px] font-medium text-on-surface-variant hover:bg-surface-variant rounded-full transition-colors">Tin tức</button>
+</div>
+</div>
+<div class="flex items-center gap-3">
+<div class="relative">
+<span class="material-symbols-outlined absolute left-2 top-1/2 -translate-y-1/2 text-outline text-[18px]">search</span>
+<input class="pl-8 pr-3 py-1.5 border border-outline-variant rounded text-sm w-48 focus:outline-none focus:border-primary-container focus:ring-1 focus:ring-primary-container" placeholder="Tìm file..." type="text"/>
+</div>
+<button class="bg-primary-container hover:bg-[#0b1d2d] text-white px-4 py-1.5 rounded font-label-bold text-[12px] flex items-center gap-1.5 transition-colors">
+<span class="material-symbols-outlined text-[16px]">upload</span>
+                                Tải lên
+                            </button>
+</div>
+</div>
+<!-- Media Grid -->
+<div class="p-6 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 overflow-y-auto max-h-[600px] bg-background">
+<!-- Media Item 1 -->
+<div class="group relative border border-outline-variant rounded bg-white overflow-hidden hover:shadow-md transition-all cursor-pointer">
+<div class="aspect-square bg-surface-dim relative overflow-hidden">
+<img alt="Media Image" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" data-alt="high angle wide shot of an active large-scale industrial construction site with steel framework and yellow cranes under clear blue sky" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBN2NiFpZ3KOnKqk9ET0psHhc5_czS3WYek_Bab37zn2ujGx48oCYpo247GmXA1q6_zhJ4hNbSBLAHwhX20R_Lsrb3UKUMEUsvDgecA8N5c0ZEZxWpZ3UAVFTI5rkj_URqt7B6-bXkvzHa4Axs_pTzENGYMELKwj9revu4qm04LgA9u0Hm1ZneVyVIVpcErB-QtpAwfujtMGsbWh0GCd01Y1fJAEGN2VOzNKl-vlkEMLEvOGodw-t9pFVEVNLw_fMbEAI5od4XwRjO0"/>
+<div class="absolute inset-0 bg-primary-container/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-3">
+<button class="w-8 h-8 rounded-full bg-white text-primary-container flex items-center justify-center hover:bg-[#ea580c] hover:text-white transition-colors">
+<span class="material-symbols-outlined text-[18px]">visibility</span>
+</button>
+</div>
+</div>
+<div class="p-2 border-t border-outline-variant">
+<p class="font-body-sm text-[12px] text-on-surface truncate font-medium">Slider_Main_01.jpg</p>
+<p class="font-body-sm text-[11px] text-outline mt-0.5">2.4 MB • Dự án</p>
+</div>
+</div>
+<!-- Media Item 2 -->
+<div class="group relative border border-outline-variant rounded bg-white overflow-hidden hover:shadow-md transition-all cursor-pointer">
+<div class="aspect-square bg-surface-dim relative overflow-hidden">
+<img alt="Media Image" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" data-alt="architectural close up of modern concrete and glass building facade reflecting golden hour sunlight, sharp geometric lines" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDn5t9znOqYVHUvraQbfOVfR9lJKp2rDxFDxA5zb2jo44e_HWNikLW65Cdr2hPreSqfTqZa2IW5qCo2CMssZou0tlPczDNYiCaENaVoe3B1yP1_j_4_SlIykO6rSM2Lz0MPddiehoEx84L1cGmX2P-rAcWJej_zfY2JdVS8CjAd8YoRMwOklL31egmZdAiLMLgAtCqpQSc7JWd2QtwEWmkZSCKPepB4pzr41l1ZbGmywZw8Szny3TyLGjfTpEPRFenSNKC3QA56IJbF"/>
+<div class="absolute inset-0 bg-primary-container/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-3">
+<button class="w-8 h-8 rounded-full bg-white text-primary-container flex items-center justify-center hover:bg-[#ea580c] hover:text-white transition-colors">
+<span class="material-symbols-outlined text-[18px]">visibility</span>
+</button>
+</div>
+</div>
+<div class="p-2 border-t border-outline-variant">
+<p class="font-body-sm text-[12px] text-on-surface truncate font-medium">Materials_Hero.png</p>
+<p class="font-body-sm text-[11px] text-outline mt-0.5">1.1 MB • Sản phẩm</p>
+</div>
+</div>
+<!-- Media Item 3 -->
+<div class="group relative border border-outline-variant rounded bg-white overflow-hidden hover:shadow-md transition-all cursor-pointer">
+<div class="aspect-square bg-surface-dim relative overflow-hidden">
+<img alt="Media Image" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" data-alt="black and white photo of heavy industrial manufacturing equipment in a clean factory setting, precise engineering details" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCX2Gz3dJB_b7YZN-8DEzNxuqJv_NOzNIQrkET28FiqZzTEkG2ySr--ty1r9fWEiQIBQtVK2d0qRgz-9fByIdJRsELcT2tGaKf-GVAkAbHqbEMrhe9q4JpIabNyxOikjfzSNF9GKj-3i8FUpT8UMMgLVMyuPs4kWvgHywo8ef6WF6uPsQTdlqnIsed3t0Y7v7omvhQXoZ6IiupyL0m8o3y-3mcUMQFGiOIg9BxG3p0nbnBVAzsGEY-DUmWh2xTfp6uG-Mfl2w03FUkc"/>
+<div class="absolute inset-0 bg-primary-container/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-3">
+<button class="w-8 h-8 rounded-full bg-white text-primary-container flex items-center justify-center hover:bg-[#ea580c] hover:text-white transition-colors">
+<span class="material-symbols-outlined text-[18px]">visibility</span>
+</button>
+</div>
+</div>
+<div class="p-2 border-t border-outline-variant">
+<p class="font-body-sm text-[12px] text-on-surface truncate font-medium">Project_Hydro.jpg</p>
+<p class="font-body-sm text-[11px] text-outline mt-0.5">3.8 MB • Dự án</p>
+</div>
+</div>
+<!-- Media Item 4 -->
+<div class="group relative border border-outline-variant rounded bg-white overflow-hidden hover:shadow-md transition-all cursor-pointer">
+<div class="aspect-square bg-surface-dim relative overflow-hidden">
+<img alt="Media Image" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" data-alt="close up of textured raw grey concrete surface with subtle variations in tone, industrial minimalist aesthetic" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCotnqCDYtOfBRZZ96hRbg0gaVJGIVBsY1fSMjcSuZGUEdT3NgJNeTx7p6vN3mASFD05R5-ocIfBC2JJvK3eEltlEMorkyx4rJzX51BAUA6nsLxyMQWWFqKDsTXz-qiCalSdLmOYV84B3pa8NqOGVLL-3iIzgo0niadXeCQbgDUglEUOU9uPEKG9347OvyyRk9W7nhjy9OF4kIbTEmje-PjA3RG8f9VJNwesuvV07RVGWl7jAAoFxd64FLrcXcE0O4eAbC7SH05dpfQ"/>
+<div class="absolute inset-0 bg-primary-container/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-3">
+<button class="w-8 h-8 rounded-full bg-white text-primary-container flex items-center justify-center hover:bg-[#ea580c] hover:text-white transition-colors">
+<span class="material-symbols-outlined text-[18px]">visibility</span>
+</button>
+</div>
+</div>
+<div class="p-2 border-t border-outline-variant">
+<p class="font-body-sm text-[12px] text-on-surface truncate font-medium">Texture_Concrete.jpg</p>
+<p class="font-body-sm text-[11px] text-outline mt-0.5">850 KB • Sản phẩm</p>
+</div>
+</div>
+<!-- Media Item 5 -->
+<div class="group relative border border-outline-variant rounded bg-white overflow-hidden hover:shadow-md transition-all cursor-pointer">
+<div class="aspect-square bg-surface-dim relative overflow-hidden">
+<img alt="Media Image" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" data-alt="construction workers in hardhats reviewing architectural blueprints on site during daytime, professional engineering context" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBknZbuVjj4Q5oMLj6KUkXs7KDSbRrjCiNCVfqwoHnxyA6w34TjIHAFoY6nWtGbNExZx244qHOpxbTkZcH_TxIwEz6tvBQ-grW_VtXC0jwcZpBKEtSxX-f2_IGMc3-1DFgusBxYc7l7-nL5Tu1fC_fOeEeXGtRE5tRSlOF2sSA53GYfp2CbxV2sEpjqtOy0RDeqUi1DvKt9NSHXBuUCVrUYkhchSdqRzaYS7cBB1L5VTsjO0jqunfS59uLgmOnY4ySZ3SNIqr-AAAOC"/>
+<div class="absolute inset-0 bg-primary-container/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-3">
+<button class="w-8 h-8 rounded-full bg-white text-primary-container flex items-center justify-center hover:bg-[#ea580c] hover:text-white transition-colors">
+<span class="material-symbols-outlined text-[18px]">visibility</span>
+</button>
+</div>
+</div>
+<div class="p-2 border-t border-outline-variant">
+<p class="font-body-sm text-[12px] text-on-surface truncate font-medium">News_Team_04.jpg</p>
+<p class="font-body-sm text-[11px] text-outline mt-0.5">1.5 MB • Tin tức</p>
+</div>
+</div>
+</div>
+<!-- Pagination Bar (Structural Indicator style) -->
+<div class="p-4 border-t border-outline-variant bg-surface flex items-center justify-center gap-2">
+<div class="h-1 w-8 bg-[#ea580c] rounded-full"></div>
+<div class="h-1 w-8 bg-outline-variant rounded-full cursor-pointer hover:bg-outline"></div>
+<div class="h-1 w-8 bg-outline-variant rounded-full cursor-pointer hover:bg-outline"></div>
+<div class="h-1 w-8 bg-outline-variant rounded-full cursor-pointer hover:bg-outline"></div>
+</div>
+</div>
+</section>
+</div>
+</main>
+<script>
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('/sw.js').catch(() => {});
+  });
+}
+</script>
+</body>
+</html>

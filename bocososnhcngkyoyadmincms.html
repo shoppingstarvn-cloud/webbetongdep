@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Year-over-Year Report - Industrial Analytics</title>
+<link href="/manifest.json" rel="manifest"/>
+<link href="/favicon.ico" rel="icon" sizes="any"/>
+<link href="/favicon-32.png" rel="icon" type="image/png" sizes="32x32"/>
+<link href="/apple-touch-icon.png" rel="apple-touch-icon" sizes="180x180"/>
+<meta content="#041627" name="theme-color"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface": "#f8f9fb",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-container": "#eceef0",
+                        "secondary-fixed-dim": "#c7c6c6",
+                        "surface-dim": "#d8dadc",
+                        "surface-container-low": "#f2f4f6",
+                        "on-secondary": "#ffffff",
+                        "outline": "#74777d",
+                        "on-secondary-fixed": "#1b1c1c",
+                        "on-error": "#ffffff",
+                        "on-tertiary": "#ffffff",
+                        "on-primary-fixed-variant": "#38485a",
+                        "on-secondary-container": "#646464",
+                        "secondary": "#5e5e5e",
+                        "on-surface": "#191c1e",
+                        "inverse-surface": "#2d3133",
+                        "inverse-primary": "#b7c8de",
+                        "on-background": "#191c1e",
+                        "surface-variant": "#e0e3e5",
+                        "surface-bright": "#f8f9fb",
+                        "on-error-container": "#93000a",
+                        "surface-tint": "#4f6073",
+                        "primary-container": "#1a2b3c",
+                        "tertiary-fixed-dim": "#ffb693",
+                        "on-tertiary-fixed": "#341000",
+                        "on-primary": "#ffffff",
+                        "surface-container-high": "#e6e8ea",
+                        "on-surface-variant": "#44474c",
+                        "inverse-on-surface": "#eff1f3",
+                        "tertiary-container": "#4b1b00",
+                        "primary": "#041627",
+                        "primary-fixed": "#d2e4fb",
+                        "secondary-fixed": "#e3e2e2",
+                        "on-primary-fixed": "#0b1d2d",
+                        "on-primary-container": "#8192a7",
+                        "surface-container-highest": "#e0e3e5",
+                        "error": "#ba1a1a",
+                        "background": "#f8f9fb",
+                        "outline-variant": "#c4c6cd",
+                        "on-secondary-fixed-variant": "#464747",
+                        "tertiary-fixed": "#ffdbcb",
+                        "tertiary": "#2a0c00",
+                        "primary-fixed-dim": "#b7c8de",
+                        "on-tertiary-container": "#eb6a1b",
+                        "error-container": "#ffdad6",
+                        "secondary-container": "#e3e2e2",
+                        "on-tertiary-fixed-variant": "#7a3000"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "sm": "1rem",
+                        "xs": "0.5rem",
+                        "xl": "4rem",
+                        "max_width": "1280px",
+                        "base": "4px",
+                        "gutter": "24px",
+                        "md": "1.5rem",
+                        "lg": "2.5rem",
+                        "margin": "32px"
+                    },
+                    "fontFamily": {
+                        "body-md": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "table-data": ["Inter"],
+                        "headline-sm": ["Inter"],
+                        "display-lg": ["Inter"],
+                        "body-sm": ["Inter"],
+                        "label-bold": ["Inter"],
+                        "headline-md": ["Inter"]
+                    },
+                    "fontSize": {
+                        "body-md": ["16px", {"lineHeight": "1.5", "fontWeight": "400"}],
+                        "body-lg": ["18px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                        "table-data": ["14px", {"lineHeight": "1.2", "fontWeight": "500"}],
+                        "headline-sm": ["24px", {"lineHeight": "1.3", "fontWeight": "600"}],
+                        "display-lg": ["48px", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "body-sm": ["14px", {"lineHeight": "1.5", "fontWeight": "400"}],
+                        "label-bold": ["12px", {"lineHeight": "1", "letterSpacing": "0.05em", "fontWeight": "700"}],
+                        "headline-md": ["32px", {"lineHeight": "1.2", "letterSpacing": "-0.01em", "fontWeight": "600"}]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .fill-icon {
+            font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        
+        /* Custom chart line styles to represent SVG paths without JS */
+        .chart-line-current { border-top: 2px solid #041627; }
+        .chart-line-previous { border-top: 2px dashed #8192a7; }
+        .chart-line-yoy { border-top: 2px solid #eb6a1b; }
+    </style>
+</head>
+<body class="bg-background text-on-background min-h-screen flex font-body-md text-body-md overflow-x-hidden">
+<!-- SideNavBar -->
+<nav class="hidden md:flex flex-col fixed left-0 top-0 h-full w-64 border-r border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950 py-4 z-20">
+<div class="px-6 mb-8 flex flex-col items-start">
+<div class="text-lg font-black text-slate-900 dark:text-slate-50 mb-4 tracking-tight">Core Reporting</div>
+<div class="font-body-sm text-body-sm text-slate-500">Enterprise Division</div>
+</div>
+<div class="flex-1 px-4 space-y-2">
+<a class="flex items-center px-4 py-3 rounded-DEFAULT text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-900 hover:text-orange-600 dark:hover:text-orange-400 transition-all" href="#">
+<span class="material-symbols-outlined mr-3">dashboard</span>
+<span class="font-['Inter'] text-xs font-semibold uppercase tracking-wider">Dashboard</span>
+</a>
+<a class="flex items-center px-4 py-3 rounded-DEFAULT bg-slate-200 dark:bg-slate-800 text-slate-900 dark:text-slate-50 border-l-4 border-orange-600 active-translate-x-1 duration-200" href="#">
+<span class="material-symbols-outlined fill-icon mr-3">analytics</span>
+<span class="font-['Inter'] text-xs font-semibold uppercase tracking-wider">Product Performance</span>
+</a>
+<a class="flex items-center px-4 py-3 rounded-DEFAULT text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-900 hover:text-orange-600 dark:hover:text-orange-400 transition-all" href="#">
+<span class="material-symbols-outlined mr-3">inventory_2</span>
+<span class="font-['Inter'] text-xs font-semibold uppercase tracking-wider">Inventory Reports</span>
+</a>
+<a class="flex items-center px-4 py-3 rounded-DEFAULT text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-900 hover:text-orange-600 dark:hover:text-orange-400 transition-all" href="#">
+<span class="material-symbols-outlined mr-3">payments</span>
+<span class="font-['Inter'] text-xs font-semibold uppercase tracking-wider">Financials</span>
+</a>
+<a class="flex items-center px-4 py-3 rounded-DEFAULT text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-900 hover:text-orange-600 dark:hover:text-orange-400 transition-all" href="#">
+<span class="material-symbols-outlined mr-3">precision_manufacturing</span>
+<span class="font-['Inter'] text-xs font-semibold uppercase tracking-wider">Project Timeline</span>
+</a>
+</div>
+<div class="px-4 mt-auto space-y-4">
+<button class="w-full py-3 px-4 bg-primary text-on-primary font-label-bold text-label-bold rounded-DEFAULT hover:opacity-90 transition-opacity">
+                Export Global Data
+            </button>
+<div class="border-t border-slate-200 dark:border-slate-800 pt-4">
+<a class="flex items-center px-4 py-2 text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-900 transition-all" href="#">
+<span class="material-symbols-outlined mr-3">settings</span>
+<span class="font-['Inter'] text-xs font-semibold uppercase tracking-wider">Settings</span>
+</a>
+<a class="flex items-center px-4 py-2 text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-900 transition-all" href="#">
+<span class="material-symbols-outlined mr-3">contact_support</span>
+<span class="font-['Inter'] text-xs font-semibold uppercase tracking-wider">Support</span>
+</a>
+</div>
+</div>
+</nav>
+<!-- Main Content Area -->
+<div class="flex-1 flex flex-col md:ml-64 relative min-h-screen bg-surface">
+<!-- TopNavBar -->
+<header class="flex justify-between items-center h-16 px-6 w-full docked full-width top-0 border-b border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 sticky z-10 flat no shadows">
+<div class="flex items-center space-x-4">
+<span class="text-xl font-bold text-slate-900 dark:text-slate-50 tracking-tight">Industrial Analytics</span>
+<!-- Period Selector -->
+<div class="hidden lg:flex items-center ml-8 bg-surface-container-low border border-outline-variant rounded-DEFAULT px-3 py-1.5">
+<span class="material-symbols-outlined text-outline mr-2" style="font-size: 18px;">calendar_month</span>
+<select class="bg-transparent border-none text-body-sm font-table-data text-on-surface focus:ring-0 p-0 pr-6 cursor-pointer">
+<option>Oct 2023 vs Oct 2022</option>
+<option>Sep 2023 vs Sep 2022</option>
+<option>Q3 2023 vs Q3 2022</option>
+<option>YTD 2023 vs YTD 2022</option>
+</select>
+</div>
+</div>
+<div class="flex items-center space-x-6">
+<!-- Search (on_right) -->
+<div class="relative hidden sm:block">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline">search</span>
+<input class="pl-10 pr-4 py-2 bg-surface-container border border-outline-variant rounded-DEFAULT text-body-sm focus:border-primary focus:ring-1 focus:ring-primary w-64 transition-colors" placeholder="Search reports..." type="text"/>
+</div>
+<div class="flex items-center space-x-4 text-slate-600 dark:text-slate-400 font-medium">
+<button class="hover:text-orange-600 dark:hover:text-orange-400 transition-colors p-1 relative">
+<span class="material-symbols-outlined">notifications</span>
+<span class="absolute top-1 right-1 w-2 h-2 bg-on-tertiary-container rounded-full"></span>
+</button>
+<button class="hover:text-orange-600 dark:hover:text-orange-400 transition-colors p-1">
+<span class="material-symbols-outlined">help</span>
+</button>
+<button class="hover:text-orange-600 dark:hover:text-orange-400 transition-colors p-1">
+<span class="material-symbols-outlined">settings</span>
+</button>
+<div class="w-8 h-8 rounded-full bg-primary-container text-on-primary-container flex items-center justify-center font-label-bold text-label-bold ml-2 cursor-pointer border border-outline-variant" data-alt="User Profile">
+                        IA
+                    </div>
+</div>
+</div>
+</header>
+<!-- Canvas -->
+<main class="flex-1 p-6 lg:p-8 space-y-xl max-w-[1440px] mx-auto w-full">
+<!-- Header Section -->
+<div class="flex flex-col md:flex-row justify-between items-start md:items-end gap-4 border-b border-outline-variant pb-4">
+<div>
+<h1 class="font-headline-md text-headline-md text-on-surface mb-2">Year-over-Year Performance</h1>
+<p class="font-body-md text-body-md text-on-surface-variant">Comparative analysis for October 2023 against October 2022.</p>
+</div>
+<div class="flex space-x-3">
+<button class="px-4 py-2 border border-outline text-on-surface font-table-data text-table-data rounded-DEFAULT hover:bg-surface-container-low transition-colors flex items-center">
+<span class="material-symbols-outlined mr-2" style="font-size: 18px;">download</span>
+                        PDF Report
+                    </button>
+<button class="px-4 py-2 bg-primary text-on-primary font-table-data text-table-data rounded-DEFAULT hover:opacity-90 transition-opacity flex items-center">
+<span class="material-symbols-outlined mr-2" style="font-size: 18px;">share</span>
+                        Share Insights
+                    </button>
+</div>
+</div>
+<!-- Bento Grid: Top KPIs & Summary -->
+<div class="grid grid-cols-1 md:grid-cols-4 gap-gutter">
+<!-- YoY Growth Summary Card (Spans 1 col, acts as hero metric) -->
+<div class="col-span-1 md:col-span-1 bg-primary text-on-primary p-6 rounded-DEFAULT border border-outline-variant/20 flex flex-col justify-between h-full relative overflow-hidden group">
+<!-- Subtle background pattern suggestion -->
+<div class="absolute inset-0 opacity-5 pointer-events-none" style="background-image: radial-gradient(circle at 2px 2px, white 1px, transparent 0); background-size: 16px 16px;"></div>
+<div>
+<div class="flex items-center text-primary-fixed-dim mb-4">
+<span class="material-symbols-outlined mr-2">monitoring</span>
+<span class="font-label-bold text-label-bold uppercase tracking-wider">Annual Growth</span>
+</div>
+<div class="font-display-lg text-display-lg text-white mb-2">+24.8%</div>
+<p class="font-body-sm text-body-sm text-inverse-primary">Overall platform traffic volume increase YoY.</p>
+</div>
+<div class="mt-8 pt-4 border-t border-primary-fixed-dim/30 flex justify-between items-center">
+<span class="font-body-sm text-body-sm text-primary-fixed-dim">Status: Strong</span>
+<span class="material-symbols-outlined text-tertiary-fixed-dim">trending_up</span>
+</div>
+</div>
+<!-- KPI Cards (Span 3 cols) -->
+<div class="col-span-1 md:col-span-3 grid grid-cols-1 sm:grid-cols-3 gap-gutter">
+<!-- KPI 1 -->
+<div class="bg-surface-container-lowest border border-outline-variant/50 p-5 rounded-DEFAULT shadow-sm flex flex-col hover:border-outline-variant transition-colors group">
+<div class="text-on-surface-variant font-table-data text-table-data mb-2">Total Visits</div>
+<div class="flex items-baseline space-x-3 mb-4">
+<span class="font-headline-md text-headline-md text-on-surface">142.5k</span>
+</div>
+<div class="mt-auto flex items-center justify-between text-body-sm">
+<div class="flex items-center text-secondary">
+<span class="material-symbols-outlined text-sm mr-1">history</span>
+                                114.2k prev. yr
+                            </div>
+<div class="flex items-center text-tertiary-container font-medium px-2 py-1 bg-tertiary-fixed rounded-DEFAULT">
+<span class="material-symbols-outlined text-sm mr-1">arrow_upward</span>
+                                24.8%
+                            </div>
+</div>
+</div>
+<!-- KPI 2 -->
+<div class="bg-surface-container-lowest border border-outline-variant/50 p-5 rounded-DEFAULT shadow-sm flex flex-col hover:border-outline-variant transition-colors">
+<div class="text-on-surface-variant font-table-data text-table-data mb-2">Qualified Inquiries</div>
+<div class="flex items-baseline space-x-3 mb-4">
+<span class="font-headline-md text-headline-md text-on-surface">3,240</span>
+</div>
+<div class="mt-auto flex items-center justify-between text-body-sm">
+<div class="flex items-center text-secondary">
+<span class="material-symbols-outlined text-sm mr-1">history</span>
+                                2,850 prev. yr
+                            </div>
+<div class="flex items-center text-tertiary-container font-medium px-2 py-1 bg-tertiary-fixed rounded-DEFAULT">
+<span class="material-symbols-outlined text-sm mr-1">arrow_upward</span>
+                                13.7%
+                            </div>
+</div>
+</div>
+<!-- KPI 3 -->
+<div class="bg-surface-container-lowest border border-outline-variant/50 p-5 rounded-DEFAULT shadow-sm flex flex-col hover:border-outline-variant transition-colors">
+<div class="text-on-surface-variant font-table-data text-table-data mb-2">Conversion Rate</div>
+<div class="flex items-baseline space-x-3 mb-4">
+<span class="font-headline-md text-headline-md text-on-surface">2.27%</span>
+</div>
+<div class="mt-auto flex items-center justify-between text-body-sm">
+<div class="flex items-center text-secondary">
+<span class="material-symbols-outlined text-sm mr-1">history</span>
+                                2.49% prev. yr
+                            </div>
+<div class="flex items-center text-error font-medium px-2 py-1 bg-error-container rounded-DEFAULT">
+<span class="material-symbols-outlined text-sm mr-1">arrow_downward</span>
+                                -8.8%
+                            </div>
+</div>
+</div>
+</div>
+</div>
+<!-- Chart Section -->
+<div class="bg-surface-container-lowest border border-outline-variant/50 rounded-DEFAULT p-6 shadow-sm">
+<div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6">
+<div>
+<h2 class="font-headline-sm text-headline-sm text-on-surface">Traffic Trend Analysis</h2>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Daily visitation volume comparison</p>
+</div>
+<!-- Legend -->
+<div class="flex flex-wrap items-center gap-4 mt-4 sm:mt-0 font-body-sm text-body-sm text-on-surface-variant">
+<div class="flex items-center">
+<div class="w-4 h-0.5 bg-primary mr-2"></div>
+                            Current (Oct '23)
+                        </div>
+<div class="flex items-center">
+<div class="w-4 border-t-2 border-dashed border-on-primary-container mr-2"></div>
+                            Previous (Sep '23)
+                        </div>
+<div class="flex items-center">
+<div class="w-4 h-0.5 bg-on-tertiary-container mr-2"></div>
+                            Last Year (Oct '22)
+                        </div>
+</div>
+</div>
+<!-- Abstracted Chart Canvas -->
+<div class="relative h-[300px] w-full border-b border-l border-outline-variant/30 ml-8 mb-6 mt-4">
+<!-- Y-Axis Labels -->
+<div class="absolute -left-10 top-0 h-full flex flex-col justify-between font-label-bold text-[10px] text-outline text-right w-8">
+<span>6k</span>
+<span>4k</span>
+<span>2k</span>
+<span>0</span>
+</div>
+<!-- Grid Lines -->
+<div class="absolute inset-0 flex flex-col justify-between pointer-events-none">
+<div class="w-full border-t border-outline-variant/10 h-0"></div>
+<div class="w-full border-t border-outline-variant/10 h-0"></div>
+<div class="w-full border-t border-outline-variant/10 h-0"></div>
+<div class="w-full h-0"></div>
+</div>
+<!-- CSS-only Abstract Chart Lines (simulated) -->
+<div class="absolute inset-0 overflow-hidden">
+<!-- Last Year Line (Orange) -->
+<div class="absolute top-[60%] left-0 w-[10%] chart-line-yoy transform -rotate-[15deg] origin-left"></div>
+<div class="absolute top-[55%] left-[10%] w-[20%] chart-line-yoy transform rotate-[5deg] origin-left"></div>
+<div class="absolute top-[58%] left-[30%] w-[30%] chart-line-yoy transform -rotate-[25deg] origin-left"></div>
+<div class="absolute top-[45%] left-[60%] w-[20%] chart-line-yoy transform rotate-[10deg] origin-left"></div>
+<div class="absolute top-[50%] left-[80%] w-[20%] chart-line-yoy transform -rotate-[5deg] origin-left"></div>
+<!-- Previous Month Line (Dashed Navy) -->
+<div class="absolute top-[40%] left-0 w-[15%] chart-line-previous transform -rotate-[10deg] origin-left"></div>
+<div class="absolute top-[35%] left-[15%] w-[25%] chart-line-previous transform rotate-[15deg] origin-left"></div>
+<div class="absolute top-[42%] left-[40%] w-[35%] chart-line-previous transform -rotate-[20deg] origin-left"></div>
+<div class="absolute top-[30%] left-[75%] w-[25%] chart-line-previous transform rotate-[5deg] origin-left"></div>
+<!-- Current Month Line (Solid Navy) -->
+<div class="absolute top-[30%] left-0 w-[20%] chart-line-current transform -rotate-[25deg] origin-left"></div>
+<div class="absolute top-[18%] left-[20%] w-[20%] chart-line-current transform rotate-[10deg] origin-left"></div>
+<div class="absolute top-[22%] left-[40%] w-[30%] chart-line-current transform -rotate-[35deg] origin-left"></div>
+<div class="absolute top-[5%] left-[70%] w-[30%] chart-line-current transform rotate-[15deg] origin-left"></div>
+<!-- Current Month Highlight Node -->
+<div class="absolute top-[10%] right-0 w-2 h-2 bg-primary rounded-full transform translate-x-1/2 -translate-y-1/2 shadow-[0_0_0_4px_rgba(4,22,39,0.1)]"></div>
+</div>
+</div>
+<!-- X-Axis Labels -->
+<div class="flex justify-between ml-8 font-label-bold text-[10px] text-outline">
+<span>Week 1</span>
+<span>Week 2</span>
+<span>Week 3</span>
+<span>Week 4</span>
+</div>
+</div>
+<!-- Product Performance Table -->
+<div class="bg-surface-container-lowest border border-outline-variant/50 rounded-DEFAULT overflow-hidden shadow-sm">
+<div class="p-6 border-b border-outline-variant/30 bg-surface-container-low flex justify-between items-center">
+<h3 class="font-headline-sm text-headline-sm text-on-surface">Category Performance</h3>
+<div class="flex items-center text-primary font-table-data text-table-data cursor-pointer hover:underline">
+                        View Full Catalog <span class="material-symbols-outlined ml-1 text-sm">arrow_forward</span>
+</div>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-primary text-on-primary">
+<th class="p-4 font-label-bold text-label-bold uppercase tracking-wider">Product Line</th>
+<th class="p-4 font-label-bold text-label-bold uppercase tracking-wider text-right">Inquiries (Oct '23)</th>
+<th class="p-4 font-label-bold text-label-bold uppercase tracking-wider text-right">Conv. Rate</th>
+<th class="p-4 font-label-bold text-label-bold uppercase tracking-wider text-right">YoY Conv. Growth</th>
+<th class="p-4 font-label-bold text-label-bold uppercase tracking-wider text-center">Status</th>
+</tr>
+</thead>
+<tbody class="text-on-surface font-table-data text-table-data divide-y divide-outline-variant/20">
+<tr class="hover:bg-surface-container-low transition-colors">
+<td class="p-4 font-semibold">Structural Steel</td>
+<td class="p-4 text-right">1,245</td>
+<td class="p-4 text-right">3.1%</td>
+<td class="p-4 text-right text-tertiary-container font-semibold">+1.2 pts</td>
+<td class="p-4 text-center">
+<span class="inline-flex items-center px-2 py-0.5 rounded-DEFAULT bg-tertiary-fixed text-on-tertiary-fixed font-label-bold text-[10px] uppercase">Leading</span>
+</td>
+</tr>
+<tr class="hover:bg-surface-container-low transition-colors">
+<td class="p-4 font-semibold">Industrial Concrete</td>
+<td class="p-4 text-right">890</td>
+<td class="p-4 text-right">2.8%</td>
+<td class="p-4 text-right text-tertiary-container font-semibold">+0.5 pts</td>
+<td class="p-4 text-center">
+<span class="inline-flex items-center px-2 py-0.5 rounded-DEFAULT bg-surface-variant text-on-surface-variant font-label-bold text-[10px] uppercase">Stable</span>
+</td>
+</tr>
+<tr class="hover:bg-surface-container-low transition-colors">
+<td class="p-4 font-semibold">Prefabricated Modules</td>
+<td class="p-4 text-right">650</td>
+<td class="p-4 text-right">1.9%</td>
+<td class="p-4 text-right text-error font-semibold">-0.8 pts</td>
+<td class="p-4 text-center">
+<span class="inline-flex items-center px-2 py-0.5 rounded-DEFAULT bg-error-container text-on-error-container font-label-bold text-[10px] uppercase">Watch</span>
+</td>
+</tr>
+<tr class="hover:bg-surface-container-low transition-colors">
+<td class="p-4 font-semibold">Heavy Machinery Leasing</td>
+<td class="p-4 text-right">455</td>
+<td class="p-4 text-right">1.2%</td>
+<td class="p-4 text-right text-tertiary-container font-semibold">+0.1 pts</td>
+<td class="p-4 text-center">
+<span class="inline-flex items-center px-2 py-0.5 rounded-DEFAULT bg-surface-variant text-on-surface-variant font-label-bold text-[10px] uppercase">Stable</span>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</main>
+</div>
+<script>
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('/sw.js').catch(() => {});
+  });
+}
+</script>
+</body>
+</html>

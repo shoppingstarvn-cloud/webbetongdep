@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Admin Dashboard | CONCRETE SOLUTIONS</title>
+<link href="/manifest.json" rel="manifest"/>
+<link href="/favicon.ico" rel="icon" sizes="any"/>
+<link href="/favicon-32.png" rel="icon" type="image/png" sizes="32x32"/>
+<link href="/apple-touch-icon.png" rel="apple-touch-icon" sizes="180x180"/>
+<meta content="#041627" name="theme-color"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "primary-container": "#1a2b3c",
+                      "on-secondary-fixed": "#1b1c1c",
+                      "error": "#ba1a1a",
+                      "on-surface-variant": "#44474c",
+                      "on-error-container": "#93000a",
+                      "tertiary-container": "#4b1b00",
+                      "on-tertiary-fixed-variant": "#7a3000",
+                      "surface-dim": "#d8dadc",
+                      "surface-tint": "#4f6073",
+                      "background": "#f8f9fb",
+                      "surface-bright": "#f8f9fb",
+                      "on-tertiary": "#ffffff",
+                      "on-error": "#ffffff",
+                      "inverse-on-surface": "#eff1f3",
+                      "on-tertiary-container": "#eb6a1b",
+                      "on-secondary-container": "#646464",
+                      "on-background": "#191c1e",
+                      "on-primary-fixed-variant": "#38485a",
+                      "inverse-surface": "#2d3133",
+                      "surface-container": "#eceef0",
+                      "surface-container-lowest": "#ffffff",
+                      "surface-container-high": "#e6e8ea",
+                      "secondary-fixed": "#e3e2e2",
+                      "on-secondary": "#ffffff",
+                      "tertiary": "#2a0c00",
+                      "surface": "#f8f9fb",
+                      "tertiary-fixed": "#ffdbcb",
+                      "on-primary": "#ffffff",
+                      "secondary-container": "#e3e2e2",
+                      "inverse-primary": "#b7c8de",
+                      "outline": "#74777d",
+                      "on-surface": "#191c1e",
+                      "primary-fixed": "#d2e4fb",
+                      "error-container": "#ffdad6",
+                      "on-secondary-fixed-variant": "#464747",
+                      "on-primary-fixed": "#0b1d2d",
+                      "surface-container-low": "#f2f4f6",
+                      "primary-fixed-dim": "#b7c8de",
+                      "surface-variant": "#e0e3e5",
+                      "on-tertiary-fixed": "#341000",
+                      "surface-container-highest": "#e0e3e5",
+                      "secondary": "#5e5e5e",
+                      "primary": "#041627",
+                      "tertiary-fixed-dim": "#ffb693",
+                      "on-primary-container": "#8192a7",
+                      "secondary-fixed-dim": "#c7c6c6",
+                      "outline-variant": "#c4c6cd"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.125rem",
+                      "lg": "0.25rem",
+                      "xl": "0.5rem",
+                      "full": "0.75rem"
+              },
+              "spacing": {
+                      "md": "1.5rem",
+                      "margin": "32px",
+                      "gutter": "24px",
+                      "lg": "2.5rem",
+                      "sm": "1rem",
+                      "base": "4px",
+                      "max_width": "1280px",
+                      "xs": "0.5rem",
+                      "xl": "4rem"
+              },
+              "fontFamily": {
+                      "body-lg": ["Inter"],
+                      "label-bold": ["Inter"],
+                      "body-sm": ["Inter"],
+                      "body-md": ["Inter"],
+                      "headline-sm": ["Inter"],
+                      "table-data": ["Inter"],
+                      "display-lg": ["Inter"],
+                      "headline-md": ["Inter"]
+              },
+              "fontSize": {
+                      "body-lg": ["18px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                      "label-bold": ["12px", {"lineHeight": "1", "letterSpacing": "0.05em", "fontWeight": "700"}],
+                      "body-sm": ["14px", {"lineHeight": "1.5", "fontWeight": "400"}],
+                      "body-md": ["16px", {"lineHeight": "1.5", "fontWeight": "400"}],
+                      "headline-sm": ["24px", {"lineHeight": "1.3", "fontWeight": "600"}],
+                      "table-data": ["14px", {"lineHeight": "1.2", "fontWeight": "500"}],
+                      "display-lg": ["48px", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                      "headline-md": ["32px", {"lineHeight": "1.2", "letterSpacing": "-0.01em", "fontWeight": "600"}]
+              }
+            },
+          },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body {
+            background-color: #f8f9fb;
+            font-family: 'Inter', sans-serif;
+        }
+        .sidebar-scroll::-webkit-scrollbar {
+            width: 4px;
+        }
+        .sidebar-scroll::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 2px;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background">
+<!-- TopNavBar: Execution of JSON parameters -->
+<header class="flex justify-between items-center h-20 px-8 max-w-full sticky top-0 z-50 bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800">
+<div class="flex items-center gap-8">
+<span class="text-xl font-black text-blue-900 dark:text-white uppercase tracking-wider">CONCRETE SOLUTIONS</span>
+<nav class="hidden lg:flex gap-6">
+<a class="font-inter font-semibold tracking-tight text-orange-600 border-b-2 border-orange-600 pb-1" href="#">Materials</a>
+<a class="font-inter font-semibold tracking-tight text-slate-600 dark:text-slate-400 hover:text-blue-900 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors duration-200 ease-in-out" href="#">Equipment</a>
+<a class="font-inter font-semibold tracking-tight text-slate-600 dark:text-slate-400 hover:text-blue-900 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors duration-200 ease-in-out" href="#">Projects</a>
+<a class="font-inter font-semibold tracking-tight text-slate-600 dark:text-slate-400 hover:text-blue-900 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors duration-200 ease-in-out" href="#">Technical Resources</a>
+<a class="font-inter font-semibold tracking-tight text-slate-600 dark:text-slate-400 hover:text-blue-900 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors duration-200 ease-in-out" href="#">Contact</a>
+</nav>
+</div>
+<div class="flex items-center gap-4">
+<div class="relative group">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400">search</span>
+<input class="pl-10 pr-4 py-2 bg-slate-50 border border-slate-200 rounded-md focus:outline-none focus:border-blue-900 focus:ring-1 focus:ring-blue-900 text-sm" placeholder="Search resources..." type="text"/>
+</div>
+<button class="bg-blue-900 text-white px-6 py-2 rounded-md font-semibold text-sm hover:bg-blue-800 transition-all">Get a Quote</button>
+</div>
+</header>
+<div class="flex min-h-screen">
+<!-- SideNavBar: Execution of JSON parameters -->
+<aside class="flex flex-col fixed left-0 top-20 h-[calc(100vh-80px)] w-64 z-40 bg-slate-50 dark:bg-slate-950 border-r border-slate-200 dark:border-slate-800">
+<div class="p-6 border-b border-slate-200 dark:border-slate-800">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-md bg-blue-900 flex items-center justify-center text-white">
+<span class="material-symbols-outlined" data-weight="fill" style="font-variation-settings: 'FILL' 1;">admin_panel_settings</span>
+</div>
+<div>
+<h2 class="text-lg font-bold text-blue-900 dark:text-white leading-tight">Project Control</h2>
+<p class="text-[10px] uppercase tracking-widest text-slate-500 font-bold">SME Admin Portal</p>
+</div>
+</div>
+</div>
+<nav class="flex-1 py-4 space-y-1 overflow-y-auto sidebar-scroll">
+<!-- Dashboard Active -->
+<a class="flex items-center gap-3 bg-blue-900 text-white rounded-md mx-2 px-4 py-3 font-inter text-sm font-medium transition-transform active:scale-95" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span>Dashboard</span>
+</a>
+<a class="flex items-center gap-3 text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-800 px-4 py-3 mx-2 rounded-md font-inter text-sm font-medium hover:translate-x-1 transition-transform active:scale-95" href="#">
+<span class="material-symbols-outlined" data-icon="inventory_2">inventory_2</span>
+<span>Inventory</span>
+</a>
+<a class="flex items-center gap-3 text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-800 px-4 py-3 mx-2 rounded-md font-inter text-sm font-medium hover:translate-x-1 transition-transform active:scale-95" href="#">
+<span class="material-symbols-outlined" data-icon="handyman">handyman</span>
+<span>Project Leads</span>
+</a>
+<a class="flex items-center gap-3 text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-800 px-4 py-3 mx-2 rounded-md font-inter text-sm font-medium hover:translate-x-1 transition-transform active:scale-95" href="#">
+<span class="material-symbols-outlined" data-icon="menu_book">menu_book</span>
+<span>Catalog CMS</span>
+</a>
+<a class="flex items-center gap-3 text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-800 px-4 py-3 mx-2 rounded-md font-inter text-sm font-medium hover:translate-x-1 transition-transform active:scale-95" href="#">
+<span class="material-symbols-outlined" data-icon="receipt_long">receipt_long</span>
+<span>Invoices</span>
+</a>
+<a class="flex items-center gap-3 text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-800 px-4 py-3 mx-2 rounded-md font-inter text-sm font-medium hover:translate-x-1 transition-transform active:scale-95" href="#">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+<span>Settings</span>
+</a>
+</nav>
+<div class="p-4 mt-auto border-t border-slate-200 dark:border-slate-800">
+<button class="w-full bg-orange-600 text-white font-bold py-3 rounded-md flex items-center justify-center gap-2 hover:bg-orange-700 transition-colors active:scale-95">
+<span class="material-symbols-outlined">add_circle</span>
+                    New Entry
+                </button>
+<a class="flex items-center gap-3 text-slate-600 dark:text-slate-400 hover:text-error mt-4 px-4 py-2 font-inter text-xs font-medium uppercase tracking-widest transition-colors" href="#">
+<span class="material-symbols-outlined text-sm" data-icon="logout">logout</span>
+                    Logout
+                </a>
+</div>
+</aside>
+<!-- Main Content Canvas -->
+<main class="flex-1 ml-64 p-8">
+<header class="mb-10">
+<div class="flex justify-between items-end">
+<div>
+<p class="text-sm font-bold text-orange-600 uppercase tracking-widest mb-1">Administrative Overview</p>
+<h1 class="text-display-lg font-display-lg text-primary">Global Control Center</h1>
+</div>
+<div class="flex items-center gap-2 text-on-surface-variant font-medium">
+<span class="material-symbols-outlined">calendar_today</span>
+<span class="text-body-sm">October 24, 2024</span>
+</div>
+</div>
+</header>
+<!-- Stats Grid -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-gutter mb-xl">
+<div class="bg-white p-6 border border-slate-200 hover:shadow-lg transition-shadow duration-300">
+<div class="flex justify-between items-start mb-4">
+<div class="p-2 bg-slate-100 rounded">
+<span class="material-symbols-outlined text-blue-900" style="font-variation-settings: 'FILL' 1;">construction</span>
+</div>
+<span class="text-xs font-bold text-green-600">+12%</span>
+</div>
+<p class="text-label-bold text-on-surface-variant uppercase mb-1">Active Projects</p>
+<h3 class="text-headline-md font-headline-md text-primary">42</h3>
+</div>
+<div class="bg-white p-6 border border-slate-200 hover:shadow-lg transition-shadow duration-300">
+<div class="flex justify-between items-start mb-4">
+<div class="p-2 bg-slate-100 rounded">
+<span class="material-symbols-outlined text-blue-900" style="font-variation-settings: 'FILL' 1;">group</span>
+</div>
+<span class="text-xs font-bold text-green-600">+5</span>
+</div>
+<p class="text-label-bold text-on-surface-variant uppercase mb-1">New Leads</p>
+<h3 class="text-headline-md font-headline-md text-primary">128</h3>
+</div>
+<div class="bg-white p-6 border border-slate-200 hover:shadow-lg transition-shadow duration-300">
+<div class="flex justify-between items-start mb-4">
+<div class="p-2 bg-slate-100 rounded">
+<span class="material-symbols-outlined text-blue-900" style="font-variation-settings: 'FILL' 1;">article</span>
+</div>
+<span class="text-xs font-bold text-slate-400">Stable</span>
+</div>
+<p class="text-label-bold text-on-surface-variant uppercase mb-1">Recent News</p>
+<h3 class="text-headline-md font-headline-md text-primary">15</h3>
+</div>
+<div class="bg-white p-6 border border-slate-200 hover:shadow-lg transition-shadow duration-300">
+<div class="flex justify-between items-start mb-4">
+<div class="p-2 bg-slate-100 rounded">
+<span class="material-symbols-outlined text-orange-600" style="font-variation-settings: 'FILL' 1;">warning</span>
+</div>
+<span class="text-xs font-bold text-error">Pending</span>
+</div>
+<p class="text-label-bold text-on-surface-variant uppercase mb-1">Safety Audits</p>
+<h3 class="text-headline-md font-headline-md text-primary">3</h3>
+</div>
+</div>
+<div class="grid grid-cols-1 xl:grid-cols-3 gap-gutter">
+<!-- Data Table Section (Main Area) -->
+<div class="xl:col-span-2 space-y-gutter">
+<section class="bg-white border border-slate-200 overflow-hidden">
+<div class="bg-slate-50 px-6 py-4 border-b border-slate-200 flex justify-between items-center">
+<h2 class="text-headline-sm font-headline-sm text-primary">Active Structural Projects</h2>
+<button class="text-body-sm font-semibold text-blue-900 flex items-center gap-1 hover:underline">
+                                View Report <span class="material-symbols-outlined text-sm">open_in_new</span>
+</button>
+</div>
+<table class="w-full text-left">
+<thead class="bg-primary text-white">
+<tr>
+<th class="px-6 py-3 text-label-bold uppercase">Project ID</th>
+<th class="px-6 py-3 text-label-bold uppercase">Location</th>
+<th class="px-6 py-3 text-label-bold uppercase">Pour Status</th>
+<th class="px-6 py-3 text-label-bold uppercase">Quality Score</th>
+<th class="px-6 py-3 text-label-bold uppercase">Action</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-slate-100">
+<tr class="hover:bg-slate-50 transition-colors">
+<td class="px-6 py-4 text-table-data">CS-9021</td>
+<td class="px-6 py-4 text-table-data">Manhattan Plaza</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-2">
+<div class="w-16 h-2 bg-slate-200 rounded-full overflow-hidden">
+<div class="w-3/4 h-full bg-orange-600"></div>
+</div>
+<span class="text-xs font-bold">75%</span>
+</div>
+</td>
+<td class="px-6 py-4 text-table-data text-green-600">9.8/10</td>
+<td class="px-6 py-4">
+<button class="text-blue-900 hover:text-orange-600"><span class="material-symbols-outlined">edit_note</span></button>
+</td>
+</tr>
+<tr class="hover:bg-slate-50 transition-colors">
+<td class="px-6 py-4 text-table-data">CS-8842</td>
+<td class="px-6 py-4">O'Hare Terminal 5</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-2">
+<div class="w-16 h-2 bg-slate-200 rounded-full overflow-hidden">
+<div class="w-1/4 h-full bg-orange-600"></div>
+</div>
+<span class="text-xs font-bold">25%</span>
+</div>
+</td>
+<td class="px-6 py-4 text-table-data text-green-600">9.4/10</td>
+<td class="px-6 py-4">
+<button class="text-blue-900 hover:text-orange-600"><span class="material-symbols-outlined">edit_note</span></button>
+</td>
+</tr>
+<tr class="hover:bg-slate-50 transition-colors">
+<td class="px-6 py-4 text-table-data">CS-9110</td>
+<td class="px-6 py-4">Austin Gigafactory</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-2">
+<div class="w-16 h-2 bg-slate-200 rounded-full overflow-hidden">
+<div class="w-full h-full bg-blue-900"></div>
+</div>
+<span class="text-xs font-bold">100%</span>
+</div>
+</td>
+<td class="px-6 py-4 text-table-data text-green-600">9.9/10</td>
+<td class="px-6 py-4">
+<button class="text-blue-900 hover:text-orange-600"><span class="material-symbols-outlined">edit_note</span></button>
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<!-- Bento Grid Content Management -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-gutter">
+<div class="bg-white border border-slate-200 p-6 flex flex-col justify-between h-64 overflow-hidden relative group">
+<div class="absolute inset-0 opacity-10 group-hover:opacity-20 transition-opacity">
+<img class="w-full h-full object-cover" data-alt="close-up of industrial concrete architecture with sharp lines and shadows in daylight" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBms2VEz2_XOJUgxb4St9F4tOIf1CZHklJqQmuSHLr4kLIGoVM9OJ2JyVrEQoKbFwbRMWAhzXRFw23PuqVKg3L5I_ypakyF6KcRchZoaIeED6KcbzMACEG8gPpeevuJwGS-pRk5Cd-1NPO9dfMg43mm__Is-MNCKSpzjzyCyIqbprWmTjVb0t80nqVqt5Ro3hn2ZLmKCdeAcKnNb8XXXCvE6MHoufxN9O9iksS_51Em8HSW-qbQhakO4CSxhyj_sY-4FXKC_i6RyM15"/>
+</div>
+<div class="relative z-10">
+<span class="text-label-bold text-orange-600 uppercase">Product CMS</span>
+<h4 class="text-headline-sm font-headline-sm text-primary mt-2">Materials Inventory</h4>
+<p class="text-body-sm text-on-surface-variant mt-2">Manage mix designs, curing agents, and equipment specs.</p>
+</div>
+<button class="relative z-10 w-fit bg-primary text-white px-4 py-2 text-xs font-bold uppercase tracking-widest hover:bg-orange-600 transition-colors">Manage Catalog</button>
+</div>
+<div class="bg-white border border-slate-200 p-6 flex flex-col justify-between h-64 overflow-hidden relative group">
+<div class="absolute inset-0 opacity-10 group-hover:opacity-20 transition-opacity">
+<img class="w-full h-full object-cover" data-alt="industrial construction worker operating a concrete pump on a large building site" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAEe9fnhnrp1tP4PgnIbftZd42B9GMkrJtPRQLV-OeH3578gIUVcXksU4wnbALDp787ku7NUCmDpZUpxr2Asqocc6-dZFMrVb7fWl_OLxAsTiBdWLB4M_f_SA91DoRSkr9MynJXCHrFoI3UImr--KMtNJXE3l04CPdFtauQqEl0txVmEVcnMExWeeRSWDBLMzX2emZ52LRx2vKBkEJk-DM6_OLooKUW5L4Kmv14NjMw3S76toav5KkAdQyVMUi19MFg0x8jcaqwZZO2"/>
+</div>
+<div class="relative z-10">
+<span class="text-label-bold text-orange-600 uppercase">Media Library</span>
+<h4 class="text-headline-sm font-headline-sm text-primary mt-2">Project Assets</h4>
+<p class="text-body-sm text-on-surface-variant mt-2">Upload drone footage, blueprints, and site photography.</p>
+</div>
+<button class="relative z-10 w-fit bg-primary text-white px-4 py-2 text-xs font-bold uppercase tracking-widest hover:bg-orange-600 transition-colors">Open Library</button>
+</div>
+</div>
+</div>
+<!-- Sidebar Activity/News -->
+<div class="space-y-gutter">
+<section class="bg-white border border-slate-200 p-6">
+<div class="flex items-center justify-between mb-6">
+<h3 class="text-headline-sm font-headline-sm text-primary">System Feed</h3>
+<span class="material-symbols-outlined text-slate-300">notifications</span>
+</div>
+<div class="space-y-6">
+<div class="flex gap-4">
+<div class="w-1 bg-orange-600 h-10 shrink-0"></div>
+<div>
+<p class="text-xs font-bold text-on-surface-variant uppercase tracking-tighter">10:45 AM Today</p>
+<p class="text-body-sm text-primary font-medium">New Quote Request from <span class="text-blue-900 font-bold">Skanska Global</span></p>
+</div>
+</div>
+<div class="flex gap-4">
+<div class="w-1 bg-blue-900 h-10 shrink-0"></div>
+<div>
+<p class="text-xs font-bold text-on-surface-variant uppercase tracking-tighter">Yesterday</p>
+<p class="text-body-sm text-primary font-medium">Inventory Level Low: <span class="text-error font-bold">High-Strength Fiber</span></p>
+</div>
+</div>
+<div class="flex gap-4">
+<div class="w-1 bg-green-600 h-10 shrink-0"></div>
+<div>
+<p class="text-xs font-bold text-on-surface-variant uppercase tracking-tighter">Oct 22</p>
+<p class="text-body-sm text-primary font-medium">Project <span class="text-blue-900 font-bold">CS-9110</span> marked as Completed.</p>
+</div>
+</div>
+<div class="flex gap-4">
+<div class="w-1 bg-slate-200 h-10 shrink-0"></div>
+<div>
+<p class="text-xs font-bold text-on-surface-variant uppercase tracking-tighter">Oct 21</p>
+<p class="text-body-sm text-primary font-medium">News post "Industry Safety 2024" published.</p>
+</div>
+</div>
+</div>
+<button class="w-full mt-8 py-3 border border-slate-200 text-xs font-bold uppercase tracking-widest hover:bg-slate-50 transition-colors">Clear All History</button>
+</section>
+<section class="bg-primary text-white p-6 border-b-4 border-orange-600">
+<div class="flex items-center gap-3 mb-4">
+<span class="material-symbols-outlined text-orange-600">verified_user</span>
+<h3 class="text-label-bold uppercase">Security Status</h3>
+</div>
+<p class="text-body-sm text-slate-300 mb-6">Database integrity verified. SSL certificates active. 2FA required for all admins.</p>
+<div class="flex items-center gap-2">
+<div class="w-3 h-3 bg-green-500 rounded-full animate-pulse"></div>
+<span class="text-xs font-bold uppercase tracking-widest">Systems Nominal</span>
+</div>
+</section>
+</div>
+</div>
+</main>
+</div>
+<!-- Footer: Execution of JSON parameters -->
+<footer class="w-full py-12 px-8 grid grid-cols-1 md:grid-cols-4 gap-8 bg-blue-950 dark:bg-black border-t-4 border-orange-600 relative z-50">
+<div class="md:col-span-1">
+<span class="text-2xl font-black text-white">CONCRETE SOLUTIONS</span>
+<p class="text-slate-400 text-body-sm mt-4">Pioneering structural integrity through advanced material science and industrial excellence.</p>
+</div>
+<div class="md:col-span-1">
+<h4 class="font-inter text-xs uppercase tracking-widest text-orange-500 mb-4">Internal Links</h4>
+<ul class="space-y-2">
+<li><a class="font-inter text-xs uppercase tracking-widest text-slate-400 hover:text-white transition-colors" href="#">Sitemap</a></li>
+<li><a class="font-inter text-xs uppercase tracking-widest text-slate-400 hover:text-white transition-colors" href="#">Technical Specs</a></li>
+<li><a class="font-inter text-xs uppercase tracking-widest text-slate-400 hover:text-white transition-colors" href="#">Compliance</a></li>
+</ul>
+</div>
+<div class="md:col-span-1">
+<h4 class="font-inter text-xs uppercase tracking-widest text-orange-500 mb-4">Resources</h4>
+<ul class="space-y-2">
+<li><a class="font-inter text-xs uppercase tracking-widest text-slate-400 hover:text-white transition-colors" href="#">Safety</a></li>
+<li><a class="font-inter text-xs uppercase tracking-widest text-slate-400 hover:text-white transition-colors" href="#">Privacy Policy</a></li>
+</ul>
+</div>
+<div class="md:col-span-1 flex flex-col justify-between">
+<div class="text-right">
+<p class="font-inter text-xs uppercase tracking-widest text-slate-400 leading-relaxed">© 2024 CONCRETE SOLUTIONS.<br/>ALL RIGHTS RESERVED.<br/>INDUSTRIAL EXCELLENCE.</p>
+</div>
+<div class="flex justify-end gap-4 mt-4">
+<span class="material-symbols-outlined text-white">shield</span>
+<span class="material-symbols-outlined text-white">terminal</span>
+</div>
+</div>
+</footer>
+<script>
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('/sw.js').catch(() => {});
+  });
+}
+</script>
+</body>
+</html>

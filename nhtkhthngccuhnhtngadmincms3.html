@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+
+<html lang="vi"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Nhật ký Hệ thống - AuditShield</title>
+<link href="/manifest.json" rel="manifest"/>
+<link href="/favicon.ico" rel="icon" sizes="any"/>
+<link href="/favicon-32.png" rel="icon" type="image/png" sizes="32x32"/>
+<link href="/apple-touch-icon.png" rel="apple-touch-icon" sizes="180x180"/>
+<meta content="#041627" name="theme-color"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "inverse-on-surface": "#eff1f3",
+                      "on-tertiary-container": "#eb6a1b",
+                      "on-secondary-fixed": "#1b1c1c",
+                      "surface-variant": "#e0e3e5",
+                      "error-container": "#ffdad6",
+                      "surface-container-highest": "#e0e3e5",
+                      "on-primary-fixed": "#0b1d2d",
+                      "primary-fixed-dim": "#b7c8de",
+                      "on-primary-container": "#8192a7",
+                      "secondary": "#5e5e5e",
+                      "inverse-surface": "#2d3133",
+                      "secondary-container": "#e3e2e2",
+                      "primary": "#041627",
+                      "on-secondary-container": "#646464",
+                      "primary-container": "#1a2b3c",
+                      "on-tertiary-fixed": "#341000",
+                      "tertiary-fixed-dim": "#ffb693",
+                      "tertiary-container": "#4b1b00",
+                      "primary-fixed": "#d2e4fb",
+                      "on-tertiary-fixed-variant": "#7a3000",
+                      "on-secondary": "#ffffff",
+                      "on-surface": "#191c1e",
+                      "on-primary": "#ffffff",
+                      "tertiary-fixed": "#ffdbcb",
+                      "secondary-fixed-dim": "#c7c6c6",
+                      "background": "#f8f9fb",
+                      "surface-container-lowest": "#ffffff",
+                      "secondary-fixed": "#e3e2e2",
+                      "surface": "#f8f9fb",
+                      "inverse-primary": "#b7c8de",
+                      "surface-container-low": "#f2f4f6",
+                      "on-tertiary": "#ffffff",
+                      "surface-container-high": "#e6e8ea",
+                      "on-secondary-fixed-variant": "#464747",
+                      "on-error-container": "#93000a",
+                      "outline": "#74777d",
+                      "error": "#ba1a1a",
+                      "on-background": "#191c1e",
+                      "on-error": "#ffffff",
+                      "surface-bright": "#f8f9fb",
+                      "surface-dim": "#d8dadc",
+                      "on-primary-fixed-variant": "#38485a",
+                      "surface-tint": "#4f6073",
+                      "surface-container": "#eceef0",
+                      "tertiary": "#2a0c00",
+                      "outline-variant": "#c4c6cd",
+                      "on-surface-variant": "#44474c"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.125rem",
+                      "lg": "0.25rem",
+                      "xl": "0.5rem",
+                      "full": "0.75rem"
+              },
+              "spacing": {
+                      "lg": "2.5rem",
+                      "margin": "32px",
+                      "gutter": "24px",
+                      "xs": "0.5rem",
+                      "max_width": "1280px",
+                      "base": "4px",
+                      "xl": "4rem",
+                      "sm": "1rem",
+                      "md": "1.5rem"
+              },
+              "fontFamily": {
+                      "display-lg": [
+                              "Inter"
+                      ],
+                      "body-lg": [
+                              "Inter"
+                      ],
+                      "label-bold": [
+                              "Inter"
+                      ],
+                      "headline-md": [
+                              "Inter"
+                      ],
+                      "table-data": [
+                              "Inter"
+                      ],
+                      "body-md": [
+                              "Inter"
+                      ],
+                      "headline-sm": [
+                              "Inter"
+                      ],
+                      "body-sm": [
+                              "Inter"
+                      ]
+              },
+              "fontSize": {
+                      "display-lg": [
+                              "48px",
+                              {
+                                      "lineHeight": "1.1",
+                                      "letterSpacing": "-0.02em",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "body-lg": [
+                              "18px",
+                              {
+                                      "lineHeight": "1.6",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "label-bold": [
+                              "12px",
+                              {
+                                      "lineHeight": "1",
+                                      "letterSpacing": "0.05em",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "headline-md": [
+                              "32px",
+                              {
+                                      "lineHeight": "1.2",
+                                      "letterSpacing": "-0.01em",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "table-data": [
+                              "14px",
+                              {
+                                      "lineHeight": "1.2",
+                                      "fontWeight": "500"
+                              }
+                      ],
+                      "body-md": [
+                              "16px",
+                              {
+                                      "lineHeight": "1.5",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "headline-sm": [
+                              "24px",
+                              {
+                                      "lineHeight": "1.3",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "body-sm": [
+                              "14px",
+                              {
+                                      "lineHeight": "1.5",
+                                      "fontWeight": "400"
+                              }
+                      ]
+              }
+      },
+          },
+        }
+      </script>
+</head>
+<body class="bg-background text-on-background min-h-screen flex antialiased">
+<!-- SideNavBar -->
+<nav class="w-64 h-screen border-r fixed left-0 top-0 z-50 border-slate-200 dark:border-slate-800 shadow-none bg-[#F5F7F9] dark:bg-slate-900 flex flex-col h-full py-6">
+<div class="px-4 mb-8">
+<h1 class="text-lg font-bold text-[#1A2B3C] dark:text-white mb-1">System Console</h1>
+<p class="font-['Inter'] text-xs font-medium text-slate-500">Audit Management v2.4</p>
+</div>
+<div class="flex-1 flex flex-col gap-1 px-2">
+<a class="flex items-center gap-3 text-slate-600 dark:text-slate-400 px-4 py-3 font-['Inter'] text-xs font-medium hover:bg-slate-200 dark:hover:bg-slate-800 hover:text-[#1A2B3C] transition-all transition-transform duration-150 active:scale-95 rounded" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+                Overview
+            </a>
+<a class="flex items-center gap-3 bg-white dark:bg-slate-800 text-orange-600 dark:text-orange-400 border-r-4 border-orange-600 px-4 py-3 shadow-sm font-['Inter'] text-xs font-medium hover:bg-slate-200 dark:hover:bg-slate-800 hover:text-[#1A2B3C] transition-all transition-transform duration-150 active:scale-95 rounded" href="#">
+<span class="material-symbols-outlined">list_alt</span>
+                System Logs
+            </a>
+<a class="flex items-center gap-3 text-slate-600 dark:text-slate-400 px-4 py-3 font-['Inter'] text-xs font-medium hover:bg-slate-200 dark:hover:bg-slate-800 hover:text-[#1A2B3C] transition-all transition-transform duration-150 active:scale-95 rounded" href="#">
+<span class="material-symbols-outlined">verified_user</span>
+                Access History
+            </a>
+<a class="flex items-center gap-3 text-slate-600 dark:text-slate-400 px-4 py-3 font-['Inter'] text-xs font-medium hover:bg-slate-200 dark:hover:bg-slate-800 hover:text-[#1A2B3C] transition-all transition-transform duration-150 active:scale-95 rounded" href="#">
+<span class="material-symbols-outlined">settings_input_component</span>
+                Configurations
+            </a>
+<a class="flex items-center gap-3 text-slate-600 dark:text-slate-400 px-4 py-3 font-['Inter'] text-xs font-medium hover:bg-slate-200 dark:hover:bg-slate-800 hover:text-[#1A2B3C] transition-all transition-transform duration-150 active:scale-95 rounded" href="#">
+<span class="material-symbols-outlined">inventory_2</span>
+                Archives
+            </a>
+</div>
+<div class="mt-auto px-2 flex flex-col gap-1">
+<a class="flex items-center gap-3 text-slate-600 dark:text-slate-400 px-4 py-3 font-['Inter'] text-xs font-medium hover:bg-slate-200 dark:hover:bg-slate-800 hover:text-[#1A2B3C] transition-all transition-transform duration-150 active:scale-95 rounded" href="#">
+<span class="material-symbols-outlined">help_outline</span>
+                Support
+            </a>
+<a class="flex items-center gap-3 text-slate-600 dark:text-slate-400 px-4 py-3 font-['Inter'] text-xs font-medium hover:bg-slate-200 dark:hover:bg-slate-800 hover:text-[#1A2B3C] transition-all transition-transform duration-150 active:scale-95 rounded" href="#">
+<span class="material-symbols-outlined">logout</span>
+                Logout
+            </a>
+</div>
+</nav>
+<div class="ml-64 flex-1 flex flex-col">
+<!-- TopAppBar -->
+<header class="docked full-width top-0 border-b z-40 border-slate-200 dark:border-slate-800 shadow-none bg-white dark:bg-slate-950 flex justify-between items-center w-full px-8 h-16">
+<div class="flex items-center gap-8">
+<span class="text-xl font-black text-[#1A2B3C] dark:text-white uppercase tracking-wider">AuditShield</span>
+<nav class="hidden md:flex gap-6 font-['Inter'] text-sm tracking-tight">
+<a class="text-slate-500 dark:text-slate-400 hover:text-[#1A2B3C] dark:hover:text-white transition-colors duration-200 cursor-pointer active:opacity-70" href="#">Dashboard</a>
+<a class="text-orange-600 dark:text-orange-400 border-b-2 border-orange-600 dark:border-orange-400 pb-1 hover:text-[#1A2B3C] dark:hover:text-white transition-colors duration-200 cursor-pointer active:opacity-70" href="#">Logs</a>
+<a class="text-slate-500 dark:text-slate-400 hover:text-[#1A2B3C] dark:hover:text-white transition-colors duration-200 cursor-pointer active:opacity-70" href="#">Reports</a>
+<a class="text-slate-500 dark:text-slate-400 hover:text-[#1A2B3C] dark:hover:text-white transition-colors duration-200 cursor-pointer active:opacity-70" href="#">Security</a>
+</nav>
+</div>
+<div class="flex items-center gap-4">
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-sm">search</span>
+<input class="pl-9 pr-4 py-1.5 rounded border border-slate-200 bg-[#F5F7F9] text-sm focus:border-primary-container focus:ring-1 focus:ring-primary-container transition-all w-64 text-[#1A2B3C]" placeholder="Search logs..." type="text"/>
+</div>
+<button class="text-[#1A2B3C] dark:text-slate-100 hover:text-[#1A2B3C] dark:hover:text-white transition-colors duration-200 cursor-pointer active:opacity-70">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="text-[#1A2B3C] dark:text-slate-100 hover:text-[#1A2B3C] dark:hover:text-white transition-colors duration-200 cursor-pointer active:opacity-70">
+<span class="material-symbols-outlined">settings</span>
+</button>
+<div class="w-8 h-8 rounded-full bg-slate-300 overflow-hidden border border-slate-200">
+<img alt="Administrator Profile" class="w-full h-full object-cover" data-alt="Administrator Profile avatar icon with initials" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBrrSnYjMG2LjkL116RYoe7upc9UJB2jYl6QHBIvnaijevcBmJrHNCzSYhBYgxkzpIR_2M1deto1uRgWhC7M5x8oD91FwX3c7TAK_ecCP7x7W6Smd4GVOyPdLJs3myvgZ3NGfoEITFGdaFdZhaeb_HgTubWghV0nL3RrevwwKcgkAGQqp4iBvG4WzmmZEvwq8yeWaFLbVB-6_XCQwuaEoSQ6RAT9ehx-AjJpuj5KokugHV99MarTEkwLVKR_GZLX47OE-wnpoy3AB34"/>
+</div>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="flex-1 p-margin overflow-y-auto">
+<div class="max-w-max_width mx-auto">
+<!-- Page Header -->
+<div class="mb-lg">
+<h2 class="font-headline-md text-headline-md text-primary-container mb-2">Nhật ký Hệ thống</h2>
+<p class="font-body-md text-body-md text-on-surface-variant">Monitoring real-time system activities and security events.</p>
+</div>
+<!-- Rotation Settings Card -->
+<section class="bg-surface-container-lowest border border-outline-variant/30 rounded-DEFAULT mb-lg overflow-hidden">
+<div class="bg-[#F5F7F9] px-6 py-4 border-b border-outline-variant/30">
+<h3 class="font-headline-sm text-headline-sm text-primary-container flex items-center gap-2">
+<span class="material-symbols-outlined text-[20px]">manage_history</span>
+                            Cấu hình Tự động Xóa Nhật ký
+                        </h3>
+</div>
+<div class="p-6"><div class="flex items-center gap-3 p-4 mb-6 rounded bg-orange-50 border border-orange-200 text-orange-800">
+<span class="material-symbols-outlined text-[20px] text-orange-600">warning</span>
+<div class="flex-1">
+<p class="font-body-sm text-body-sm font-semibold mb-0.5">Cảnh báo hệ thống</p>
+<p class="font-body-sm text-body-sm opacity-90">Dung lượng nhật ký đã đạt giới hạn 500MB. Hệ thống sẽ tự động thực hiện xoay vòng dữ liệu.</p>
+</div>
+</div>
+<form class="grid grid-cols-1 md:grid-cols-3 gap-gutter items-end">
+<div class="flex flex-col gap-2">
+<label class="font-label-bold text-label-bold text-primary-container uppercase">Auto-Rotation</label>
+<div class="flex items-center h-10">
+<label class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only peer" type="checkbox" value=""/>
+<div class="w-11 h-6 bg-slate-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[#eb6a1b]"></div>
+<span class="ml-3 font-body-sm text-body-sm text-on-surface-variant">Enabled</span>
+</label>
+</div>
+</div>
+<div class="flex flex-col gap-2">
+<label class="font-label-bold text-label-bold text-primary-container uppercase">Thời gian lưu trữ</label>
+<select class="h-10 px-3 py-2 bg-white border border-[#c4c6cd]/50 text-on-surface text-sm rounded focus:ring-1 focus:ring-primary-container focus:border-primary-container block w-full">
+<option>30 days</option>
+<option selected="">60 days</option>
+<option>90 days</option>
+<option>1 year</option>
+</select>
+</div>
+<div class="flex flex-col gap-2">
+<label class="font-label-bold text-label-bold text-primary-container uppercase">Giới hạn dung lượng (MB)</label>
+<input class="h-10 px-3 py-2 bg-white border border-[#c4c6cd]/50 text-on-surface text-sm rounded focus:ring-1 focus:ring-primary-container focus:border-primary-container block w-full" type="number" value="500"/>
+</div>
+<div class="md:col-span-3 flex justify-end mt-4">
+<button class="bg-[#eb6a1b] hover:bg-[#eb6a1b]/90 text-white font-label-bold text-label-bold py-2.5 px-6 rounded transition-colors shadow-sm flex items-center gap-2" type="button">
+<span class="material-symbols-outlined text-[16px]">save</span>
+                                    Lưu cấu hình
+                                </button>
+</div>
+</form>
+</div>
+</section>
+<!-- Data Table Section -->
+<section class="bg-surface-container-lowest border border-outline-variant/30 rounded-DEFAULT">
+<!-- Table Controls -->
+<div class="bg-[#F5F7F9] px-6 py-4 flex justify-between items-center border-b border-outline-variant/30"><div class="relative flex-1 max-w-md mr-4">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-[20px]">search</span>
+<input class="w-full pl-10 pr-4 py-2 bg-surface-container-lowest border border-outline-variant/50 rounded text-sm text-on-surface focus:ring-1 focus:ring-primary-container focus:border-primary-container transition-all outline-none" placeholder="Search in logs..." type="text"/>
+</div>
+<div class="flex gap-2">
+<button class="bg-white border border-outline-variant/50 text-primary-container hover:bg-slate-50 font-label-bold text-label-bold py-1.5 px-4 rounded transition-colors flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[16px]">download</span>
+                                Xuất CSV
+                            </button>
+<button class="bg-white border border-outline-variant/50 text-primary-container hover:bg-slate-50 font-label-bold text-label-bold py-1.5 px-4 rounded transition-colors flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[16px]">picture_as_pdf</span>
+                                Xuất PDF
+                            </button><button class="bg-white border border-outline-variant/50 text-primary-container hover:bg-slate-50 font-label-bold text-label-bold py-1.5 px-4 rounded transition-colors flex items-center gap-1.5"><span class="material-symbols-outlined text-[16px]">download_for_offline</span>Tải xuống tất cả</button><button class="bg-white border border-outline-variant/50 text-primary-container hover:bg-slate-50 font-label-bold text-label-bold py-1.5 px-4 rounded transition-colors flex items-center gap-1.5 ml-2" onclick="window.print()">
+<span class="material-symbols-outlined text-[16px]">print</span>
+    In
+</button>
+<button class="bg-error/10 text-error hover:bg-error/20 font-label-bold text-label-bold py-1.5 px-4 rounded transition-colors flex items-center gap-1.5 ml-2">
+<span class="material-symbols-outlined text-[16px]">delete</span>
+                                Xóa Nhật ký
+                            </button>
+</div>
+</div>
+<!-- Table -->
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-primary-container text-white border-b border-outline-variant/30">
+<th class="py-3 px-6 font-label-bold text-label-bold uppercase tracking-wider"><div class="flex items-center gap-1 cursor-pointer hover:text-orange-200 transition-colors"><span>Timestamp</span><span class="material-symbols-outlined text-[16px] opacity-70">unfold_more</span></div></th>
+<th class="py-3 px-6 font-label-bold text-label-bold uppercase tracking-wider"><div class="flex items-center gap-1 cursor-pointer hover:text-orange-200 transition-colors"><span>User</span><span class="material-symbols-outlined text-[16px] opacity-70">unfold_more</span></div></th>
+<th class="py-3 px-6 font-label-bold text-label-bold uppercase tracking-wider"><div class="flex items-center gap-1 cursor-pointer hover:text-orange-200 transition-colors"><span>Action</span><span class="material-symbols-outlined text-[16px] opacity-70">unfold_more</span></div></th>
+<th class="py-3 px-6 font-label-bold text-label-bold uppercase tracking-wider"><div class="flex items-center gap-1 cursor-pointer hover:text-orange-200 transition-colors"><span>Module</span><span class="material-symbols-outlined text-[16px] opacity-70">unfold_more</span></div></th>
+<th class="py-3 px-6 font-label-bold text-label-bold uppercase tracking-wider">IP</th>
+<th class="py-3 px-6 font-label-bold text-label-bold uppercase tracking-wider"><div class="flex items-center gap-1 cursor-pointer hover:text-orange-200 transition-colors"><span>Status</span><span class="material-symbols-outlined text-[16px] opacity-70">unfold_more</span></div></th>
+</tr>
+</thead>
+<tbody class="font-table-data text-table-data text-on-surface">
+<tr class="border-b border-outline-variant/20 hover:bg-slate-50 transition-colors">
+<td class="py-3 px-6 text-slate-500 text-sm">2023-10-27 14:32:01</td>
+<td class="py-3 px-6">admin@system.local</td>
+<td class="py-3 px-6">LOGIN_SUCCESS</td>
+<td class="py-3 px-6">Auth</td>
+<td class="py-3 px-6 text-slate-500 font-mono text-xs">192.168.1.105</td>
+<td class="py-3 px-6">
+<span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-emerald-100 text-emerald-800">Success</span>
+</td>
+</tr>
+<tr class="border-b border-outline-variant/20 hover:bg-slate-50 transition-colors">
+<td class="py-3 px-6 text-slate-500 text-sm">2023-10-27 14:35:12</td>
+<td class="py-3 px-6">system_service</td>
+<td class="py-3 px-6">CONFIG_UPDATE</td>
+<td class="py-3 px-6">Network Settings</td>
+<td class="py-3 px-6 text-slate-500 font-mono text-xs">10.0.0.1</td>
+<td class="py-3 px-6">
+<span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-emerald-100 text-emerald-800">Success</span>
+</td>
+</tr>
+<tr class="border-b border-outline-variant/20 hover:bg-slate-50 transition-colors">
+<td class="py-3 px-6 text-slate-500 text-sm">2023-10-27 15:01:44</td>
+<td class="py-3 px-6">unknown</td>
+<td class="py-3 px-6">LOGIN_FAILED</td>
+<td class="py-3 px-6">Auth</td>
+<td class="py-3 px-6 text-slate-500 font-mono text-xs">45.22.19.102</td>
+<td class="py-3 px-6">
+<span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-error-container text-on-error-container">Failed</span>
+</td>
+</tr>
+<tr class="border-b border-outline-variant/20 hover:bg-slate-50 transition-colors">
+<td class="py-3 px-6 text-slate-500 text-sm">2023-10-27 15:15:20</td>
+<td class="py-3 px-6">db_admin</td>
+<td class="py-3 px-6">QUERY_EXECUTE</td>
+<td class="py-3 px-6">Database</td>
+<td class="py-3 px-6 text-slate-500 font-mono text-xs">192.168.1.50</td>
+<td class="py-3 px-6">
+<span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-emerald-100 text-emerald-800">Success</span>
+</td>
+</tr>
+<tr class="hover:bg-slate-50 transition-colors">
+<td class="py-3 px-6 text-slate-500 text-sm">2023-10-27 16:00:05</td>
+<td class="py-3 px-6">system</td>
+<td class="py-3 px-6">AUTO_ROTATION_TRIGGER</td>
+<td class="py-3 px-6">Log Manager</td>
+<td class="py-3 px-6 text-slate-500 font-mono text-xs">localhost</td>
+<td class="py-3 px-6">
+<span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-orange-100 text-orange-800">Warning</span>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Pagination Bar -->
+<div class="px-6 py-4 flex items-center justify-between border-t border-outline-variant/30 bg-white">
+<span class="text-sm text-slate-500">Showing 1 to 5 of 2,451 entries</span>
+<div class="flex gap-1">
+<div class="h-1 w-8 bg-slate-200 cursor-pointer"></div>
+<div class="h-1 w-8 bg-[#eb6a1b] cursor-pointer"></div>
+<div class="h-1 w-8 bg-slate-200 cursor-pointer"></div>
+<div class="h-1 w-8 bg-slate-200 cursor-pointer"></div>
+</div>
+</div>
+</section>
+</div>
+</main>
+</div>
+<script>
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('/sw.js').catch(() => {});
+  });
+}
+</script>
+</body>
+</html>
