@@ -1,837 +1,475 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-<title>CONCRETEPRO â Quáº£n Trá» Há» Thá»ng</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CONCRETEPRO Admin</title>
 <script src="https://cdn.tailwindcss.com"></script>
-<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
-*{font-family:'Segoe UI',system-ui,sans-serif;box-sizing:border-box;}
-body{background:#0d1117;color:#e2e8f0;margin:0;}
-:root{--orange:#ea580c;--orange-light:#f97316;--navy:#0a0f1e;--card:#0f172a;--border:rgba(255,255,255,0.07);}
-/* LAYOUT */
-.sidebar{width:250px;min-height:100vh;background:var(--navy);border-right:1px solid var(--border);position:fixed;top:0;left:0;z-index:50;transition:.3s;}
-.topbar{height:60px;background:rgba(10,15,30,.9);border-bottom:1px solid var(--border);position:fixed;top:0;left:250px;right:0;z-index:40;display:flex;align-items:center;padding:0 20px;gap:12px;}
-.main{margin-left:250px;margin-top:60px;padding:24px;min-height:calc(100vh - 60px);}
-/* NAV */
-.nav-item{display:flex;align-items:center;gap:10px;padding:9px 14px;border-radius:8px;margin:2px 8px;cursor:pointer;transition:.2s;color:#94a3b8;font-size:13.5px;font-weight:500;text-decoration:none;}
-.nav-item:hover{background:rgba(255,255,255,.06);color:#e2e8f0;}
-.nav-item.active{background:rgba(234,88,12,.15);color:#f97316;border:1px solid rgba(234,88,12,.2);}
-.nav-item .mi{font-size:19px;}
-.nav-badge{margin-left:auto;background:#ea580c;color:#fff;font-size:10px;padding:1px 7px;border-radius:99px;font-weight:700;}
-.nav-badge.blue{background:#2563eb;}
-.nav-badge.red{background:#dc2626;}
-/* CARDS */
-.card{background:var(--card);border:1px solid var(--border);border-radius:14px;}
-.card-header{padding:16px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;}
-/* STAT CARD */
-.stat-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:20px;position:relative;overflow:hidden;transition:.3s;}
-.stat-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;}
-.stat-card.c-orange::before{background:linear-gradient(90deg,#ea580c,#f97316);}
-.stat-card.c-blue::before{background:linear-gradient(90deg,#2563eb,#60a5fa);}
-.stat-card.c-green::before{background:linear-gradient(90deg,#059669,#34d399);}
-.stat-card.c-purple::before{background:linear-gradient(90deg,#7c3aed,#a78bfa);}
-.stat-card:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,0,0,.35);}
-/* ICON BADGE */
-.ib{width:44px;height:44px;border-radius:10px;display:flex;align-items:center;justify-content:center;}
-.ib.orange{background:rgba(234,88,12,.15);color:#f97316;}
-.ib.blue{background:rgba(37,99,235,.15);color:#60a5fa;}
-.ib.green{background:rgba(5,150,105,.15);color:#34d399;}
-.ib.purple{background:rgba(124,58,237,.15);color:#a78bfa;}
-.ib.red{background:rgba(220,38,38,.15);color:#f87171;}
-/* TABLE */
-table{width:100%;border-collapse:collapse;}
-th{background:rgba(255,255,255,.04);padding:11px 14px;text-align:left;font-size:11px;font-weight:600;color:#64748b;text-transform:uppercase;letter-spacing:.05em;border-bottom:1px solid var(--border);}
-td{padding:12px 14px;border-bottom:1px solid rgba(255,255,255,.04);font-size:13.5px;color:#94a3b8;}
-tr:hover td{background:rgba(255,255,255,.02);color:#cbd5e1;}
-/* BADGE */
-.badge{display:inline-flex;align-items:center;padding:2px 9px;border-radius:99px;font-size:11px;font-weight:600;}
-.badge.green{background:rgba(5,150,105,.15);color:#34d399;border:1px solid rgba(52,211,153,.2);}
-.badge.yellow{background:rgba(234,179,8,.15);color:#fbbf24;border:1px solid rgba(251,191,36,.2);}
-.badge.gray{background:rgba(100,116,139,.15);color:#94a3b8;border:1px solid rgba(148,163,184,.2);}
-.badge.red{background:rgba(220,38,38,.15);color:#f87171;border:1px solid rgba(248,113,113,.2);}
-.badge.blue{background:rgba(37,99,235,.15);color:#60a5fa;border:1px solid rgba(96,165,250,.2);}
-/* FORM */
-.form-input{width:100%;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);color:#e2e8f0;border-radius:10px;padding:9px 14px;font-size:13.5px;outline:none;transition:.2s;}
-.form-input:focus{border-color:#ea580c;background:rgba(234,88,12,.08);box-shadow:0 0 0 3px rgba(234,88,12,.12);}
-.form-input::placeholder{color:rgba(255,255,255,.3);}
-select.form-input option{background:#0f172a;color:#e2e8f0;}
-textarea.form-input{resize:vertical;min-height:90px;}
-.form-label{display:block;font-size:12px;font-weight:600;color:#64748b;text-transform:uppercase;letter-spacing:.05em;margin-bottom:6px;}
-/* BUTTONS */
-.btn{display:inline-flex;align-items:center;gap:6px;padding:8px 16px;border-radius:9px;font-size:13px;font-weight:600;cursor:pointer;transition:.2s;border:none;outline:none;}
-.btn-primary{background:linear-gradient(135deg,#ea580c,#c2410c);color:#fff;}
-.btn-primary:hover{background:linear-gradient(135deg,#f97316,#ea580c);transform:translateY(-1px);box-shadow:0 6px 18px rgba(234,88,12,.35);}
-.btn-secondary{background:rgba(255,255,255,.07);color:#94a3b8;border:1px solid var(--border);}
-.btn-secondary:hover{background:rgba(255,255,255,.12);color:#e2e8f0;}
-.btn-danger{background:rgba(220,38,38,.15);color:#f87171;border:1px solid rgba(220,38,38,.25);}
-.btn-danger:hover{background:rgba(220,38,38,.25);}
-.btn-success{background:rgba(5,150,105,.2);color:#34d399;border:1px solid rgba(52,211,153,.25);}
-.btn-success:hover{background:rgba(5,150,105,.35);}
-/* MODAL */
-.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.65);backdrop-filter:blur(4px);z-index:100;display:flex;align-items:center;justify-content:center;padding:20px;}
-.modal-box{background:#0f172a;border:1px solid rgba(255,255,255,.1);border-radius:18px;width:100%;max-width:600px;max-height:90vh;overflow-y:auto;box-shadow:0 25px 60px rgba(0,0,0,.6);}
-.modal-header{padding:18px 22px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;}
-.modal-body{padding:22px;}
-.modal-footer{padding:16px 22px;border-top:1px solid var(--border);display:flex;justify-content:flex-end;gap:10px;}
-/* LOGIN */
-.login-bg{background:#0a0f1e;min-height:100vh;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;}
-.login-bg::before{content:'';position:absolute;width:500px;height:500px;background:radial-gradient(circle,rgba(234,88,12,.12) 0%,transparent 70%);top:-100px;left:-100px;border-radius:50%;animation:f1 8s ease-in-out infinite;}
-.login-bg::after{content:'';position:absolute;width:400px;height:400px;background:radial-gradient(circle,rgba(30,58,138,.25) 0%,transparent 70%);bottom:-80px;right:-80px;border-radius:50%;animation:f2 10s ease-in-out infinite;}
-@keyframes f1{0%,100%{transform:translate(0,0);}50%{transform:translate(50px,30px);}}
-@keyframes f2{0%,100%{transform:translate(0,0);}50%{transform:translate(-30px,-50px);}}
-.login-card{background:rgba(15,23,42,.9);backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,.08);border-radius:18px;padding:36px;width:100%;max-width:420px;position:relative;z-index:1;}
-/* TOAST */
-.toast-container{position:fixed;top:20px;right:20px;z-index:999;display:flex;flex-direction:column;gap:8px;}
-.toast{background:#0f172a;border:1px solid var(--border);border-radius:10px;padding:12px 16px;display:flex;align-items:center;gap:10px;font-size:13px;min-width:260px;box-shadow:0 8px 24px rgba(0,0,0,.4);animation:slideIn .3s ease;}
-.toast.success{border-color:rgba(52,211,153,.3);color:#34d399;}
-.toast.error{border-color:rgba(248,113,113,.3);color:#f87171;}
-.toast.info{border-color:rgba(96,165,250,.3);color:#60a5fa;}
-@keyframes slideIn{from{transform:translateX(120%);opacity:0;}to{transform:translateX(0);opacity:1;}}
-/* AVATAR */
-.avatar{width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,#ea580c,#c2410c);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px;color:#fff;flex-shrink:0;}
-/* PROGRESS */
-.progress{height:5px;border-radius:3px;background:rgba(255,255,255,.08);overflow:hidden;}
-.progress-fill{height:100%;border-radius:3px;background:linear-gradient(90deg,#ea580c,#f97316);transition:width 1s ease;}
-/* SCROLLBAR */
-::-webkit-scrollbar{width:5px;}::-webkit-scrollbar-track{background:transparent;}::-webkit-scrollbar-thumb{background:rgba(255,255,255,.1);border-radius:3px;}
-/* SECTION HIDDEN */
-.section{display:none;}.section.active{display:block;}
-/* QUICK ACTION */
-.qa-btn{display:flex;align-items:center;gap:10px;padding:10px 14px;background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:9px;cursor:pointer;transition:.2s;color:#94a3b8;font-size:13px;font-weight:500;}
-.qa-btn:hover{background:rgba(234,88,12,.1);border-color:rgba(234,88,12,.3);color:#f97316;}
-/* EMPTY STATE */
-.empty{text-align:center;padding:60px 20px;color:#64748b;}
-.empty .mi{font-size:48px;display:block;margin-bottom:12px;color:#334155;}
-/* MOBILE */
-@media(max-width:768px){.sidebar{transform:translateX(-100%);}.sidebar.open{transform:translateX(0);}.topbar{left:0;}.main{margin-left:0;}}
-/* DIVIDER */
-.nav-sep{font-size:10.5px;font-weight:700;color:#334155;padding:8px 16px 4px;text-transform:uppercase;letter-spacing:.07em;margin-top:8px;}
-/* DETAIL ROW */
-.dr{display:flex;gap:8px;margin-bottom:14px;}.dr label{width:130px;color:#64748b;font-size:12.5px;flex-shrink:0;}.dr span{color:#cbd5e1;font-size:13px;}
-/* STATUS SELECTOR */
-.status-select{background:rgba(255,255,255,.05);border:1px solid var(--border);color:#e2e8f0;border-radius:7px;padding:4px 8px;font-size:12px;outline:none;cursor:pointer;}
+:root{--navy:#0a0f1e;--navy2:#0d1117;--navy3:#161b2e;--navy4:#1e2538;--or:#ea580c;--or2:#f97316;--tx:#e2e8f0;--tx2:#94a3b8;--bd:#1e2d3d}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--navy);color:var(--tx);font-family:'Segoe UI',sans-serif;min-height:100vh}
+#toast{position:fixed;top:1.5rem;right:1.5rem;z-index:9999;display:flex;flex-direction:column;gap:.5rem;pointer-events:none}
+.ti{background:var(--navy3);border:1px solid var(--bd);border-radius:8px;padding:.7rem 1.2rem;display:flex;align-items:center;gap:.5rem;font-size:.875rem;animation:sIn .3s ease;min-width:220px;pointer-events:all}
+.ti.success{border-left:3px solid #22c55e}.ti.error{border-left:3px solid #ef4444}.ti.info{border-left:3px solid #3b82f6}
+@keyframes sIn{from{transform:translateX(100%);opacity:0}to{transform:translateX(0);opacity:1}}
+#loginPage{min-height:100vh;display:flex;align-items:center;justify-content:center}
+.lcard{background:var(--navy3);border:1px solid var(--bd);border-radius:16px;padding:2.5rem;width:100%;max-width:400px}
+.logo{text-align:center;margin-bottom:2rem}.logo .mi{font-size:3rem;color:var(--or)}.logo h1{font-size:1.75rem;font-weight:700;letter-spacing:2px}.logo p{color:var(--tx2);font-size:.875rem;margin-top:.25rem}
+.fg{margin-bottom:1.2rem}.fg label{display:block;font-size:.75rem;color:var(--tx2);margin-bottom:.35rem;text-transform:uppercase;letter-spacing:.5px}
+.fg input,.fg select,.fg textarea{width:100%;background:var(--navy4);border:1px solid var(--bd);border-radius:8px;padding:.6rem .9rem;color:var(--tx);font-size:.875rem;outline:none;transition:border-color .2s}
+.fg input:focus,.fg select:focus,.fg textarea:focus{border-color:var(--or)}.fg textarea{resize:vertical;min-height:80px}
+select option{background:var(--navy4)}
+.btn{padding:.55rem 1.1rem;border-radius:8px;border:none;cursor:pointer;font-size:.875rem;font-weight:500;transition:all .2s;display:inline-flex;align-items:center;gap:.4rem}
+.bp{background:var(--or);color:#fff}.bp:hover{background:var(--or2)}
+.bs{background:var(--navy4);color:var(--tx2);border:1px solid var(--bd)}.bs:hover{color:var(--tx);border-color:var(--or)}
+.bd2{background:#7f1d1d;color:#fca5a5}.bd2:hover{background:#991b1b}
+.bfull{width:100%;justify-content:center;padding:.75rem}
+#sb{width:240px;min-height:100vh;background:var(--navy2);border-right:1px solid var(--bd);position:fixed;left:0;top:0;display:flex;flex-direction:column;z-index:100}
+.sbl{padding:1.25rem 1.5rem;border-bottom:1px solid var(--bd)}.sbl h2{font-size:1rem;font-weight:700;color:var(--or);letter-spacing:2px}.sbl p{font-size:.65rem;color:var(--tx2)}
+.snav{flex:1;padding:.75rem 0;overflow-y:auto}
+.nss{padding:.5rem 1rem .2rem;font-size:.62rem;color:var(--tx2);text-transform:uppercase;letter-spacing:1px}
+.ni{display:flex;align-items:center;gap:.7rem;padding:.6rem 1.25rem;cursor:pointer;color:var(--tx2);font-size:.85rem;transition:all .15s}
+.ni:hover{background:var(--navy3);color:var(--tx)}.ni.active{background:rgba(234,88,12,.15);color:var(--or);border-left:3px solid var(--or)}
+.ni .material-icons{font-size:1.1rem}
+.su{padding:1rem;border-top:1px solid var(--bd);display:flex;align-items:center;gap:.7rem}
+.av{width:34px;height:34px;border-radius:50%;background:var(--or);display:flex;align-items:center;justify-content:center;font-size:.95rem;color:#fff;font-weight:600;flex-shrink:0}
+.ui2{flex:1;overflow:hidden}.ui2 .nm{font-size:.8rem;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.ui2 .ro{font-size:.7rem;color:var(--tx2)}
+#ap{display:none}
+#mc{margin-left:240px;min-height:100vh}
+#tb{background:var(--navy2);border-bottom:1px solid var(--bd);padding:0 1.5rem;height:58px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:50}
+#tb h1{font-size:1.05rem;font-weight:600}
+.ca{padding:1.5rem}
+.sc{background:var(--navy3);border:1px solid var(--bd);border-radius:12px;padding:1.2rem}
+.sc .ico{width:38px;height:38px;border-radius:8px;display:flex;align-items:center;justify-content:center;margin-bottom:.7rem}
+.sc .val{font-size:1.75rem;font-weight:700}.sc .lbl{font-size:.78rem;color:var(--tx2);margin-top:.15rem}
+.tw{background:var(--navy3);border:1px solid var(--bd);border-radius:12px;overflow:hidden}
+.th2{padding:.9rem 1.2rem;border-bottom:1px solid var(--bd);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.5rem}.th2 h3{font-size:.95rem;font-weight:600}
+table{width:100%;border-collapse:collapse}
+th{padding:.55rem 1rem;text-align:left;font-size:.7rem;color:var(--tx2);text-transform:uppercase;letter-spacing:.5px;border-bottom:1px solid var(--bd);background:var(--navy4);white-space:nowrap}
+td{padding:.7rem 1rem;font-size:.85rem;border-bottom:1px solid rgba(30,45,61,.5);vertical-align:middle}
+tr:last-child td{border-bottom:none}tr:hover td{background:rgba(255,255,255,.02)}
+.badge{padding:.18rem .55rem;border-radius:999px;font-size:.68rem;font-weight:500}
+.bg{background:rgba(34,197,94,.15);color:#4ade80}.by{background:rgba(234,179,8,.15);color:#fbbf24}
+.br{background:rgba(239,68,68,.15);color:#f87171}.bb{background:rgba(59,130,246,.15);color:#60a5fa}
+.bgr{background:rgba(148,163,184,.15);color:#94a3b8}
+#modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:1000;align-items:center;justify-content:center;padding:1rem}
+#modal.open{display:flex}
+.mb2{background:var(--navy3);border:1px solid var(--bd);border-radius:16px;width:100%;max-width:660px;max-height:90vh;overflow-y:auto;padding:1.75rem}
+.mh{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.5rem}.mh h2{font-size:1.05rem;font-weight:600}
+.mh button{background:none;border:none;color:var(--tx2);cursor:pointer;line-height:1}.mh button:hover{color:var(--tx)}
+#cfd{display:none;position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:1100;align-items:center;justify-content:center}
+#cfd.open{display:flex}
+.cfb{background:var(--navy3);border:1px solid var(--bd);border-radius:16px;padding:1.75rem;max-width:380px;width:90%;text-align:center}
+.cfb h3{font-size:1rem;font-weight:600;margin-bottom:.4rem}.cfb p{color:var(--tx2);font-size:.875rem;margin-bottom:1.25rem}
+.pg{display:none}.pg.active{display:block}
+.ld{display:flex;align-items:center;justify-content:center;padding:3rem;color:var(--tx2)}
+.sp{width:28px;height:28px;border:3px solid var(--bd);border-top-color:var(--or);border-radius:50%;animation:spin .8s linear infinite;margin-right:.9rem}
+@keyframes spin{to{transform:rotate(360deg)}}
+.es{text-align:center;padding:3rem 1rem;color:var(--tx2)}.es .material-icons{font-size:2.75rem;margin-bottom:.75rem;opacity:.45;display:block}
+.sb2{position:relative}.sb2 input{padding-left:2.1rem;width:230px}
+.sb2 .material-icons{position:absolute;left:.55rem;top:50%;transform:translateY(-50%);font-size:.95rem;color:var(--tx2);pointer-events:none}
+.g4{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+@media(max-width:1100px){.g4{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:700px){.g2{grid-template-columns:1fr}#mc{margin-left:0}#sb{display:none}}
+.bdg{margin-left:auto;background:var(--or);color:#fff;border-radius:999px;font-size:.63rem;padding:.1rem .45rem}
 </style>
 </head>
 <body>
-
-<!-- TOAST CONTAINER -->
-<div class="toast-container" id="toastContainer"></div>
-
-<!-- âââââââââââ LOGIN PAGE âââââââââââ -->
-<div id="loginPage" class="login-bg">
-  <div class="login-card">
-    <div class="text-center mb-7">
-      <div class="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-orange-600 mb-3 shadow-lg" style="box-shadow:0 8px 20px rgba(234,88,12,.35)">
-        <span class="material-icons text-white text-2xl">business</span>
-      </div>
-      <div class="text-xl font-bold text-white mb-0.5">CONCRETEPRO</div>
-      <div class="text-sm text-gray-500">Cá»ng Quáº£n Trá» Há» Thá»ng</div>
-    </div>
-    <div id="loginAlert" class="hidden mb-4 p-3 rounded-xl text-sm" style="background:rgba(220,38,38,.12);border:1px solid rgba(220,38,38,.3);color:#fca5a5;"></div>
-    <form onsubmit="doLogin(event)">
-      <div class="mb-4">
-        <label class="form-label">TÃªn ÄÄng nháº­p</label>
-        <input id="loginUser" type="text" class="form-input" placeholder="admin" autocomplete="username" required/>
-      </div>
-      <div class="mb-5">
-        <label class="form-label">Máº­t kháº©u</label>
-        <div class="relative">
-          <input id="loginPass" type="password" class="form-input" placeholder="â¢â¢â¢â¢â¢â¢â¢â¢" autocomplete="current-password" required style="padding-right:44px;"/>
-          <span class="material-icons absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer text-gray-600 hover:text-gray-400 transition-colors" style="font-size:19px" onclick="toggleLoginPass(this)">visibility_off</span>
-        </div>
-      </div>
-      <button type="submit" id="loginBtn" class="btn btn-primary w-full justify-center py-2.5">
-        <span class="material-icons text-base">login</span> ÄÄng Nháº­p
-      </button>
-    </form>
-    <div class="mt-5 p-3 rounded-xl text-xs" style="background:rgba(255,255,255,.04);border:1px solid var(--border)">
-      <div class="font-semibold text-gray-400 mb-1.5">TÃ i khoáº£n máº·c Äá»nh:</div>
-      <div class="text-gray-600">admin / <code class="text-orange-400">Admin@2025!</code></div>
-    </div>
+<div id="toast"></div>
+<div id="loginPage">
+  <div class="lcard">
+    <div class="logo"><span class="material-icons mi">admin_panel_settings</span><h1>CONCRETEPRO</h1><p>Hệ thống quản lý nội dung</p></div>
+    <div class="fg"><label>Email</label><input type="email" id="lE" placeholder="admin@concretepro.vn" autocomplete="username"></div>
+    <div class="fg"><label>Mật khẩu</label><input type="password" id="lP" placeholder="••••••••" autocomplete="current-password" onkeydown="if(event.key==='Enter')doLogin()"></div>
+    <button class="btn bp bfull" id="lBtn" onclick="doLogin()"><span class="material-icons" style="font-size:1rem">login</span>Đăng nhập</button>
+    <p style="text-align:center;color:var(--tx2);font-size:.72rem;margin-top:1.2rem">CONCRETEPRO CMS v2.0 — Supabase</p>
   </div>
 </div>
-
-<!-- âââââââââââ ADMIN PANEL âââââââââââ -->
-<div id="adminPanel" style="display:none">
-
-<!-- SIDEBAR -->
-<aside class="sidebar" id="sidebar">
-  <div class="p-4 border-b" style="border-color:var(--border)">
-    <div class="flex items-center gap-2.5">
-      <div class="w-8 h-8 bg-orange-600 rounded-xl flex items-center justify-center flex-shrink-0">
-        <span class="material-icons text-white" style="font-size:17px">business</span>
+<div id="ap">
+  <div id="sb">
+    <div class="sbl"><h2>CONCRETEPRO</h2><p>Admin v2.0</p></div>
+    <nav class="snav">
+      <div class="nss">Tổng quan</div>
+      <div class="ni active" data-page="dashboard" onclick="nav(this)"><span class="material-icons">dashboard</span>Dashboard</div>
+      <div class="ni" data-page="analytics" onclick="nav(this)"><span class="material-icons">bar_chart</span>Thống kê</div>
+      <div class="nss" style="margin-top:.5rem">Nội dung</div>
+      <div class="ni" data-page="products" onclick="nav(this)"><span class="material-icons">inventory_2</span>Sản phẩm</div>
+      <div class="ni" data-page="projects" onclick="nav(this)"><span class="material-icons">engineering</span>Dự án</div>
+      <div class="ni" data-page="news" onclick="nav(this)"><span class="material-icons">article</span>Tin tức</div>
+      <div class="nss" style="margin-top:.5rem">Khách hàng</div>
+      <div class="ni" data-page="quotes" onclick="nav(this)"><span class="material-icons">request_quote</span>Báo giá<span id="bq" class="bdg" style="display:none">0</span></div>
+      <div class="ni" data-page="contacts" onclick="nav(this)"><span class="material-icons">contact_mail</span>Liên hệ<span id="bc" class="bdg" style="background:#ef4444;display:none">0</span></div>
+      <div class="nss" style="margin-top:.5rem">Hệ thống</div>
+      <div class="ni" data-page="users" onclick="nav(this)"><span class="material-icons">manage_accounts</span>Tài khoản</div>
+      <div class="ni" data-page="settings" onclick="nav(this)"><span class="material-icons">settings</span>Cài đặt</div>
+    </nav>
+    <div class="su">
+      <div class="av" id="uAv">A</div>
+      <div class="ui2"><div class="nm" id="uNm">Admin</div><div class="ro">Administrator</div></div>
+      <button onclick="doLogout()" title="Đăng xuất" style="background:none;border:none;color:var(--tx2);cursor:pointer;padding:.25rem"><span class="material-icons" style="font-size:1.1rem">logout</span></button>
+    </div>
+  </div>
+  <div id="mc">
+    <div id="tb">
+      <h1 id="pTitle">Dashboard</h1>
+      <div style="display:flex;align-items:center;gap:.6rem">
+        <button class="btn bs" id="addBtn" onclick="openAdd()" style="display:none"><span class="material-icons" style="font-size:.95rem">add</span>Thêm mới</button>
+        <button class="btn bs" id="expBtn" onclick="doExport()" style="display:none" title="Xuất CSV"><span class="material-icons" style="font-size:.95rem">download</span></button>
+        <button class="btn bs" onclick="refreshCur()" title="Làm mới"><span class="material-icons" style="font-size:.95rem">refresh</span></button>
       </div>
-      <div><div class="text-white font-bold text-sm">CONCRETEPRO</div><div class="text-gray-600 text-xs">Admin Panel v2.0</div></div>
     </div>
-  </div>
-  <nav class="p-2 mt-1 overflow-y-auto" style="max-height:calc(100vh - 140px)">
-    <div class="nav-sep">Tá»ng quan</div>
-    <a class="nav-item active" onclick="nav('dashboard',this)"><span class="mi material-icons">dashboard</span>Dashboard</a>
-    <a class="nav-item" onclick="nav('analytics',this)"><span class="mi material-icons">bar_chart</span>Thá»ng kÃª</a>
-    <div class="nav-sep">Ná»i dung</div>
-    <a class="nav-item" onclick="nav('products',this)"><span class="mi material-icons">inventory_2</span>Sáº£n pháº©m<span class="nav-badge" id="badge-products">0</span></a>
-    <a class="nav-item" onclick="nav('projects',this)"><span class="mi material-icons">engineering</span>Dá»± Ã¡n<span class="nav-badge blue" id="badge-projects">0</span></a>
-    <a class="nav-item" onclick="nav('news',this)"><span class="mi material-icons">article</span>Tin tá»©c<span class="nav-badge blue" id="badge-news">0</span></a>
-    <div class="nav-sep">Kinh doanh</div>
-    <a class="nav-item" onclick="nav('quotes',this)"><span class="mi material-icons">request_quote</span>YÃªu cáº§u bÃ¡o giÃ¡<span class="nav-badge red" id="badge-quotes">0</span></a>
-    <a class="nav-item" onclick="nav('contacts',this)"><span class="mi material-icons">contacts</span>LiÃªn há»<span class="nav-badge red" id="badge-contacts">0</span></a>
-    <div class="nav-sep">Há» thá»ng</div>
-    <a class="nav-item" onclick="nav('users',this)"><span class="mi material-icons">manage_accounts</span>TÃ i khoáº£n quáº£n trá»</a>
-    <a class="nav-item" onclick="nav('settings',this)"><span class="mi material-icons">settings</span>CÃ i Äáº·t</a>
-  </nav>
-  <div class="absolute bottom-0 left-0 right-0 p-3 border-t" style="border-color:var(--border)">
-    <div class="nav-item" style="color:#f87171;" onclick="showLogoutModal()">
-      <span class="mi material-icons">logout</span>ÄÄng xuáº¥t
-    </div>
-  </div>
-</aside>
-
-<!-- TOPBAR -->
-<header class="topbar">
-  <button onclick="toggleSidebar()" class="text-gray-500 hover:text-white md:hidden"><span class="material-icons">menu</span></button>
-  <div class="text-sm text-gray-500">
-    <span class="material-icons text-orange-500 align-middle" style="font-size:15px">home</span>
-    <span class="mx-1">/</span><span id="breadcrumb" class="text-gray-300">Dashboard</span>
-  </div>
-  <div class="flex-1"></div>
-  <button onclick="naw('quotes',null)" class="relative text-gray-500 hover:text-white p-1.5 rounded-lg hover:bg-white/5">
-    <span class="material-icons" style="font-size:20px">notifications</span>
-    <span id="notifDot" class="absolute top-0.5 right-0.5 w-2 h-2 bg-red-500 rounded-full border-2" style="border-color:#0a0f1e;display:none"></span>
-  </button>
-  <div class="flex items-center gap-2 cursor-pointer hover:bg-white/5 rounded-xl px-2 py-1 transition-colors" onclick="nav('settings',null)">
-    <div class="avatar" id="topAvatar">A</div>
-    <div class="hidden md:block"><div class="text-sm font-semibold text-white" id="topName">Admin</div><div class="text-xs text-gray-600" id="topRole">Super Admin</div></div>
-  </div>
-</header>
-
-<!-- MAIN CONTENT -->
-<main class="main">
-
-<!-- âââââ DASHBOARD âââââ -->
-<div class="section active" id="sec-dashboard">
-  <div class="mb-5"><h1 class="text-2xl font-bold text-white">Tá»ng quan há» thá»ng</h1><p class="text-sm text-gray-600 mt-0.5" id="dashDate"></p></div>
-  <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
-    <div class="stat-card c-orange"><div class="flex items-start justify-between mb-3"><div class="ib orange"><span class="material-icons">request_quote</span></div><span class="badge yellow" id="stat-quotes-badge">0 má»i</span></div><div class="text-3xl font-bold text-white" id="stat-quotes">0</div><div class="text-sm text-gray-500">YÃªu cáº§u bÃ¡o giÃ¡</div></div>
-    <div class="stat-card c-blue"><div class="flex items-start justify-between mb-3"><div class="ib blue"><span class="material-icons">engineering</span></div><span class="badge blue" id="stat-projects-badge">0 dá»± Ã¡n</span></div><div class="text-3xl font-bold text-white" id="stat-projects">0</div><div class="text-sm text-gray-500">Dá»± Ã¡n</div></div>
-    <div class="stat-card c-green"><div class="flex items-start justify-between mb-3"><div class="ib green"><span class="material-icons">inventory_2</span></div><span class="badge green" id="stat-products-badge">0 sáº£n pháº©m</span></div><div class="text-3xl font-bold text-white" id="stat-products">0</div><div class="text-sm text-gray-500">Sáº£n pháº©m</div></div>
-    <div class="stat-card c-purple"><div class="flex items-start justify-between mb-3"><div class="ib purple"><span class="material-icons">article</span></div><span class="badge gray" id="stat-news-badge">0 bÃ i</span></div><div class="text-3xl font-bold text-white" id="stat-news">0</div><div class="text-sm text-gray-500">Tin tá»©c</div></div>
-  </div>
-  <div class="grid grid-cols-1 lg:grid-cols-3 gap-5">
-    <div class="card lg:col-span-2">
-      <div class="card-header"><div><div class="font-semibold text-white text-sm">YÃªu cáº§u bÃ¡o giÃ¡ gáº§n ÄÃ¢y</div><div class="text-xs text-gray-600 mt-0.5">Má»i nháº¥t cáº§n xeu lÃ½>Content</div></div><button class="btn btn-secondary text-xs py-1.5 px-3" onclick="naw('quotes',null)">Xem táº¥t cáº£</button></div>
-      <div id="dashQuotes" style="overflow-x:auto"></div>
-    </div>
-    <div class="flex flex-col gap-4">
-      <div class="card">
-        <div class="card-header"><div class="font-semibold text-white text-sm">Thao tÃ¡c nhanh</div></div>
-        <div class="p-4 flex flex-col gap-2">
-          <div class="qa-btn" onclick="openAddModal('products')"><span class="material-icons text-orange-400" style="font-size:17px">add_circle</span>ThÃªm sáº£n pháº©m má»i</div>
-          <div class="qa-btn" onclick="openAddModal('projects')"><span class="material-icons text-blue-400" style="font-size:17px">add_circle</span>ThÃªm dá»± Ã¡n má»i:</div>
-          <div class="qa-btn" onclick="openAddModal('news')"><span class="material-icons text-green-400" style="font-size:17px">post_add</span>ÄÄng bÃ i tin tá»©c</div>
-          <div class="qa-btn" onclick="exportCSV('quotes')"><span class="material-icons text-purple-400" style="font-size:17px">download</span>Xuáº¥t bÃ¡o giÃ¡ CSV</div>
+    <div class="ca">
+      <div id="page-dashboard" class="pg active">
+        <div class="g4" id="sGrid" style="margin-bottom:1.25rem"></div>
+        <div class="g2">
+          <div class="tw"><div class="th2"><h3>Báo giá mới</h3></div><div id="rQ"></div></div>
+          <div class="tw"><div class="th2"><h3>Liên hệ mới</h3></div><div id="rC"></div></div>
         </div>
       </div>
-      <div class="card">
-        <div class="card-header"><div class="font-semibold text-white text-sm">Dá»¯ liá»u tá»ng thÃ«</div></div>
-        <div class="p-4 space-y-3" id="dbStats"></div>
+      <div id="page-analytics" class="pg">
+        <div class="g4" id="aSt" style="margin-bottom:1.25rem"></div>
+        <div class="tw"><div class="th2"><h3>Phân tích</h3></div><div id="aBd" style="padding:1.25rem"></div></div>
+      </div>
+      <div id="page-products" class="pg"><div class="tw"><div class="th2"><h3>Sản phẩm</h3><div class="sb2"><span class="material-icons">search</span><input type="text" placeholder="Tìm..." oninput="filterT('products',this.value)"></div></div><div id="tbl-products"></div></div></div>
+      <div id="page-projects" class="pg"><div class="tw"><div class="th2"><h3>Dự án</h3><div class="sb2"><span class="material-icons">search</span><input type="text" placeholder="Tìm..." oninput="filterT('projects',this.value)"></div></div><div id="tbl-projects"></div></div></div>
+      <div id="page-news" class="pg"><div class="tw"><div class="th2"><h3>Tin tức</h3><div class="sb2"><span class="material-icons">search</span><input type="text" placeholder="Tìm..." oninput="filterT('news',this.value)"></div></div><div id="tbl-news"></div></div></div>
+      <div id="page-quotes" class="pg"><div class="tw"><div class="th2"><h3>Báo giá</h3><div class="sb2"><span class="material-icons">search</span><input type="text" placeholder="Tìm..." oninput="filterT('quotes',this.value)"></div></div><div id="tbl-quotes"></div></div></div>
+      <div id="page-contacts" class="pg"><div class="tw"><div class="th2"><h3>Liên hệ</h3><div class="sb2"><span class="material-icons">search</span><input type="text" placeholder="Tìm..." oninput="filterT('contacts',this.value)"></div></div><div id="tbl-contacts"></div></div></div>
+      <div id="page-users" class="pg"><div class="tw"><div class="th2"><h3>Tài khoản</h3></div><div id="tbl-users"></div></div></div>
+      <div id="page-settings" class="pg">
+        <div class="g2">
+          <div class="tw" style="padding:1.5rem">
+            <h3 style="margin-bottom:1.1rem;font-size:.95rem">Thông tin công ty</h3>
+            <div class="fg"><label>Tên công ty</label><input type="text" id="s_company_name"></div>
+            <div class="fg"><label>Địa chỉ</label><input type="text" id="s_address"></div>
+            <div class="fg"><label>Điện thoại</label><input type="text" id="s_phone"></div>
+            <div class="fg"><label>Email</label><input type="email" id="s_email"></div>
+            <div class="fg"><label>Website</label><input type="text" id="s_website"></div>
+            <div class="fg"><label>Mô tả SEO</label><textarea id="s_description" rows="3"></textarea></div>
+            <button class="btn bp" onclick="saveSettings()"><span class="material-icons" style="font-size:.95rem">save</span>Lưu</button>
+          </div>
+          <div>
+            <div class="tw" style="padding:1.5rem;margin-bottom:1rem">
+              <h3 style="margin-bottom:1rem;font-size:.95rem">Đổi mật khẩu</h3>
+              <div class="fg"><label>Mật khẩu mới</label><input type="password" id="nPw"></div>
+              <div class="fg"><label>Xác nhận</label><input type="password" id="cPw"></div>
+              <button class="btn bp" onclick="changePw()"><span class="material-icons" style="font-size:.95rem">lock_reset</span>Cập nhật</button>
+            </div>
+            <div class="tw" style="padding:1.5rem">
+              <h3 style="margin-bottom:1rem;font-size:.95rem">Dữ liệu</h3>
+              <div style="display:flex;gap:.6rem;flex-wrap:wrap">
+                <button class="btn bs" onclick="backupData()"><span class="material-icons" style="font-size:.95rem">backup</span>Sao lưu</button>
+                <button class="btn bs" onclick="restoreData()"><span class="material-icons" style="font-size:.95rem">restore</span>Khôi phục</button>
+                <button class="btn bd2" onclick="confirmReset()"><span class="material-icons" style="font-size:.95rem">delete_forever</span>Xóa</button>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 </div>
+<div id="modal"><div class="mb2"><div class="mh"><h2 id="mTitle">Form</h2><button onclick="closeMd()"><span class="material-icons">close</span></button></div><div id="mBody"></div></div></div>
+<div id="cfd"><div class="cfb"><span class="material-icons" style="font-size:2.5rem;color:#ef4444;margin-bottom:.5rem">warning</span><h3 id="cfT">Xác nhận</h3><p id="cfM">Bạn có chắc?</p><div style="display:flex;gap:.75rem;justify-content:center"><button class="btn bs" onclick="closeCf()">Hủy</button><button class="btn bd2" id="cfOk">Xác nhận</button></div></div></div>
+<script>
+// SUPABASE CONFIG — replace with your project credentials
+const SUPABASE_URL = 'YOUR_SUPABASE_PROJECT_URL';
+const SUPABASE_ANON_KEY = 'YOUR_SUPABASE_ANON_KEY';
+const {createClient} = supabase;
+const sb = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-<!-- âââââ ANALYTICS âââââ -->
-<div class="section" id="sec-analytics">
-  <div class="mb-5"><h1 class="text-2xl font-bold text-white">Thá»ng kÃª & BÃ o cÃ¡o</h1></div>
-  <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-6" id="analyticsCards"></div>
-  <div class="grid grid-cols-1 lg:grid-cols-2 gap-5">
-    <div class="card">
-      <div class="card-header"><div class="font-semibold text-white text-sm">Tráº¡ng thÃ¡i bÃ¡o giÃ¡</div></div>
-      <div class="p-5" id="analyticsQuoteStatus"></div>
-    </div>
-    <div class="card">
-      <div clas73Ò&6&BÖVFW"#ãÆFb6Æ73Ò&föçB×6VÖ&öÆBFWB×vFRFWB×6Ò#å>ª6âªÒFVòFæÞºV3ÂöFcãÂöFcà¢ÆFb6Æ73Ò'ÓR"CÒ&æÇF746FVv÷&W2#ãÂöFcà¢ÂöFcà¢ÂöFcà£ÂöFcà £ÂÒÒ)H)H)H)H)H$ôET5E2)H)H)H)H)HÒÓà£ÆFb6Æ73Ò'6V7Föâ"CÒ'6V2×&öGV7G2#à¢ÆFb6Æ73Ò&fÆWFV×2Ö6VçFW"§W7FgÖ&WGvVVâÖ"ÓR#à¢ÆFcãÆ6Æ73Ò'FWBÓ'ÂföçBÖ&öÆBFWB×vFR#å^ª6âÌ;Ò>ª6âªÓÂöãÇ6Æ73Ò'FWB×6ÒFWBÖw&Óc×BÓãR#åF:¦ÒÂ>ºÖÂü:>ª6âªÒ,:¢L;Færbnª×BÆ¸wSÂ÷ãÂöFcà¢Æ'WGFöâ6Æ73Ò&'Fâ'Fâ×&Ö'"öæ6Æ6³Ò&÷VäFDÖöFÂw&öGV7G2r#ãÇ7â6Æ73Ò&ÖFW&ÂÖ6öç2FWBÖ&6R#æFCÂ÷7ãåF:¦Ò>ª6âªÓÂö'WGFöãà¢ÂöFcà¢ÆFb6Æ73Ò&6&BÖ"ÓBÓ2#à¢ÆFb6Æ73Ò&fÆWfÆW×w&vÓ2#à¢ÆçWBCÒ'6V&6×&öGV7G2"6Æ73Ò&f÷&ÒÖçWB"7GÆSÒ&Ö×vGF£#c²"Æ6VöÆFW#Ò/	ùHÒL:ÆÒ¶«öÒ>ª6âªÒâââ"öæçWCÒ'&VæFW%F&ÆRw&öGV7G2r"óà¢Ç6VÆV7BCÒ&fÇFW"×&öGV7G2Ö6B"6Æ73Ò&f÷&ÒÖçWB"7GÆSÒ&Ö×vGF£²"öæ6ævSÒ'&VæFW%F&ÆRw&öGV7G2r#ãÆ÷FöâfÇVSÒ"#åNªWB>ª2FæÞºV3Âö÷FöããÂ÷6VÆV7Cà¢Ç6VÆV7BCÒ&fÇFW"×&öGV7G2×7FGW2"6Æ73Ò&f÷&ÒÖçWB"7GÆSÒ&Ö×vGF£c²"öæ6ævSÒ'&VæFW%F&ÆRw&öGV7G2r#ãÆ÷FöâfÇVSÒ"#åNªWB>ª2G.ªærF:Âö÷FöããÆ÷FöâfÇVSÒ&7FfR#ìIær,:ãÂö÷FöããÆ÷FöâfÇVSÒ&æ7FfR#äæ~º¶ær,:ãÂö÷FöããÂ÷6VÆV7Cà¢ÂöFcà¢ÂöFcà¢ÆFb6Æ73Ò&6&B#ãÆFbCÒ'F&Â×&öGV7G2"7GÆSÒ&÷fW&fÆ÷r×¦WFò#ãÂöFcãÂöFcà£ÂöFcà £ÂÒÒ)H)H)H)H)H$ô¤T5E2)H)H)H)H)HÒÓà£ÆFb6Æ73Ò'6V7Föâ"CÒ'6V2×&ö¦V7G2#à¢ÆFb6Æ73Ò&fÆWFV×2Ö6VçFW"§W7FgÖ&WGvVVâÖ"ÓR#à¢ÆFcãÆ6Æ73Ò'FWBÓ'ÂföçBÖ&öÆBFWB×vFR#å^ª6âÌ;ÒN»:ãÂöãÇ6Æ73Ò'FWB×6ÒFWBÖw&Óc×BÓãR#å÷'FföÆò<:2<;FærG,:ÆæI:2ü:âF:æÂ÷ãÂöFcà¢Æ'WGFöâ6Æ73Ò&'Fâ'Fâ×&Ö'"öæ6Æ6³Ò&÷VäFDÖöFÂw&ö¦V7G2r#ãÇ7â6Æ73Ò&ÖFW&ÂÖ6öç2FWBÖ&6R#æFCÂ÷7ãåF:¦ÒN»:ãÂö'WGFöãà¢ÂöFcà¢ÆFb6Æ73Ò&6&BÖ"ÓBÓ2#ãÆFb6Æ73Ò&fÆWfÆW×w&vÓ2#à¢ÆçWBCÒ'6V&6×&ö¦V7G2"6Æ73Ò&f÷&ÒÖçWB"7GÆSÒ&Ö×vGF£#c²"Æ6VöÆFW#Ò/	ùHÒL:ÆÒ¶«öÒN»:ââââ"öæçWCÒ'&VæFW%F&ÆRw&ö¦V7G2r"óà¢Ç6VÆV7BCÒ&fÇFW"×&ö¦V7G2Ö6B"6Æ73Ò&f÷&ÒÖçWB"7GÆSÒ&Ö×vGF£#²"öæ6ævSÒ'&VæFW%F&ÆRw&ö¦V7G2r#ãÆ÷FöâfÇVSÒ"#åNªWB>ª2ÆþªÂö÷FöããÂ÷6VÆV7Cà¢ÂöFcãÂöFcà¢ÆFb6Æ73Ò&6&B#ãÆFbCÒ'F&Â×&ö¦V7G2"7GÆSÒ&÷fW&fÆ÷r×¦WFò#ãÂöFcãÂöFcà£ÂöFcà £ÂÒÒ)H)H)H)H)HäUu2)H)H)H)H)HÒÓà£ÆFb6Æ73Ò'6V7Föâ"CÒ'6V2ÖæWw2#à¢ÆFb6Æ73Ò&fÆWFV×2Ö6VçFW"§W7FgÖ&WGvVVâÖ"ÓR#à¢ÆFcãÆ6Æ73Ò'FWBÓ'ÂföçBÖ&öÆBFWB×vFR#å^ª6âÌ;ÒFâNº3ÂöãÇ6Æ73Ò'FWB×6ÒFWBÖw&Óc×BÓãR#ìIH6ærl:^ª6âÌ;Ò,:f«÷BFâNº3Â÷ãÂöFcà¢Æ'WGFöâ6Æ73Ò&'Fâ'Fâ×&Ö'"öæ6Æ6³Ò&÷VäFDÖöFÂvæWw2r#ãÇ7â6Æ73Ò&ÖFW&ÂÖ6öç2FWBÖ&6R#æFCÂ÷7ãåf«÷B,:Þ¹¶Âö'WGFöãà¢ÂöFcà¢ÆFb6Æ73Ò&6&BÖ"ÓBÓ2#ãÆçWBCÒ'6V&6ÖæWw2"6Æ73Ò&f÷&ÒÖçWB"7GÆSÒ&Ö×vGF£3#²"Æ6VöÆFW#Ò/	ùHÒL:ÆÒ,:f«÷Bâââ"öæçWCÒ'&VæFW%F&ÆRvæWw2r"óãÂöFcà¢ÆFb6Æ73Ò&6&B#ãÆFbCÒ'F&ÂÖæWw2"7GÆSÒ&÷fW&fÆ÷r×¦WFò#ãÂöFcãÂöFcà£ÂöFcà £ÂÒÒ)H)H)H)H)HTõDU2)H)H)H)H)HÒÓà£ÆFb6Æ73Ò'6V7Föâ"CÒ'6V2×V÷FW2#à¢ÆFb6Æ73Ò&fÆWFV×2Ö6VçFW"§W7FgÖ&WGvVVâÖ"ÓR#à¢ÆFcãÆ6Æ73Ò'FWBÓ'ÂföçBÖ&öÆBFWB×vFR#å:§R>ªwR,:òv:ÂöãÇ6Æ73Ò'FWB×6ÒFWBÖw&Óc×BÓãR#åVÒl:ºÒÌ;Ò<:2:§R>ªwRNº²¶:6:æsÂ÷ãÂöFcà¢Æ'WGFöâ6Æ73Ò&'Fâ'Fâ×6V6öæF'"öæ6Æ6³Ò&W÷'D55bwV÷FW2r#ãÇ7â6Æ73Ò&ÖFW&ÂÖ6öç2FWBÖ&6R#æF÷væÆöCÂ÷7ãå^ªWB55cÂö'WGFöãà¢ÂöFcà¢ÆFb6Æ73Ò&6&BÖ"ÓBÓ2#ãÆFb6Æ73Ò&fÆWfÆW×w&vÓ2#à¢ÆçWBCÒ'6V&6×V÷FW2"6Æ73Ò&f÷&ÒÖçWB"7GÆSÒ&Ö×vGF£#c²"Æ6VöÆFW#Ò/	ùHÒL:ÆÒFVòL:¦âÂVÖÂâââ"öæçWCÒ'&VæFW%F&ÆRwV÷FW2r"óà¢Ç6VÆV7BCÒ&fÇFW"×V÷FW2×7FGW2"6Æ73Ò&f÷&ÒÖçWB"7GÆSÒ&Ö×vGF£#²"öæ6ævSÒ'&VæFW%F&ÆRwV÷FW2r#à¢Æ÷FöâfÇVSÒ"#åNªWB>ª2G.ªærF:Âö÷Föãà¢Æ÷FöâfÇVSÒ'VæFær#ä6¹ÒºÒÌ;ÓÂö÷Föãà¢Æ÷FöâfÇVSÒ&6öçF7FVB#ìI:2Æ:¦â¸sÂö÷Föãà¢Æ÷FöâfÇVSÒ'V÷FVB#ìI:2,:òv:Âö÷Föãà¢Æ÷FöâfÇVSÒ&6Æ÷6VB#ìI:2I;6æsÂö÷Föãà¢Â÷6VÆV7Cà¢ÂöFcãÂöFcà¢ÆFb6Æ73Ò&6&B#ãÆFbCÒ'F&Â×V÷FW2"7GÆSÒ&÷fW&fÆ÷r×¦WFò#ãÂöFcãÂöFcà£ÂöFcà £ÂÒÒ)H)H)H)H)H4ôåD5E2)H)H)H)H)HÒÓà£ÆFb6Æ73Ò'6V7Föâ"CÒ'6V2Ö6öçF7G2#à¢ÆFb6Æ73Ò&fÆWFV×2Ö6VçFW"§W7FgÖ&WGvVVâÖ"ÓR#à¢ÆFcãÆ6Æ73Ò'FWBÓ'ÂföçBÖ&öÆBFWB×vFR#äÆ:¦â¸r¶:6:æsÂöãÇ6Æ73Ò'FWB×6ÒFWBÖw&Óc×BÓãR#å^ª6âÌ;ÒF;FærFâÆ:¦â¸rbª6â¹6Â÷ãÂöFcà¢Æ'WGFöâ6Æ73Ò&'Fâ'Fâ×6V6öæF'"öæ6Æ6³Ò&W÷'D55bv6öçF7G2r#ãÇ7â6Æ73Ò&ÖFW&ÂÖ6öç2FWBÖ&6R#æF÷væÆöCÂ÷7ãå^ªWB55cÂö'WGFöãà¢ÂöFcà¢ÆFb6Æ73Ò&6&BÖ"ÓBÓ2#ãÆçWBCÒ'6V&6Ö6öçF7G2"6Æ73Ò&f÷&ÒÖçWB"7GÆSÒ&Ö×vGF£3#²"Æ6VöÆFW#Ò/	ùHÒL:ÆÒFVòL:¦âÂVÖÂÂI¸vâFþªâââ"öæçWCÒ'&VæFW%F&ÆRv6öçF7G2r"óãÂöFcà¢ÆFb6Æ73Ò&6&B#ãÆFbCÒ'F&ÂÖ6öçF7G2"7GÆSÒ&÷fW&fÆ÷r×¦WFò#ãÂöFcãÂöFcà£ÂöFcà £ÂÒÒ)H)H)H)H)HU4U%2)H)H)H)H)HÒÓà£ÆFb6Æ73Ò'6V7Föâ"CÒ'6V2×W6W'2#à¢ÆFb6Æ73Ò&fÆWFV×2Ö6VçFW"§W7FgÖ&WGvVVâÖ"ÓR#à¢ÆFcãÆ6Æ73Ò'FWBÓ'ÂföçBÖ&öÆBFWB×vFR#åL:¶þª6â^ª6âG.¸³ÂöãÇ6Æ73Ò'FWB×6ÒFWBÖw&Óc×BÓãR#åF:¦ÒÂ>ºÖÂ:&âW¸âL:¶þª6âFÖãÂ÷ãÂöFcà¢Æ'WGFöâ6Æ73Ò&'Fâ'Fâ×&Ö'"öæ6Æ6³Ò&÷VäFDÖöFÂwW6W'2r#ãÇ7â6Æ73Ò&ÖFW&ÂÖ6öç2FWBÖ&6R#æFCÂ÷7ãåF:¦ÒL:¶þª6ãÂö'WGFöãà¢ÂöFcà¢ÆFb6Æ73Ò&6&B#ãÆFbCÒ'F&Â×W6W'2"7GÆSÒ&÷fW&fÆ÷r×¦WFò#ãÂöFcãÂöFcà£ÂöFcà £ÂÒÒ)H)H)H)H)H4UEDäu2)H)H)H)H)HÒÓà£ÆFb6Æ73Ò'6V7Föâ"CÒ'6V2×6WGFæw2#à¢ÆFb6Æ73Ò&Ö"ÓR#ãÆ6Æ73Ò'FWBÓ'ÂföçBÖ&öÆBFWB×vFR#ä<:I«wBnòF¹æsÂöãÇ6Æ73Ò'FWB×6ÒFWBÖw&Óc×BÓãR#åF;FærFâ<;FærGb>ªWR:ÆævV'6FSÂ÷ãÂöFcà¢ÆFb6Æ73Ò&w&Bw&BÖ6öÇ2ÓÆs¦w&BÖ6öÇ2Ó"vÓR#à¢ÆFb6Æ73Ò&6&B#à¢ÆFb6Æ73Ò&6&BÖVFW"#ãÆFb6Æ73Ò&föçB×6VÖ&öÆBFWB×vFRFWB×6Ò#åF;FærFâ<;FærGÂöFcãÂöFcà¢ÆFb6Æ73Ò'ÓR76R×ÓB#à¢ÆFcãÆÆ&VÂ6Æ73Ò&f÷&ÒÖÆ&VÂ#åL:¦â<;FærGÂöÆ&VÃãÆçWBCÒ'6WBÖ6ö×ç"6Æ73Ò&f÷&ÒÖçWB"Æ6VöÆFW#Ò$4ôä5$UDU$ò"óãÂöFcà¢ÆFcãÆÆ&VÂ6Æ73Ò&f÷&ÒÖÆ&VÂ#å6ÆövãÂöÆ&VÃãÆçWBCÒ'6WB×6Æövâ"6Æ73Ò&f÷&ÒÖçWB"Æ6VöÆFW#Ò$î¸âNª6ærnºöær6ªö2âââ"óãÂöFcà¢ÆFcãÆÆ&VÂ6Æ73Ò&f÷&ÒÖÆ&VÂ#äVÖÂÆ:¦â¸sÂöÆ&VÃãÆçWBCÒ'6WBÖVÖÂ"6Æ73Ò&f÷&ÒÖçWB"GSÒ&VÖÂ"Æ6VöÆFW#Ò&æfô6öæ7&WFW&òçfâ"óãÂöFcà¢ÆFcãÆÆ&VÂ6Æ73Ò&f÷&ÒÖÆ&VÂ#ìI¸vâFþªÂöÆ&VÃãÆçWBCÒ'6WB×öæR"6Æ73Ò&f÷&ÒÖçWB"Æ6VöÆFW#Ò#"óãÂöFcà¢ÆFcãÆÆ&VÂ6Æ73Ò&f÷&ÒÖÆ&VÂ#ìI¸¶6¸ÂöÆ&VÃãÇFWF&VCÒ'6WBÖFG&W72"6Æ73Ò&f÷&ÒÖçWB"7GÆSÒ&ÖâÖVvC£s²"Æ6VöÆFW#Ò,I¸¶6¸<;FærGâââ#ãÂ÷FWF&VãÂöFcà¢ÆFcãÆÆ&VÂ6Æ73Ò&f÷&ÒÖÆ&VÂ#äÜ;BNª2æ~ªöãÂöÆ&VÃãÇFWF&VCÒ'6WBÖFW62"6Æ73Ò&f÷&ÒÖçWB"Æ6VöÆFW#Ò$Ü;BNª2n¸<;FærGâââ#ãÂ÷FWF&VãÂöFcà¢Æ'WGFöâ6Æ73Ò&'Fâ'Fâ×&Ö'"öæ6Æ6³Ò'6fU6WGFæw2#ãÇ7â6Æ73Ò&ÖFW&ÂÖ6öç2FWBÖ&6R#ç6fSÂ÷7ãäÌkRFI¹VÂö'WGFöãà¢ÂöFcà¢ÂöFcà¢ÆFb6Æ73Ò&6&B#à¢ÆFb6Æ73Ò&6&BÖVFW"#ãÆFb6Æ73Ò&föçB×6VÖ&öÆBFWB×vFRFWB×6Ò#äÞªær:2¹ÂöFcãÂöFcà¢ÆFb6Æ73Ò'ÓR76R×ÓB#à¢ÆFcãÆÆ&VÂ6Æ73Ò&f÷&ÒÖÆ&VÂ#äf6V&öö³ÂöÆ&VÃãÆçWBCÒ'6WBÖf""6Æ73Ò&f÷&ÒÖçWB"Æ6VöÆFW#Ò&GG3¢òöf6V&öö²æ6öÒòâââ"óãÂöFcà¢ÆFcãÆÆ&VÂ6Æ73Ò&f÷&ÒÖÆ&VÂ#å÷UGV&SÂöÆ&VÃãÆçWBCÒ'6WB×B"6Æ73Ò&f÷&ÒÖçWB"Æ6VöÆFW#Ò&GG3¢ò÷÷WGV&Ræ6öÒòâââ"óãÂöFcà¢ÆFcãÆÆ&VÂ6Æ73Ò&f÷&ÒÖÆ&VÂ#å¦ÆóÂöÆ&VÃãÆçWBCÒ'6WB×¦Æò"6Æ73Ò&f÷&ÒÖçWB"Æ6VöÆFW#Ò%>¹¦Æòôâââ"óãÂöFcà¢ÆFcãÆÆ&VÂ6Æ73Ò&f÷&ÒÖÆ&VÂ#äÆæ¶VDãÂöÆ&VÃãÆçWBCÒ'6WBÖÆ"6Æ73Ò&f÷&ÒÖçWB"Æ6VöÆFW#Ò&GG3¢òöÆæ¶VFâæ6öÒòâââ"óãÂöFcà¢Æ'WGFöâ6Æ73Ò&'Fâ'Fâ×&Ö'"öæ6Æ6³Ò'6fU6WGFæw2#ãÇ7â6Æ73Ò&ÖFW&ÂÖ6öç2FWBÖ&6R#ç6fSÂ÷7ãäÌkRÞªær:2¹Âö'WGFöãà¢ÂöFcà¢ÂöFcà¢ÆFb6Æ73Ò&6&B#à¢ÆFb6Æ73Ò&6&BÖVFW"#ãÆFb6Æ73Ò&föçB×6VÖ&öÆBFWB×vFRFWB×6Ò#ìI¹VÞª×B¶ªSÂöFcãÂöFcà¢ÆFb6Æ73Ò'ÓR76R×ÓB#à¢ÆFcãÆÆ&VÂ6Æ73Ò&f÷&ÒÖÆ&VÂ#äÞª×B¶ªR¸vâNªÂöÆ&VÃãÆçWBCÒ'6WBÖöÆB×72"GSÒ'77v÷&B"6Æ73Ò&f÷&ÒÖçWB"Æ6VöÆFW#Ò.(
-.(
-.(
-.(
-.(
-.(
-.(
-.(
-""óãÂöFcà¢ÆFcãÆÆ&VÂ6Æ73Ò&f÷&ÒÖÆ&VÂ#äÞª×B¶ªRÞ¹¶ÂöÆ&VÃãÆçWBCÒ'6WBÖæWr×72"GSÒ'77v÷&B"6Æ73Ò&f÷&ÒÖçWB"Æ6VöÆFW#Ò.(
-.(
-.(
-.(
-.(
-.(
-.(
-.(
-""óãÂöFcà¢ÆFcãÆÆ&VÂ6Æ73Ò&f÷&ÒÖÆ&VÂ#å:2æªÖâÞª×B¶ªRÞ¹¶ÂöÆ&VÃãÆçWBCÒ'6WBÖ6öæf&Ò×72"GSÒ'77v÷&B"6Æ73Ò&f÷&ÒÖçWB"Æ6VöÆFW#Ò.(
-.(
-.(
-.(
-.(
-.(
-.(
-.(
-""óãÂöFcà¢Æ'WGFöâ6Æ73Ò&'Fâ'Fâ×&Ö'"öæ6Æ6³Ò&6ævU77v÷&B#ãÇ7â6Æ73Ò&ÖFW&ÂÖ6öç2FWBÖ&6R#æÆö6µ÷&W6WCÂ÷7ãìI¹VÞª×B¶ªSÂö'WGFöãà¢ÂöFcà¢ÂöFcà¢ÆFcçb6Æ73Ò&6&B#à¢ÆFb6Æ73Ò&6&BÖVFW"#ãÆFb6Æ73Ò&föçB×6VÖ&öÆBFWB×vFRFWB×6Ò#å^ª6âÌ;ÒNºòÆ¸wSÂöFcãÂöFcà¢ÆFb6Æ73Ò'ÓR76R×Ó2#à¢ÆFb6Æ73Ò'FWB×6ÒFWBÖw&ÓSÖ"Ó2#å6òÌkRl:¶;FºV2NºòÆ¸wR¸rF¹æsÂöFcà¢Æ'WGFöâ6Æ73Ò&'Fâ'Fâ×6V6öæF'rÖgVÆÂ§W7FgÖ6VçFW""öæ6Æ6³Ò&&6·WFF#ãÇ7â6Æ73Ò&ÖFW&ÂÖ6öç2FWBÖ&6R#æF÷væÆöCÂ÷7ãå6òÌkRNºòÆ¸wR¥4ôâÂö'WGFöãà¢ÆFb6Æ73Ò'&VÆFfR#à¢Æ'WGFöâ6Æ73Ò&'Fâ'Fâ×6V6öæF'rÖgVÆÂ§W7FgÖ6VçFW"#ãÇ7â6Æ73Ò&ÖFW&ÂÖ6öç2FWBÖ&6R#çWÆöCÂ÷7ãä¶;FºV2NºòÆ¸wSÂö'WGFöãà¢ÆçWBGSÒ&fÆR"66WCÒ"æ§6öâ"6Æ73Ò&'6öÇWFRç6WBÓ÷6GÓ7W'6÷"×öçFW""öæ6ævSÒ'&W7F÷&TFFWfVçB"óà¢ÂöFcà¢Æ'WGFöâ6Æ73Ò&'Fâ'FâÖFævW"rÖgVÆÂ§W7FgÖ6VçFW""öæ6Æ6³Ò&6öæf&Õ&W6WDFF#ãÇ7â6Æ73Ò&ÖFW&ÂÖ6öç2FWBÖ&6R#æFVÆWFUöf÷&WfW#Â÷7ãåü:NªWB>ª2NºòÆ¸wRÞª·SÂö'WGFöãà¢ÂöFcà¢ÂöFcà¢ÂöFcà£ÂöFcà £ÂöÖãà£ÂöFcà £ÂÒÒ)Y)Y)Y)Y)Y)Y)Y)Y)Y)Y)YTädU%4ÂÔôDÂ)Y)Y)Y)Y)Y)Y)Y)Y)Y)Y)YÒÓà£ÆFbCÒ&ÖöFÂ"6Æ73Ò&ÖöFÂÖ÷fW&Æ"7GÆSÒ&F7Æ¦æöæR"öæ6Æ6³Ò&bWfVçBçF&vWCÓÓ×F26Æ÷6TÖöFÂ#à¢ÆFb6Æ73Ò&ÖöFÂÖ&÷#à¢ÆFb6Æ73Ò&ÖöFÂÖVFW"#à¢Æ26Æ73Ò&föçBÖ&öÆBFWB×vFR"CÒ&ÖöFÅFFÆR#äÖöFÃÂö3à¢Æ'WGFöâöæ6Æ6³Ò&6Æ÷6TÖöFÂ"6Æ73Ò'FWBÖw&Óc÷fW#§FWB×vFRG&ç6FöâÖ6öÆ÷'2#ãÇ7â6Æ73Ò&ÖFW&ÂÖ6öç2#æ6Æ÷6SÂ÷7ããÂö'WGFöãà¢ÂöFcà¢ÆFb6Æ73Ò&ÖöFÂÖ&öG"CÒ&ÖöFÄ&öG#ãÂöFcà¢ÆFb6Æ73Ò&ÖöFÂÖfö÷FW""CÒ&ÖöFÄfö÷FW"#ãÂöFcà¢ÂöFcà£ÂöFcà £ÂÒÒ)Y)Y)Y)Y)Y)Y)Y)Y)Y)Y)Y4ôäd$ÒÔôDÂ)Y)Y)Y)Y)Y)Y)Y)Y)Y)Y)YÒÓà£ÆFbCÒ&6öæf&ÔÖöFÂ"6Æ73Ò&ÖöFÂÖ÷fW&Æ"7GÆSÒ&F7Æ¦æöæR#à¢ÆFb6Æ73Ò&ÖöFÂÖ&÷"7GÆSÒ&Ö×vGF£3#à¢ÆFb6Æ73Ò'ÓbFWBÖ6VçFW"#à¢ÆFb6Æ73Ò'rÓBÓB&÷VæFVBÖgVÆÂfÆWFV×2Ö6VçFW"§W7FgÖ6VçFW"×ÖWFòÖ"ÓB"7GÆSÒ&&6¶w&÷VæC§&v&##Ã3Ã3Âã"#ãÇ7â6Æ73Ò&ÖFW&ÂÖ6öç2FWB×&VBÓCFWBÓ'Â"CÒ&6öæf&Ô6öâ#çv&ææsÂ÷7ããÂöFcà¢Æ26Æ73Ò&föçBÖ&öÆBFWB×vFRFWBÖÆrÖ"Ó""CÒ&6öæf&ÕFFÆR#å:2æªÖãÂö3à¢Ç6Æ73Ò'FWBÖw&ÓSFWB×6ÒÖ"ÓR"CÒ&6öæf&Ô×6r#ä.ªâ<;26ªö2¶;FæsóÂ÷à¢ÆFb6Æ73Ò&fÆWvÓ2#à¢Æ'WGFöâ6Æ73Ò&'Fâ'Fâ×6V6öæF'fÆWÓ§W7FgÖ6VçFW""öæ6Æ6³Ò&6Æ÷6T6öæf&Ò#äºwÂö'WGFöãà¢Æ'WGFöâ6Æ73Ò&'Fâ'FâÖFævW"fÆWÓ§W7FgÖ6VçFW""CÒ&6öæf&Ôö´'Fâ#å:2æªÖãÂö'WGFöãà¢ÂöFcà¢ÂöFcà¢ÂöFcà£ÂöFcà £Ç67&Cà¢òò)Y)Y)Y)Y)Y)Y)Y)Y)Y)Y)Y)Y)Y)Y)Y)Y)Y)Y)Y)Y)Y)Y)Y)Y)Y)Y)Y)Y)Y)Y)Y)Y)Y)Y)Y)Y)Y)Y)Y)Y)Y)Y)Y)Y)Y)Y)Y)Y)Y)Y)Y)Y)Y)Y)Y ¢òòDD$4RTätäR(	BÆö6Å7F÷&vRÖ&6VB5%T@¢òò)Y)Y)Y)Y)Y)Y)Y)Y)Y)Y)Y)Y)Y)Y)Y)Y)Y)Y)Y)Y)Y)Y)Y)Y)Y)Y)Y)Y)Y)Y)Y)Y)Y)Y)Y)Y)Y)Y)Y)Y)Y)Y)Y)Y)Y)Y)Y)Y)Y)Y)Y)Y)Y)Y)Y ¦6öç7BD%ô´UÒv6öæ7&WFW&õöF"s° ¦gVæ7FöâvWDD"°¢G'²&WGW&â¥4ôâç'6RÆö6Å7F÷&vRævWDFVÒD%ô´UÇÂæDD"²Ð¢6F6R²&WGW&âæDD"²Ð§Ð¦gVæ7Föâ6fTD"F"²Æö6Å7F÷&vRç6WDFVÒD%ô´UÂ¥4ôâç7G&ævgF"²Ð¦gVæ7FöâæDD"°¢6öç7BF"Ò°¢&öGV7G3¢°¢¶C£ÂæÖS¢t,:¢L;FærFkjærªÒ3#rÂ6FVv÷'¢t,:¢L;FærFkjærªÒrÂFW67&Föã¢t,:¢L;Fær<k¹ÖærI¹3#L;ær6ò<:2<;FærG,:ÆæL:&âNºVærÂÜ;Færæ:Â<:âF;FærFk¹ÖærârÂ7V73¢t<k¹ÖærI¹¢3#ÂI¹>ºWC¢"ÓF6ÒÂF¹Övâææ¾«÷C¢"ÓFrÂ&6S¢tÆ:¦â¸rrÂVæC¢vÜ+2rÂ7FGW3¢v7FfRrÂÖvS¢rrÂ7&VFVEöC¢æWrFFRçFô4õ7G&ærÒÀ¢¶C£"ÂæÖS¢t,:¢L;Fær<k¹ÖærI¹6ò3CrÂ6FVv÷'¢t,:¢L;Fær<k¹ÖærI¹6òrÂFW67&Föã¢t,:¢L;Fær<k¹ÖærI¹6ò3C6ò<:2<;FærG,:Ææ>ªwRIk¹ÖærÂæ:6òNªværÂ¾«÷B>ªWR6¸·RÎ»2ârÂ7V73¢t<k¹ÖærI¹¢3CÂI¹>ºWC¢bÓ6ÒÂºRv6:§RJ«¶òrÂ&6S¢tÆ:¦â¸rrÂVæC¢vÜ+2rÂ7FGW3¢v7FfRrÂÖvS¢rrÂ7&VFVEöC¢æWrFFRçFô4õ7G&ærÒÀ¢¶C£2ÂæÖS¢u<:â<;Færæv¸wöÆ6VBrÂ6FVv÷'¢u<:â<;Færæv¸wrÂFW67&Föã¢u<:â,:¢L;Fær<;Færæv¸wÜ:,;6ærÂI¹«6ær6òÂ6¸·RNª6G.¸Öærî«vær6òæ:k¹öærÂ¶ò,:6ârÂ7V73¢|I¹«6æs¢dcSôdÃ#RÂI¹L:¢#Ó3ÖÒÂNª6G.¸Öæs¢RÓNªVâöÜ+"rÂ&6S¢tÆ:¦â¸rrÂVæC¢vÜ+"rÂ7FGW3¢v7FfRrÂÖvS¢rrÂ7&VFVEöC¢æWrFFRçFô4õ7G&ærÒÀ¢¶C£BÂæÖS¢t6¹ærFªVÒ7'7FÆÆæRrÂ6FVv÷'¢t6¹ærFªVÒrÂFW67&Föã¢t¸rF¹ær6¹ærFªVÒ¾«÷BFæ6òNªværªvÒÂ¹2,jÂ.¸2ÝÆî¹¶æræ~ªvÒârÂ7V73¢uFªÒFªWR<:'R3ÓSÖÒÂN»Ì:æn«÷BîºBÃãFÖÒÂ.¸âlJæ>º×RrÂ&6S¢tÆ:¦â¸rrÂVæC¢vÜ+"rÂ7FGW3¢v7FfRrÂÖvS¢rrÂ7&VFVEöC¢æWrFFRçFô4õ7G&ærÒÀ¢ÒÀ¢&ö¦V7G3¢°¢¶C£ÂæÖS¢uN¹Rº7<H6â¹fæöÖW2ö6Vâ&²rÂ6FVv÷'¢t¶RL:&â<krÂ6ÆVçC¢ufæw&÷WrÂÆö6Föã¢t:î¹rÂFW67&Föã¢uF<;FærFü:â.¹¾«÷B>ªWR,:¢L;Fær6ò"L;&F:6ò>ªWârÂV#£##2Â7FGW3¢v6ö×ÆWFVBrÂÖvS¢rrÂ7&VFVEöC¢æWrFFRçFô4õ7G&ærÒÀ¢¶C£"ÂæÖS¢tæ:Ü:>·7Vxn©][\Ý	ËØ]YÛÜNÐðíÈÚxnáÜ	ËÛY[Õ[\Ý	ËØØ][ÛÒ8n¨ÚH0ìÉË\ØÜ\[ÛÔðèðíÈÚxnáÜÚpêH8n¬ÛÈLp¬ÚÈ0èHÚ^xnàÛøn¨Ûxn©]0í0íËYX\Ý]\ÎÛÛ\]Y	Ë[XYÙNÉËÜX]YØ]]È]J
-KÒTÓÔÝ[Ê
-_KÚYË[YNÐøn©ÝH±¬8nèÝðèÈ1¬ønçÉËØ]YÛÜNÐñ¨HønçÈHxn©ÛÉËÛY[Ð[SH0è¸næZIËØØ][ÛÒ0è¸næZIË\ØÜ\[ÛÐÝ[Èøn©\°ê0íÈñ¬8nç[È1$xnæHØ[ÈÍLÚÈ8n©ÛHøn©ÝH°è¸nèÈøn©ÝKËYX\Ý]\ÎÛÛÛÚ[ÉË[XYÙNÉËÜX]YØ]]È]J
-KÒTÓÔÝ[Ê
-_KK]ÜÎÂÚYK]NÐÓÓÔUTÈHxn­]øn¨Û8nª[H°ê0íÈ[0èxnáÛpíH±¬8nç[ÉËØ]YÛÜNÔøn¨Û8nª[HxnæÚIËË]]ÜÐYZ[ËÝ]\ÎÜX\ÚY	Ë[XYÙNÉËÜX]YØ]]È]J
-KÒTÓÔÝ[Ê
-_KÚY]NÐÓÓÔUTÈ1$xn¨]Ú8nê[È8n«[TÓÈLNMIËØ]YÛÜNÕ[ðíÈIÌKÍKÌKÓÓÔUTÈÚ0ë[8nêXÈHxn«Ý0ìÈøn¨Û8nª[HÜY[Ü]H8 %°ê0íÈ0èxnáÛ¸næÚHpíH±¬8nç[Ë1$0èH0è±¬8næØÈ1$xnæ]0èH]X[¸nã[ÈÛÈÚxn¯Û1¬8nèØÈ0è]xnàÛ¸nà[¸nëÛÈønéØHðíÈKË]]ÜÐYZ[ËÝ]\ÎÜX\ÚY	Ë[XYÙNÉËÜX]YØ]]È]J
-KÒTÓÔÝ[Ê
-_KÚY]NÐÓÓÔUTÈ1$xn¨]Ú8nê[È8n«[TÓÈLNMIËØ]YÛÜNÕ[ðíÈIË^Ù\Ò8náÈ8nä[È]xn¨Û0ïHÚ8n©]1¬8nèÛÈønéØHÓÓÔUTÈ1$pèÈ1$q¬8nèØÈ8nåHÚ8nêXÈ]xnäXÈ8n¯È\X]H\]\Èøn©\Ú8nê[È8n«[TÓÈLNMKËÛÛ[Õ¸næÚHÚ8nê[È8n«[TÓÈLNMKÓÓÔUTÈÚ8n¬ÛÈ1$xnâÛØ[Høn¯ÝÝ[Èøn©\øn¨Û8nª[H°è8nâØÚ¸néH1$xn¨]pêHÚxnª[]xnäXÈ8n¯ÈÚÈÚ0èXÚ0èÈÛÈ°èÛðèH±¬8næØËË]]ÜÐYZ[ËÝ]\ÎÜX\ÚY	Ë[XYÙNÉËÜX]YØ]]È]J
-KÒTÓÔÝ[Ê
-_KK][Ý\ÎÂÚYK[YNÓÝ^xná[± Û0[ËÛNÌLLÍ
-MÎ	Ë[XZ[Ø[ÛXZ[ÛÛIËÛÛ\[NÐðíÈH0è1$8n¨]	ËÙXÝÐ°ê0íÈÍ8 %p¬ÉËY\ÜØYÙNÑ8nìH0è[0è1¬8nçÛÈÌp¬øn©Û°è[ÈÚpèHøn©\8näZH°è¸n«[Ú^xnàÛËÝ]\ÎÜ[[ÉËÝ\ÎÉËÜX]YØ]]È]J]KÝÊ
-KN
-
-KÒTÓÔÝ[Ê
-_KÚY[YNÕ¸n©Û8nâÈ°ë	ËÛNÌN
-ÍMÌIË[XZ[Ø[ËÛÛ\[NÉËÙXÝÔðèðíÈÚxnáÜÛ\ÚY	ËY\ÜØYÙNÓ0èÚÈ
-Lp¬øn©Û1¬¸n©]1$xnæH0èH°è8n¨ÚH¸nã[È0îH8nèÜËÝ]\ÎØÛÛXÝY	ËÝ\Îñ$0èÈønãZH1$ZxnáÛMÍKÚ0èXÚ1$X[ÈÚ8nçH°è[ÈÚpèHÚ0ë[8nêXËËÜX]YØ]]È]J]KÝÊ
-KN
-
-JKÒTÓÔÝ[Ê
-_KÚYË[YNÓ0êðèÈñ¬8nç[ÉËÛNÌLLÍ
-MÉË[XZ[ØÝ[ÛÐÛXZ[ÛÛIËÛÛ\[NÕ1$ÛÛÝXÝ[ÛËÙXÝÐÚ8nä[È8n©[H\Ù[Y[	ËY\ÜØYÙNÕ8n©ÛÈ8n©ÛHxnáÛ0ëXÚp¬pêHøn©ÝH¸n¨ÛÈ8à[L± ÛKËÝ]\ÎÜ][ÝY	ËÝ\Îñ$0èÈønëZH°è[ÈÚpèH]XH[XZ[ðèHMÍKËÜX]YØ]]È]J]KÝÊ
-KN
-
-
-KÒTÓÔÝ[Ê
-_KKÛÛXÝÎÂÚYK[YNÔ8n¨[H± Û1$8nêXÉËÛNÌLÍÎLLË[XZ[ÙXÐÛXZ[ÛÛIËÝXXÝÒ8nãÚH¸nàHøn¨Û8nª[H°ê0íÈ8n®IËY\ÜØYÙNÐÚÈ8nãÚHðíÈHðìÈÝ[Èøn©\°ê0íÈ8n®HPPÈÚ0íÏÈøn©Û]XHÚÈ8nìH0è[0èH1¬8nç[È0è8nçËËÝ]\ÎÛ]ÉËÜX]YØ]]È]J]KÝÊ
-KLÍ
-ÊKÒTÓÔÝ[Ê
-_KÚY[YNÒðèÈ8nâÈ[IËÛNÌ
+// DB LAYER
+async function dbGetAll(t){const{data,error}=await sb.from(t).select('*').order('created_at',{ascending:false});if(error)throw error;return data||[];}
+async function dbGet(t,id){const{data,error}=await sb.from(t).select('*').eq('id',id).single();if(error)throw error;return data;}
+async function dbAdd(t,row){const{data,error}=await sb.from(t).insert(row).select().single();if(error)throw error;return data;}
+async function dbUpdate(t,id,row){const{data,error}=await sb.from(t).update(row).eq('id',id).select().single();if(error)throw error;return data;}
+async function dbDelete(t,id){const{error}=await sb.from(t).delete().eq('id',id);if(error)throw error;}
+async function dbFind(t,k,v){const{data,error}=await sb.from(t).select('*').eq(k,v);if(error)throw error;return data||[];}
+async function dbCount(t){const{count,error}=await sb.from(t).select('*',{count:'exact',head:true});return error?0:(count||0);}
+async function getSetting(k){const r=await dbFind('settings','key',k);return r.length?r[0].value:'';}
+async function setSetting(k,v){const r=await dbFind('settings','key',k);if(r.length)await dbUpdate('settings',r[0].id,{value:v});else await dbAdd('settings',{key:k,value:v});}
 
-MÎLIË[XZ[Ù[PÛÛ\[KËÝXXÝÒ8nèÜ0èXÈÝ[Èøn©\¸n«]xnáÝIËY\ÜØYÙNÐÚ0îÈ0íH1$X[È0ëHÚxn¯ÛH1$xnäZH0èXÈÝ[Èøn©\¸n«]xnáÝH0èH8nì[ÈÚÈ8nìH0è[ÚH1$pí8nâÈ
-LH8n¨ZH1¬ÈpêËÝ]\ÎÜXY	ËÜX]YØ]]È]J]KÝÊ
-KN
-
-KÒTÓÔÝ[Ê
-_KK\Ù\ÎÂÚYK\Ù\[YNØYZ[Ë\ÜÝÛÜÐYZ[HIË[YNÔ]xn¨Û¸nâÈpêËÛNÜÝ\\ØYZ[Ë[XZ[ØYZ[ÛÛÜ]\ËËÝ]\ÎØXÝ]IËÜX]YØ]]È]J
-KÒTÓÔÝ[Ê
-_KÚY\Ù\[YNÛX[YÙ\Ë\ÜÝÛÜÓX[YÙ\LÉË[YNÕ±¬8nçÛÈ0ìÈÑ	ËÛNÛX[YÙ\Ë[XZ[ÛX[YÙ\ÛÛÜ]\ËËÝ]\ÎØXÝ]IËÜX]YØ]]È]J
-KÒTÓÔÝ[Ê
-_KÚYË\Ù\[YNÙY]ÜË\ÜÝÛÜÑY]ÜLÉË[YNÐpê8n«\pêËÛNÙY]ÜË[XZ[ÙY]ÜÛÛÜ]\ËËÝ]\ÎØXÝ]IËÜX]YØ]]È]J
-KÒTÓÔÝ[Ê
-_KKÙ][ÜÎÂÛÛ\[NÐÓÓÔUTÉËÛÙØ[Ó¸nà[8n¨ÛÈ¸nëÛÈÚ8n«ØÈÚÈxnãZHðíÈ°ë1¬1¨[ÈZIË[XZ[Ú[ÐÛÛÜ]\ËËÛNÌ	ËY\ÜÎÕ8näÈÚ0ëHZ[xnáÝ[IË\ØÎÑÚxn¨ÚH0è\°ê0íÈÚ^pê8né[È°è¸n«]xnáÝH0èH8nì[ÈÚ8n©]1¬8nèÛÈØ[ÉËÉË]ÉË[ÎÉËNÉÂK^YÜÙXÝÎKÚXÝÎ]ÜÎË][Ý\ÎÛÛXÝÎË\Ù\ÎBNÂØ]QNÂ]\ÂB[Ý[ÛÙ]
-ÛÛ
-HÈ]\Ù]
-VØÛÛH×NÈB[Ý[ÛY
-ÛÛ][JHÂÛÛÝHÙ]
-NÂY
-Y^Y
-H^YHßNÂY
-Y^YØÛÛJH^YØÛÛHHNÂ][KYH^YØÛÛJÊÎÂ][KÜX]YØ]H]È]J
-KÒTÓÔÝ[Ê
-NÂY
-YØÛÛJHØÛÛHH×NÂØÛÛK[ÚY
-][JNÂØ]QNÂ]\][NÂB[Ý[Û\]JÛÛY]JHÂÛÛÝHÙ]
-NÂØÛÛHHØÛÛKX\
-OYOHYÈË]_HNÂØ]QNÂB[Ý[Û[]JÛÛY
-HÂÛÛÝHÙ]
-NÂØÛÛHHØÛÛK[\OYOHY
-NÂØ]QNÂB[Ý[Û[
-ÛÛY
-HÈ]\Ù]
-ÛÛ
-K[
-OYOHY
-NÈB[Ý[ÛÙ][ÜÊ
-HÈ]\Ù]
-KÙ][ÜÈßNÈB[Ý[ÛØ]TÙ][ÜÊÊHÈÛÛÝYÙ]
-NÈÙ][ÜÏ^ËÙ][ÜËßNÈØ]QNÈBËÈ8¥d8¥d8¥d8¥d8¥d8¥d8¥d8¥d8¥d8¥d8¥d8¥d8¥d8¥d8¥d8¥d8¥d8¥d8¥d8¥d8¥d8¥d8¥d8¥d8¥d8¥d8¥d8¥d8¥d8¥d8¥d8¥d8¥d8¥d8¥d8¥d8¥d8¥d8¥d8¥d8¥d8¥d8¥d8¥d8¥d8¥d8¥d8¥d8¥d8¥d8¥d8¥d8¥d8¥d8¥dËÈUUËÈ8¥d8¥d8¥d8¥d8¥d8¥d8¥d8¥d8¥d8¥d8¥d8¥d8¥d8¥d8¥d8¥d8¥d8¥d8¥d8¥d8¥d8¥d8¥d8¥d8¥d8¥d8¥d8¥d8¥d8¥d8¥d8¥d8¥d8¥d8¥d8¥d8¥d8¥d8¥d8¥d8¥d8¥d8¥d8¥d8¥d8¥d8¥d8¥d8¥d8¥d8¥d8¥d8¥d8¥d8¥d]Ý\[\Ù\H[Â[Ý[ÛÓÙÚ[JHÂK][Y][
+// STATE
+var curPage='dashboard', curUser=null, tblCache={};
+var PT={dashboard:'Dashboard',analytics:'Thống kê',products:'Sản phẩm',projects:'Dự án',news:'Tin tức',quotes:'Báo giá',contacts:'Liên hệ',users:'Tài khoản',settings:'Cài đặt'};
+var ADD_PGS=['products','projects','news','users'];
+var EXP_PGS=['products','projects','news','quotes','contacts','users'];
 
-NÂÛÛÝHHØÝ[Y[Ù][[Y[RY
-	ÛÙÚ[\Ù\ÊK[YK[J
-NÂÛÛÝHØÝ[Y[Ù][[Y[RY
-	ÛÙÚ[\ÜÉÊK[YNÂÛÛÝ\Ù\ÈHÙ]
-	Ý\Ù\ÉÊNÂÛÛÝ\Ù\H\Ù\Ë[
-O\Ù\[YHOOHH	\ÜÝÛÜOOH	Ý]\ÈOOH	ØXÝ]IÊNÂY
-\Ù\HÂÝ\[\Ù\H\Ù\ÂÙ\ÜÚ[ÛÝÜYÙKÙ]][J	ØÜÜÙ\ÜÚ[ÛËÓÓÝ[ÚYJÚY\Ù\Y\Ù\[YN\Ù\\Ù\[YK[YN\Ù\[YKÛN\Ù\Û_JJNÂÚÝÐYZ[
-NÂH[ÙHÂÛÛÝHHØÝ[Y[Ù][[Y[RY
-	ÛÙÚ[[\	ÊNÂK^ÛÛ[H	Õ0ê1$q ÛÈ8n«\øn­ØÈxn«]Ú8nª]HÚ0íÈ1$pîÈIÎÂKÛ\ÜÓ\Ý[[ÝJ	ÚY[ÊNÂÙ][Y[Ý]
-
-
-HOKÛ\ÜÓ\ÝY
-	ÚY[ÊKÌ
-NÂBB[Ý[ÛÙÙÛSÙÚ[\ÜÊXÛÛHÂÛÛÝ[HØÝ[Y[Ù][[Y[RY
-	ÛÙÚ[\ÜÉÊNÂY
-[\OOOIÜ\ÜÝÛÜ	Ê^Ú[\OIÝ^	ÎÚXÛÛ^ÛÛ[IÝ\ÚX[]IÎßB[Ù^Ú[\OIÜ\ÜÝÛÜ	ÎÚXÛÛ^ÛÛ[IÝ\ÚX[]WÛÙÎßBB[Ý[ÛÚÝÐYZ[
-HÂØÝ[Y[Ù][[Y[RY
-	ÛÙÚ[YÙIÊKÝ[K\Ü^OIÛÛIÎÂØÝ[Y[Ù][[Y[RY
-	ØYZ[[[	ÊKÝ[K\Ü^OIØØÚÉÎÂØÝ[Y[Ù][[Y[½currentUser.name;
-  document.getElementById('topRole').textContent=ROLE_LABELS[currentUser.role]||currentUser.role;
-  document.getElementById('topAvatar').textContent=currentUser.name[0].toUpperCase();
-  initAdmin();
+// AUTH
+async function checkSession(){const{data:{session}}=await sb.auth.getSession();if(session){curUser=session.user;showAdmin();initAdmin();}else showLogin();}
+async function doLogin(){
+  var email=document.getElementById('lE').value.trim(),pw=document.getElementById('lP').value;
+  if(!email||!pw){toast('Nhập đầy đủ thông tin','error');return;}
+  var btn=document.getElementById('lBtn');btn.disabled=true;btn.innerHTML='<span class="sp" style="width:16px;height:16px;border-width:2px;margin-right:.4rem"></span>Đang đăng nhập...';
+  var{data,error}=await sb.auth.signInWithPassword({email:email,password:pw});
+  btn.disabled=false;btn.innerHTML='<span class="material-icons" style="font-size:1rem">login</span>Đăng nhập';
+  if(error){toast('Email hoặc mật khẩu không đúng','error');return;}
+  curUser=data.user;toast('Đăng nhập thành công!','success');showAdmin();initAdmin();
 }
-function checkSession() {
-  const s = sessionStorage.getItem('cp_session');
-  if (s) {
-    const sess = JSON.parse(s);
-    const user = dbFind('users', sess.id);
-    if (user && user.status==='active') { currentUser=user; showAdmin(); return; }
-  }
-  document.getElementById('loginPage').style.display='flex';
+async function doLogout(){await sb.auth.signOut();curUser=null;tblCache={};showLogin();toast('Đã đăng xuất','info');}
+function showLogin(){document.getElementById('loginPage').style.display='flex';document.getElementById('ap').style.display='none';}
+function showAdmin(){
+  document.getElementById('loginPage').style.display='none';document.getElementById('ap').style.display='block';
+  if(curUser){var nm=(curUser.email||'Admin').split('@')[0];document.getElementById('uNm').textContent=nm;document.getElementById('uAv').textContent=nm[0].toUpperCase();}
 }
-const ROLE_LABELS = {super_admin:'Super Admin',manager:'Manager',editor:'Editor'};
 
-// âââââââââââââââââââââââââââââââââââââââââââââââââââââââ
-// NAVIGATION
-// âââââââââââââââââââââââââââââââââââââââââââââââââââââââ
-const SECTION_LABELS = {dashboard:'Dashboard',analytics:'Thong kÃª',±ÁÉ½ÕÑÌèOêÍ¸Á£ê¥´±ÁÉ½©ÑÌèêåÈ¸±¹ÝÌèQ¥¸Óî¥±ÅÕ½ÑÌèg©ÔêÔ¼§±½¹ÑÑÌè1§©¸£î±ÕÍÉÌèS­£Æê¸±ÍÑÑ¥¹Ìè¤GêÝÐôì)Õ¹Ñ¥½¸¹Ø¡ÍÑ¥½¸°°¤ì(½Õµ¹Ð¹ÅÕÉåM±Ñ½É±° ¹ÍÑ¥½¸¤¹½É ¡ÌôùÌ¹±ÍÍ1¥ÍÐ¹Éµ½Ù Ñ¥Ù¤¤ì(½¹ÍÐÍô½Õµ¹Ð¹Ñ±µ¹Ñ	å% Í´­ÍÑ¥½¸¤ì(¥¡Í¤Í¹±ÍÍ1¥ÍÐ¹ Ñ¥Ù¤ì(½Õµ¹Ð¹ÅÕÉåM±Ñ½É±° ¹¹Øµ¥Ñ´¤¹½É ¡¤ôù¤¹±ÍÍ1¥ÍÐ¹Éµ½Ù Ñ¥Ù¤¤ì(¥¡°¤°¹±ÍÍ1¥ÍÐ¹ Ñ¥Ù¤ì(½Õµ¹Ð¹Ñ±µ¹Ñ	å% ÉÉÕµ¤¹ÑáÑ
-½¹Ñ¹ÐôM
-Q%=9}1	1MmÍÑ¥½¹uññÍÑ¥½¸ì(¥¡lÁÉ½ÕÑÌ°ÁÉ½©ÑÌ°¹ÝÌ°ÅÕ½ÑÌ°½¹ÑÑÌ°ÕÍÉÌt¹¥¹±ÕÌ¡ÍÑ¥½¸¤¤É¹ÉQ±¡ÍÑ¥½¸¤ì(¥¡ÍÑ¥½¸ôôôÍ¡½É¤É¹ÉÍ¡½É ¤ì(¥¡ÍÑ¥½¸ôôô¹±åÑ¥Ì¤É¹É¹±åÑ¥Ì ¤ì(¥¡ÍÑ¥½¸ôôôÍÑÑ¥¹Ì¤±½MÑÑ¥¹Ì ¤ì)ô)Õ¹Ñ¥½¸Ñ½±M¥È ¥í½Õµ¹Ð¹Ñ±µ¹Ñ	å% Í¥È¤¹±ÍÍ1¥ÍÐ¹Ñ½± ½Á¸¤íô((¼¼VCVCVCVCVCVCVCVCVCVCVCVCVCVCVCVCVCVCVCVCVCVCVCVCVCVCVCVCVCVCVCVCVCVCVCVCVCVCVCVCVCVCVCVCVCVCVCVCVCVCVCVCVCVCV@(¼¼Q=MP(¼¼VCVCVCVCVCVCVCVCVCVCVCVCVCVCVCVCVCVCVCVCVCVCVCVCVCVCVCVCVCVCVCVCVCVCVCVCVCVCVCVCVCVCVCVCVCVCVCVCVCVCVCVCVCVCV@)Õ¹Ñ¥½¸Ñ½ÍÐ¡µÍ°ÑåÁôÍÕÍÌ¤ì(½¹ÍÐ¥½¹ÌôíÍÕÍÌè¡­}¥É±±ÉÉ½ÈèÉÉ½È±¥¹¼è¥¹¼ôì(½¹ÍÐÐô½Õµ¹Ð¹ÉÑ±µ¹Ð ¥Ø¤ì(Ð¹±ÍÍ9µôÑ½ÍÐíÑåÁõì(Ð¹¥¹¹É!Q50ôñÍÁ¸±ÍÌôµÑÉ¥°µ¥½¹ÌÍÑå±ô½¹ÐµÍ¥éèÄáÁàøí¥½¹ÍmÑåÁuñð¥¹¼ôð½ÍÁ¸øñÍÁ¸øíµÍôð½ÍÁ¸ùì(½Õµ¹Ð¹Ñ±µ¹Ñ	å% Ñ½ÍÑ
-½¹Ñ¥¹È¤¹ÁÁ¹
-¡¥±¡Ð¤ì(ÍÑQ¥µ½ÕÐ  ¤ôùÐ¹Éµ½Ù ¤°ÌÈÀÀ¤ì)ô((¼¼VCVCVCVCVCVCVCVCVCVCVCVCVCVCVCVCVCVCVCVCVCVCVCVCVCVCVCVCVCVCVCVCVCVCVCVCVCVCVCVCVCVCVCVCVCVCVCVCVCVCVCVCVCVCV@(¼¼5=0(¼¼VCVCVCVCVCVCVCVCVCVCVCVCVCVCVCVCVCVCVCVCVCVCVCVCVCVCVCVCVCVCVCVCVCVCVCVCVCVCVCVCVCââââââââââââââ
-function openModal(title, body, footer='') {
-  document.getElementById('modalTitle').textContent=title;
-  document.getElementById('modalBody').innerHTML=body;
-  document.getElementById('modalFooter').innerHTML=footer;
-  document.getElementById('modal').style.display='flex';
+// NAV
+function nav(el){
+  var pg=el.getAttribute('data-page');
+  document.querySelectorAll('.ni').forEach(function(n){n.classList.remove('active');});el.classList.add('active');
+  document.querySelectorAll('.pg').forEach(function(p){p.classList.remove('active');});document.getElementById('page-'+pg).classList.add('active');
+  document.getElementById('pTitle').textContent=PT[pg]||pg;
+  document.getElementById('addBtn').style.display=ADD_PGS.indexOf(pg)>=0?'inline-flex':'none';
+  document.getElementById('expBtn').style.display=EXP_PGS.indexOf(pg)>=0?'inline-flex':'none';
+  curPage=pg;renderPage(pg);
 }
-function closeModal(){document.getElementById('modal').style.display='none';}
-let confirmCallback = null;
-function showConfirm(title,msg,cb,icon='warning'){
-  document.getElementById('confirmTitle').textContent=title;
-  document.getElementById('confirmMsg').textContent=msg;
-  document.getElementById('confirmIcon').textContent=icon;
-  confirmCallback=cb;
-  document.getElementById('confirmModal').style.display='flex';
-  document.getElementById('confirmOkBtn').onclick=()=>{closeConfirm();if(confirmCallback)confirmCallback();};
+function refreshCur(){renderPage(curPage);toast('Đã làm mới','info');}
+async function initAdmin(){await renderDashboard();await loadSettings();updateBadges();}
+async function renderPage(pg){
+  if(pg==='dashboard')await renderDashboard();
+  else if(pg==='analytics')await renderAnalytics();
+  else if(pg==='settings')await loadSettings();
+  else await renderTable(pg);
 }
-function closeConfirm(){document.getElementById('confirmModal').style.display='none';}
-function showLogoutModal(){showConfirm('ÄÄng xuáº¥t?','Báº¡n cÃ³ cháº¯c cháº¯n muá»n ÄÄng xuáº¥t?',()=>{sessionStorage.removeItem('cp_session');location.reload();},'logout');}
 
-// âââââââââââââââââââââââââââââââââââââââââââââââââââââââ
 // DASHBOARD
-// âââââââââââââââââââââââââââââââââââââââââââââââââââââââ
-function renderDashboard() {
-  const quotes=dbGet('quotes'), products=dbGet('products'), projects=dbGet('projects'), news=dbGet('news');
-  const pendingQ=quotes.filter(q=>q.status==='pending').length;
-  document.getElementById('stat-quotes').textContent=quotes.length;
-  document.getElementById('stat-quotes-badge').textContent=pendingQ+' chá» xá»­ lÃ½';
-  document.getElementById('stat-projects').textContent=projects.length;
-  document.getElementById('stat-projects-badge').textContent=projects.filter(p=>p.status==='completed').length+' hoÃ n thÃ nh';
-  document.getElementById('stat-products').textContent=products.length;
-  document.getElementById('stat-products-badge').textContent=products.filter(p=>p.status==='active').length+' Äang bÃ¡n';
-  document.getElementById('stat-news').textContent=news.length;
-  document.getElementById('stat-news-badge').textContent=news.filter(n=>n.status==='published').length+' ÄÃ£ ÄÄng';
-  document.getElementById('dashDate').textContent='HÃ´m nay: '+new Date().toLocaleDateString('vi-VN',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
-  // Notif dot
-  if (pendingQ>0){document.getElementById('notifDot').style.display='block';}
-  // Update badges
-  document.getElementById('badge-products').textContent=products.length;
-  document.getElementById('badge-projects').textContent=projects.length;
-  document.getElementById('badge-news').textContent=news.length;
-  document.getElementById('badge-quotes').textContent=pendingQ||'';
-  document.getElementById('badge-contacts').textContent=dbGet('contacts').filter(c=>c.status==='new').length||'';
-  // Recent quotes
-  const recent=quotes.slice(0,5);
-  if(recent.length===0){document.getElementById('dashQuotes').innerHTML='<div class="empty"><span class="material-icons">request_quote</span>ChÆ°a cÃ³ yÃªu cáº§u bÃ¡o giÃ¡ nÃ o</div>';return;}
-  document.getElementById('dashQuotes').innerHTML<`<table><thead><tr><th>KhÃ¡ch hÃ ng</th><th>Sáº£n pháº©m</th><th>NgÃ y gá»­i</th><th>Tráº¡ng thÃ¡i</th><th></th></tr></thead><tbody>${recent.map(q=>`<tr><td><div style="display:flex;align-items:center;gap:8px"><div class="avatar" style="width:28px;height:28px;font-size:11px">${q.name[0]}</div><span style="color:#cbd5e1">${q.name}</span></div></td><td>${q.product}</td><td>${fmtDate(q.created_at)}</td><td>${statusBadge(q.status,'quotes')}</td><td><button class="btn btn-secondary" style="padding:4px 10px;font-size:11px" onclick="viewRecord('quotes',${q.id})">Chi tiáº¿t</button></td></tr>`).join('')}</tbody></table>`;
-  // DB stats
-  const contacts=dbGet('contacts');
-  document.getElementById('dbStats').innerHTML=[
-    {label:'Tá»ng sáº£n pháº©m',val:products.length,max:50,color:'orange'},
-    {label:'Tá»ng dá»± Ã¡n',val:projects.length,max:50,color:'blue'},
-    {label:'Tin tá»©c ÄÃ£ ÄÄng',val:news.filter(n=>n.status==='published').length,max:20,color:'green'},
-    {label:'LiÃªn há» chÆ°a xá»­ lÃ½',val:contacts.filter(c=>c.status==='new').length,max:20,color:'purple'},
-  ].map(s=>`<div><div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px"><span style="color:#64748b">${s.label}</span><span style="color:#e2e8f0;font-weight:600">${s.val}</span></div><div class="progress"><div class="progress-fill" style="width:${Math.min(100,s.val/s.max*100)}%;background:${s.color==='orange'?'linear-gradient(90deg,#ea580c,#f97316)':s.color==='blue'?'linear-gradient(90deg,#2563eb,#60a5fa)':s.color==='green'?'linear-gradient(90deg,#059669,#34d399)':'linear-gradient(90deg,#7c3aed,#a78bfa)'}"></div></div></div>`).join('');
+async function renderDashboard(){
+  var counts=await Promise.all([dbCount('products'),dbCount('projects'),dbCount('news'),dbCount('quotes'),dbCount('contacts')]);
+  var nP=counts[0],nPr=counts[1],nN=counts[2],nQ=counts[3],nC=counts[4];
+  var sc='';
+  sc+='<div class="sc"><div class="ico" style="background:rgba(234,88,12,.15)"><span class="material-icons" style="color:var(--or)">inventory_2</span></div><div class="val">'+nP+'</div><div class="lbl">Sản phẩm</div></div>';
+  sc+='<div class="sc"><div class="ico" style="background:rgba(59,130,246,.15)"><span class="material-icons" style="color:#60a5fa">engineering</span></div><div class="val">'+nPr+'</div><div class="lbl">Dự án</div></div>';
+  sc+='<div class="sc"><div class="ico" style="background:rgba(34,197,94,.15)"><span class="material-icons" style="color:#4ade80">article</span></div><div class="val">'+nN+'</div><div class="lbl">Tin tức</div></div>';
+  sc+='<div class="sc"><div class="ico" style="background:rgba(234,179,8,.15)"><span class="material-icons" style="color:#fbbf24">request_quote</span></div><div class="val">'+(nQ+nC)+'</div><div class="lbl">Yêu cầu mới</div></div>';
+  document.getElementById('sGrid').innerHTML=sc;
+  var res=await Promise.all([dbGetAll('quotes'),dbGetAll('contacts')]);
+  document.getElementById('rQ').innerHTML=miniTbl(res[0].slice(0,5),['name','product','status'],['Khách hàng','Sản phẩm','TT']);
+  document.getElementById('rC').innerHTML=miniTbl(res[1].slice(0,5),['name','subject','status'],['Khách hàng','Chủ đề','TT']);
 }
-
-function renderAnalytics() {
-  const quotes=dbGet('quotes'),products=dbGet('products'),projects=dbGet('projects'),news=dbGet('news'),contacts=dbGet('contacts');
-  document.getElementById('analyticsCards').innerHTML=[
-    {label:'Tá»ng doanh thu',val:'LiÃªn há»',icon:'attach_money',color:'orange'},
-    {label:'Tá»· lá» chá»t ÄÆ¡n',val:quotes.length?Math.round(quotes.filter(q=>q.status==='closed').length/quotes.length*100)+'%':'0%',icon:'trending_up',color:'green'},
-    {label:'KhÃ¡ch hÃ ng má»i/thÃ¡ng',val:contacts.length,icon:'people',color:'blue'},
-    {label:'BÃ i viáº¿t ÄÃ£ ÄÄng',val:news.filter(n=>n.status==='published').length,icon:'article',color:'purple'},
-  ].map(s=>`<div class="stat-card c-${s.color}"><div class="ib ${s.color} mb-3"><span class="material-icons">${s.icon}</span></div><div class="text-2xl font-bold text-white mb-1">${s.val}</div><div class="text-sm text-gray-500">${s.label}</div></div>`).join('');
-  // Quote status
-  const statuses=[{k:'pending',l:'Chá» xá»­ lÃ½',c:'#fbbf24'},{k:'contacted',l:'ÄÃ£ liÃªn há»',c:'#60a5fa'},{k:'quoted',l:'ÄÃ£ bÃ¡o giÃ¡',c:'#34d399'},{k:'closed',l:'ÄÃ£ ÄÃ³ng',c:'#94a3b8'}];
-  document.getElementById('analyticsQuoteStatus').innerHTML=statuses.map(s=>{const c=quotes.filter(q=>q.status===s.k).length;const pct=quotes.length?Math.round(c/quotes.length*100):0;return`<div class="mb-4"><div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:5px"><span style="color:#94a3b8">${s.l}</span><span style="color:${s.c};font-weight:600">${c} (${pct}%)</span></div><div class="progress"><div style="height:100%;border-radius:3px;width:${pct}%;background:${s.c};transition:width 1s"></div></div></div>`}).join('');
-  // Product categories
-  const cats={};products.forEach(p=>{cats[p.category]=(cats[p.category]||0)+1;});
-  document.getElementById('analyticsCategories').innerHTML=Object.entries(cats).map(([cat,c])=>`<div class="mb-3"><div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:4px"><span style="color:#94a3b8">${cat}</span><span style="color:#f97316;font-weight:600">${c} sáº£n pháº©m</span></div><div class="progress"><div class="progress-fill" style="width:${Math.min(100,c/products.length*100)}%"></div></div></div>`).join('')||'<div class="empty"><span class="material-icons">category</span>ChÆ°a cÃ³ sáº£n pháº©m</div>';
-}
-
-// âââââââââââââââââââââââââââââââââââââââââââââââââââââââ
-// TABLE RENDERING
-// âââââââââââââââââââââââââââââââââââââââââââââââââââââââ
-function renderTable(coll) {
-  const search = (document.getElementById('search-'+coll)||{value:''}).value.toLowerCase();
-  let data = dbGet(coll);
-  // Filter
-  if (coll==='products'){
-    const cat=(document.getElementById('filter-products-cat')||{value:''}).value;
-    const st=(document.getElementById('filter-products-status')||{value:''}).value;
-    if(cat) data=data.filter(r=>r.category===cat);
-    if(st) data=data.filter(r=>r.status===st);
-    // Populate category filter
-    const cats=[...new Set(dbGet('products').map(p=>p.category))];
-    const catSel=document.getElementById('filter-products-cat');
-    if(catSel){const cur=catSel.value;catSel.innerHTML='<option value="">Táº¥t cáº£ danh má»¥c</option>'+cats.map(c=>`<option value="${c}" ${c===cur?'selected':''}>${c}</option>`).join('');}
-  }
-  if (coll==='projects'){
-    const cat=(document.getElementById('filter-projects-cat')||{value:''}).value;
-    if(cat) data=data.filter(r=>r.category===cat);
-    const cats=[...new Set(dbGet('projects').map(p=>p.category))];
-    const catSel=document.getElementById('filter-projects-cat');
-    if(catSel){const cur=catSel.value;catSel.innerHTML='<option value="">Táº¥t cáº£ loáº¡i</option>'+cats.map(c=>`<option value="${c}" ${c===cur?'selected':''}>${c}</option>`).join('');}
-  }
-  if (coll==='quotes'){
-    const st=(document.getElementById('filter-quotes-status')||{value:''}).value;
-    if(st) data=data.filter(r=>r.status===st);
-  }
-  if (search) data=data.filter(r=>JSON.stringify(r).toLowerCase().includes(search));
-  const el=document.getElementById('tbl-'+coll);
-  if(!el)return;
-  if(!data.length){el.innerHTML='<div class="empty"><span class="material-icons">inbox</span>KhÃ´ng cÃ³ dá»¯ liá»u</div>';return;}
-  el.innerHTML='<div style="overflow-x:auto">'+buildTable(coll,data)+'</div>';
-}
-
-function buildTable(coll, data) {
-  if (coll==='products') return `<table><thead><tr><th>#</th><th>TÃªn sáº£n pháº©m</th><th>Danh má»¥c</th><th>GiÃ¡</th><th>ÄÆ¡n vá»</th><th>Tráº¡ng thÃ¡i</th><th>NgÃ y táº¡o</th><th>Thao tÃ¡c</th></tr></thead><tbody>${data.map(r=>`<tr><td style="color:#64748b">#${r.id}</td><td style="color:#e2e8f0;font-weight:500">${r.name}</td><td><span class="badge gray">${r.category}</span></td><td style="color:#f97316">${r.price||'LiÃªn há»'}</td><td style="color:#94a3b8">${r.unit||'mÂ³'}</td><td>${statusBadge(r.status,'products')}</td><td>${fmtDate(r.created_at)}</td><td><div style="display:flex;gap:6px">${actionBtns('products',r.id)}</div></td></tr>`).join('')}</tbody></table>`;
-  if (coll==='projects') return `<table><thead><tr><th>#</th><th>TÃªn dá»± Ã¡n</th><th>Loáº¡i</th><th>KhÃ¡ch hÃ ng</th><th>Äá»a Äiá»m</th><th>NÄm</th><th>Tráº¡ng thÃ¡i</th><th>Thao tÃ¡c</th></tr></thead><tbody>${data.map(r=>`<tr><td style="color:#64748b">#${r.id}</td><td style="color:#e2e8f0;font-weight:500">${r.name}</td><td><span class="badge gray">${r.category}</span></td><td>${r.client||'â'}</td><td>${r.location||'â'}</td><td>${r.year||'â'}</td><td>${statusBadge(r.status,'projects')}</td><td><div style="display:flex;gap:6px">${actionBtns('projects',r.id)}</div></td></tr>`).join('')}</tbody></table>`;
-  if (coll==='news') return `<table><thead><tr><th>#</th><th>TiÃªu Äá»</th><th>Danh má»¥c</th><th>TÃ¡c giáº£</th><th>Tráº¡ng thÃ¡i</th><th>NgÃ y táº¡o</th><th>Thao tÃ¡c</th></tr></thead><tbody>${data.map(r=>`<tr><td style="color:#64748b">#${r.id}</td><td style="color:#e2e8f0;font-weight:500">${r.title}</td><td><span class="badge blue">${r.category||'Tin tá»©c'}</span></td><td>${r.author||'Admin'}</td><td>${statusBadge(r.status,'news')}</td><td>${fmtDate(r.created_at)}</td><td><div style="display:flex;gap:6px">${actionBtns('news',r.id)}</div></td></tr>`).join('')}</tbody></table>`;
-  if (coll==='quotes') return `<table><thead><tr><th>#</th><th>KhÃ¡ch hÃ ng</th><th>Äiá»n thoáº¡i</th><th>Email</th><th>Sáº£n pháº©m quan tÃ¢m</th><th>Tráº¡ng thÃ¡i</th><th>NgÃ y gá»­i</th><th>Thao tÃ¡c</th></tr></thead><tbody>${data.map(r=>`<tr><td style="color:#64748b">#${r.id}</td><td><div style="display:flex;align-items:center;gap:7px"><div class="avatar" style="width:26px;height:26px;font-size:11px">${r.name[0]}</div><span style="color:#e2e8f0">${r.name}</span></div></td><td>${r.phone}</td><td style="font-size:12px">${r.email||'â'}</td><td style="max-width:180px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${r.product}</td><td>${statusBadge(r.status,'quotes')}</td><td>${fmtDate(r.created_at)}</td><td><div style="display:flex;gap:6px"><button class="btn btn-secondary" style="padding:4px 10px;font-size:11px" onclick="viewRecord('quotes',${r.id})"><span class="material-icons" style="font-size:13px">visibility</span>Xem</button><button class="btn btn-danger" style="padding:4px 10px;font-size:11px" onclick="deleteRecord('quotes',${r.id})"><span class="material-icons" style="font-size:13px">delete</span></button></div></td></tr>`).join('')}</tbody></table>`;
-  if (coll==='contacts') return `<table><thead><tr><th>#</th><th>Há» tÃªn</th><th>Äiá»n thoáº¡i</th><th>Email</th><th>Chá»§ Äá»</th><th>Tráº¡ng thÃ¡i</th><th>NgÃ y gá»­i</th><th>Thao tÃ¡c</th></tr></thead><tbody>${data.map(r=>`<tr><td style="color:#64748b">#${r.id}</td><td style="color:#e2e8f0">${r.name}</td><td>${r.phone||'â'}</td><td style="font-size:12px">${r.email||'â'}</td><td style="max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${r.subject||'â'}</td><td>${statusBadge(r.status,'contacts')}</td><td>${fmtDate(r.created_at)}</td><td><div style="display:flex;gap:6px"><button class="btn btn-secondary" style="padding:4px 10px;font-size:11px" onclick="viewRecord('contacts',${r.id})"><span class="material-icons" style="font-size:13px">visibility</span>Xem</button><button class="btn btn-danger" style="padding:4px 10px;font-size:11px" onclick="deleteRecord('contacts',${r.id})"><span class="material-icons" style="font-size:13px">delete</span></button></div></td></tr>`).join('')}</tbody></table>`;
-  if (coll==='users') return `<table><thead><tr><th>#</th><th>TÃªn hiá»n thá»</th><th>TÃ i khoáº£n</th><th>Email</th><th>Vai trÃ²</th><th>Tráº¡ng thÃ¡i</th><th>NgÃ y táº¡o</th><th>Thao tÃ¡c</th></tr></thead><tbody>${data.map(r=>`<tr><td style="color:#64748b">#${r.id}</td><td><div style="display:flex;align-items:center;gap:7px"><div class="avatar" style="width:26px;height:26px;font-size:11px">${r.name[0]}</div><span style="color:#e2e8f0;font-weight:500">${r.name}</span></div></td><td style="color:#f97316"><code>${r.username}</code></td><td style="font-size:12px">${r.email||'â'}</td><td>${statusBadge(r.role,'users')}</td><td>${statusBadge(r.status,'users_status')}</td><td>${fmtDate(r.created_at)}</td><td><div style="display:flex;gap:6px">${actionBtns('users',r.id)}</div></td></tr>`).join('')}</tbody></table>`;
-  return '';
-}
-
-function actionBtns(coll, id) {
-  return `<button class="btn btn-secondary" style="padding:4px 10px;font-size:11px" onclick="openEditModal('${coll}',${id})"><span class="material-icons" style="font-size:13px">edit</span>Sá»­a</button><button class="btn btn-danger" style="padding:4px 10px;font-size:11px" onclick="deleteRecord('${coll}',${id})"><span class="material-icons" style="font-size:13px">delete</span></button>`;
-}
-
-// âââââââââââââââââââââââââââââââââââââââââââââââââââââââ
-// STATUS BADGES & FORMATTING
-// âââââââââââââââââââââââââââââââââââââââââââââââââââââââ
-function statusBadge(val, coll) {
-  const maps = {
-    products:{active:{c:'green',l:'Äang bÃ¡n'},inactive:{c:'gray',l:'Ngá»«ng bÃ¡n'}},
-    projects:{completed:{c:'green',l:'HoÃ n thÃ nh'},ongoing:{c:'blue',l:'Äang thi cÃ´ng'},pending:{c:'yellow',l:'Chuáº©n bá»'}},
-    news:{published:{c:'green',l:'ÄÃ£ ÄÄng'},draft:{c:'gray',l:'NhÃ¡p'}},
-    quotes:{pending:{c:'yellow',l:'Chá» xá»­ lÃ½'},contacted:{c:'blue',l:'ÄÃ£ liÃªn há»'},quoted:{c:'green',l:'ÄÃ£ bÃ¡o giÃ¡'},closed:{c:'gray',l:'ÄÃ£ ÄÃ³ng'}},
-    contacts:{new:{c:'red',l:'Má»i'},read:{c:'blue',l:'ÄÃ£ Äá»c'},replied:{c:'green',l:'ÄÃ£ pháº£n há»i'}},
-    users:{super_admin:{c:'orange',l:'Super Admin'},manager:{c:'blue',l:'Manager'},editor:{c:'gray',l:'Editor'}},
-    users_status:{active:{c:'green',l:'Hoáº¡t Äá»ng'},inactive:{c:'red',l:'Bá» khÃ³a'}},
-  };
-  const map = maps[coll]||{};
-  const info = map[val]||{c:'gray',l:val};
-  const colors = {orange:'background:rgba(234,88,12,.15);color:#f97316;border:1px solid rgba(234,88,12,.25)',green:'background:rgba(5,150,105,.15);color:#34d399;border:1px solid rgba(52,211,153,.2)',blue:'background:rgba(37,99,235,.15);color:#60a5fa;border:1px solid rgba(96,165,250,.2)',yellow:'background:rgba(234,179,8,.15);color:#fbbf24;border:1px solid rgba(251,191,36,.2)',gray:'background:rgba(100,116,139,.15);color:#94a3b8;border:1px solid rgba(148,163,184,.2)',red:'background:rgba(220,38,38,.15);color:#f87171;border:1px solid rgba(248,113,113,.2)'};
-  return `<span style="display:inline-flex;align-items:center;padding:2px 9px;border-radius:99px;font-size:11px;font-weight:600;${colors[info.c]||colors.gray}">${info.l}</span>`;
-}
-function fmtDate(d){if(!d)return'â';const dt=new Date(d);return dt.toLocaleDateString('vi-VN',{day:'2-digit',month:'2-digit',year:'numeric'});}
-
-// âââââââââââââââââââââââââââââââââââââââââââââââââââââââ
-// ADD / EDIT MODALS
-// âââââââââââââââââââââââââââââââââââââââââââââââââââââââ
-function openAddModal(coll) { openFormModal(coll, null); }
-function openEditModal(coll, id) { openFormModal(coll, id); }
-
-function openFormModal(coll, id) {
-  const isEdit = id !== null;
-  const data = isEdit ? dbFind(coll, id) : null;
-  const v = (field, def='') => isEdit && data ? (data[field]||def) : def;
-  const titles = {products:'Sáº£n pháº©m',projects:'Dá»± Ã¡n',news:'Tin tá»©c',users:'TÃ i khoáº£n'};
-  const title = (isEdit?'Chá»nh sá»­a ':'ThÃªm ') + (titles[coll]||coll);
-  let body = '';
-  if (coll==='products') {
-    body = `
-      <div class="grid grid-cols-1 gap-4">
-        <div class="grid grid-cols-2 gap-4">
-          <div><label class="form-label">TÎªn sáº£n pháº©m *</label><input id="f-name" class="form-input" placeholder="VD: BÃª tÃ´ng C40" value="${esc(v('name'))}"/></div>
-          <div><label class="form-label">Danh má»¥c *</label><input id="f-category" class="form-input" list="prod-cats" placeholder="VD: BÃª tÃ´ng thÆ°Æ¡ng pháº©m" value="${esc(v('category'))}"/>
-          <datalist id="prod-cats">${[...new Set(dbGet('products').map(p=>p.category))].map(c=>`<option value="${c}">`).join('')}</datalist></div>
-        </div>
-        <div><label class="form-label">MÃ´ táº£</label><textarea id="f-desc" class="form-input">${esc(v('description'))}</textarea></div>
-        <div><label class="form-label">ThÃ´ng sá» ká»¹ thuáº­t</label><textarea id="f-specs" class="form-input" style="min-height:70px" placeholder="VD: CÆ°á»ng Äá»: C40 | Äá» sá»¥t: 16cm...">${esc(v('specs'))}</textarea></div>
-        <div class="grid grid-cols-3 gap-4">
-          <div><label class="form-label">GiÃ¡</label><input id="f-price" class="form-input" placeholder="LiÃªn há»" value="${esc(v('price','LiÃªn há»'))}"/></div>
-          <div><label class="form-label">ÄÆ¡n vá»</label><select id="f-unit" class="form-input"><option ${v('unit','mÂ³')==='mÂ³'?'selected':''}>mÂ³</option><option ${v('unit')==='mÂ²'?'selected':''}>mÂ²</option><option ${v('unit')==='táº¥n'?'selected':''}>táº¥n</option><option ${v('unit')==='kg'?'selected':''}>kg</option><option ${v('unit')==='bá»'?'selected':''}>bá»</option></select></div>
-          <div><label class="form-label">Tráº¡ng thÃ¡i</label><select id="f-status" class="form-input"><option value="active" ${v('status','active')==='active'?'selected':''}>Äang bÃ¡n</option><option value="inactive" ${v('status')==='inactive'?'selected':''}>Ngá»«ng bÃ¡n</option></select></div>
-        </div>
-        <div><label class="form-label">URL hÃ¬nh áº£nh</label><input id="f-image" class="form-input" placeholder="https://..." value="${esc(v('image'))}"/></div>
-      </div>`;
-  } else if (coll==='projects') {
-    body = `
-      <div class="grid grid-cols-1 gap-4">
-        <div class="grid grid-cols-2 gap-4">
-          <div><label class="form-label">TÎªn dá»± Ã¡n *</label><input id="f-name" class="form-input" value="${esc(v('name'))}"/></div>
-          <div><label class="form-label">Loáº¡i dá»± Ã¡n</label><input id="f-category" class="form-input" list="proj-cats" value="${esc(v('category'))}"/>
-          <datalist id="proj-cats"><option value="Khu dÃ¢n cÆ°"><option value="CÃ´ng nghiá»p"><option value="CÆ¡ sá» háº¡ táº§ng"><option value="ThÆ°Æ¡ng máº¡i"></datalist></div>
-        </div>
-        <div class="grid grid-cols-2 gap-4">
-          <div><label class="form-label">KhÃ¡ch hÃ ng</label><input id="f-client" class="form-input" value="${esc(v('client'))}"/></div>
-          <div><label class="form-label">Äá»a Äiá»m</label><input id="f-location" class="form-input" value="${esc(v('location'))}"/></div>
-        </div>
-        <div><label class="form-label">MÃ´ táº£ dá»± Ã¡n</label><textarea id="f-desc" class="form-input">${esc(v('description'))}</textarea></div>
-        <div class="grid grid-cols-2 gap-4">
-          <div><label class="form-label">NÄm</label><input id="f-year" type="number" class="form-input" value="${v('year',new Date().getFullYear())}"/></div>
-          <div><label class="form-label">Tráº¡ng thÃ¡i</label><select id="f-status" class="form-input"><option value="pending" ${v('status')==='pending'?'selected':''}>Chuáº©n bá»</option><option value="ongoing" ${v('status','ongoing')==='ongoing'?'selected':''}>Äang thi cÃ´ng</option><option value="completed" ${v('status')==='completed'?'selected':''}>HoÃ n thÃ nh</option></select></div>
-        </div>
-        <div><label class="form-label">URL hÃ¬nh áº£nh</label><input id="f-image" class="form-input" placeholder="https://..." value="${esc(v('image'))}"/></div>
-      </div>`;
-  } else if (coll==='news') {
-    body = `
-      <div class="grid grid-cols-1 gap-4">
-        <div><label class="form-label">TiÃªu Äá» bÃ i viáº¿t *</label><input id="f-title" class="form-input" value="${esc(v('title'))}"/></div>
-        <div class="grid grid-cols-2 gap-4">
-          <div><label class="form-label">Danh má»¥c</label><input id="f-category" class="form-input" list="news-cats" value="${esc(v('category','Tin tá»©c'))}"/>
-          <datalist id="news-cats"><option value="Tin tá»©c"><option value="Sáº£n pháº©m má»i"><option value="Tin cÃ´ng ty"><option value="Ká»¹ thuáº­t"><option value="Thá» trÆ°á»ng"></datalist></div>
-          <div><label class="form-label">Tráº¡ng thÃ¡i</label><select id="f-status" class="form-input"><option value="published" ${v('status','published')==='published'?'selected':''}>ÄÃ£ ÄÄng</option><option value="draft" ${v('status')==='draft'?'selected':''}>NhÃ¡p</option></select></div>
-        </div>
-        <div><label class="form-label">TÎ³m táº¯t</label><textarea id="f-excerpt" class="form-input" style="min-height:70px">${esc(v('excerpt'))}</textarea></div>
-        <div><label class="form-label">Ná»i dung bÃ i viáº¿t</label><textarea id="f-content" class="form-input" style="min-height:180px">${esc(v('content'))}</textarea></div>
-        <div class="grid grid-cols-2 gap-4">
-          <div><label class="form-label">TÃ¡c giáº£</label><input id="f-author" class="form-input" value="${esc(v('author','Admin'))}"/></div>
-          <div><label class="form-label">URL hÃ¬nh áº£nh</label><input id="f-image" class="form-input" placeholder="https://..." value="${esc(v('image'))}"/></div>
-        </div>
-      </div>`;
-  } else if (coll==='users') {
-    body = `
-      <div class="grid grid-cols-1 gap-4">
-        <div class="grid grid-cols-2 gap-4">
-          <div><label class="form-label">TÎªn hiá»n thá» *</label><input id="f-name" class="form-input" value="${esc(v('name'))}"/></div>
-          <div><label class="form-label">TÃªn ÄÄng nháº­p *</label><input id="f-username" class="form-input" ${isEdit?'readonly':''} value="${esc(v('username'))}"/></div>
-        </div>
-        <div class="grid grid-cols-2 gap-4">
-          <div><label class="form-label">${isEdit?'Máº­t kháº©u má»i (Äá» trá»ng = giá»¯ nguyÃªn)':'Máº­t kháº©u *'}</label><input id="f-password" type="password" class="form-input" placeholder="${isEdit?'Äá» trá»ng náº¿u khÃ´ng Äá»i':'Nháº­p máº­t kháº©u'}"/></div>
-          <div><label class="form-label">Email</label><input id="f-email" type="email" class="form-input" value="${esc(v('email'))}"/></div>
-        </div>
-        <div class="grid grid-cols-2 gap-4">
-          <div><label class="form-label">Vai trÃ²</label><select id="f-role" class="form-input"><option value="super_admin" ${v('role')==='super_admin'?'selected':''}>Super Admin</option><option value="manager" ${v('role','manager')==='manager'?'selected':''}>Manager</option><option value="editor" ${v('role')==='editor'?'selected':''}>Editor</option></select></div>
-          <div><label class="form-label">Tráº¡ng thÃ¡i</label><select id="f-status" class="form-input"><option value="active" ${v('status','active')==='active'?'selected':''}>Hoáº¡t Äá»ng</option><option value="inactive" ${v('status')==='inactive'?'selected':''}>Bá» khÃ³a</option></select></div>
-        </div>
-      </div>`;
-  }
-  const footer = `<button class="btn btn-secondary" onclick="closeModal()">Há»§y</button><button class="btn btn-primary" onclick="saveRecord('${coll}',${isEdit?id:'null'})">${isEdit?'<span class=\'material-icons text-base\'>save</span>LÆ°u thay Äá»i':'<span class=\'material-icons text-base\'>add</span>ThÃªm má»i'}</button>`;
-  openModal(title, body, footer);
-}
-
-function saveRecord(coll, id) {
-  const g = sel => { const e=document.getElementById(sel); return e ? e.value.trim() : ''; };
-  let data = {};
-  if (coll==='products') {
-    if (!g('f-name') || !g('f-category')) { toast('Vui lÃ²ng Äiá»n Äáº§y Äá»§ trÆ°á»ng báº¯t buá»c!','error'); return; }
-    data = {name:g('f-name'),category:g('f-category'),description:g('f-desc'),specs:g('f-specs'),price:g('f-price')||'LiÃªn há»',unit:g('f-unit'),status:g('f-status'),image:g('f-image')};
-  } else if (coll==='projects') {
-    if (!g('f-name')) { toast('Vui lÃ²ng nháº­p tÃªn dá»± Ã¡n!','error'); return; }
-    data = {name:g('f-name'),category:g('f-category'),client:g('f-client'),location:g('f-location'),description:g('f-desc'),year:parseInt(g('f-year'))||new Date().getFullYear(),status:g('f-status'),image:g('f-image')};
-  } else if (coll==='news') {
-    if (!g('f-title')) { toast('Vui lÃ²ng nháº­p tiÃªu Äá»!','error'); return; }
-    data = {title:g('f-title'),category:g('f-category'),excerpt:g('f-excerpt'),content:g('f-content'),author:g('f-author')||'Admin',status:g('f-status'),image:g('f-image')};
-  } else if (coll==='users') {
-    if (!g('f-name') || (!id && !g('f-password'))) { toast('Vui lÃ²ng Äiá»n Äáº§y Äá»§!','error'); return; }
-    data = {name:g('f-name'),email:g('f-email'),role:g('f-role'),status:g('f-status')};
-    if (!id) data.username = g('f-username');
-    if (g('f-password')) data.password = g('f-password');
-  }
-  if (id) { dbUpdate(coll, id, data); toast('ÄÃ£ cáº­p nháº­t thÃ nh cÃ´ng!'); }
-  else { dbAdd(coll, data); toast('ÄÃ£ thÃªm moi thanh cÃ´ng!'); }
-  closeModal();
-  renderTable(coll);
-  renderDashboard();
-}
-
-// âââââââââââââââââââââââââââââââââââââââââââââââââââââââ
-// VIEW RECORD
-// âââââââââââââââââââââââââââââââââââââââââââââââââââââââ
-function viewRecord(coll, id) {
-  const r = dbFind(coll, id);
-  if (!r) return;
-  let body = '';
-  if (coll==='quotes') {
-    body = `
-      <div class="grid grid-cols-2 gap-x-6 gap-y-3 mb-5">
-        <div class="dr"><label>Há» tÃªn</label><span style="color:#fff;font-weight:600">${r.name}</span></div>
-        <div class="dr"><label>Äiá»n thoáº¡i</label><a href="tel:${r.phone}" style="color:#f97316">${r.phone}</a></div>
-        <div class="dr"><label>Email</label><a href="mailto:${r.email}" style="color:#60a5fa">${r.email||'â'}</a></div>
-        <div class="dr"><label>CÃ´ng ty</label><span>${r.company||'â'}</span></div>
-        <div class="dr col-span-2"><label>Sáº£n pháº©m</label><span style="color:#e2e8f0">${r.product}</span></div>
-        <div class="dr col-span-2"><label>Ná»i dung yÃªu cáº§u</label><span style="color:#e2e8f0">${r.message}</span></div>
-        <div class="dr"><label>NgÃ y gá»­i</label><span>${fmtDate(r.created_at)}</span></div>
-        <div class="dr"><label>Tráº¡ng thÃ¡i</label>${statusBadge(r.status,'quotes')}</div>
-      </div>
-      <div class="mb-4">
-        <label class="form-label">Cáº­p nháº­t tráº¡ng thÃ¡i</label>
-        <select id="quote-status-${r.id}" class="form-input" style="max-width:220px">
-          <option value="pending" ${r.status==='pending'?'selected':''}>Chá» xá»­ lÃ½</option>
-          <option value="contacted" ${r.status==='contacted'?'selected':''}>ÄÃ£ liÃªn há»</option>
-          <option value="quoted" ${r.status==='quoted'?'selected':''}>ÄÃ£ bÃ¡o giÃ¡</option>
-          <option value="closed" ${r.status==='closed'?'selected':''}>ÄÃ£ ÄÃ³ng</option>
-        </select>
-      </div>
-      <div><label class="form-label">Ghi chÃº ná»i bá»</label><textarea id="quote-notes-${r.id}" class="form-input" style="min-height:90px" placeholder="Nháº­p ghi chÃº...">${r.notes||''}</textarea></div>`;
-    const footer = `<button class="btn btn-secondary" onclick="closeModal()">ÄÃ³ng</button><button class="btn btn-primary" onclick="updateQuoteStatus(${r.id})"><span class="material-icons text-base">save</span>LÆ°u cáº­p nháº­t</button>`;
-    openModal('Chi tiáº¿t yÃªu cáº§u bÃ¡o giÃ¡ #'+r.id, body, footer)er);
-  } else if (coll==='contacts') {
-    body = `
-      <div class="grid grid-cols-2 gap-x-6 gap-y-3 mb-5">
-        <div class="dr"><label>Há» tÃªn</label><span style="color:#fff;font-weight:600">${r.name}</span></div>
-        <div class="dr"><label>Äiá»n thoáº¡i</label><a href="tel:${r.phone}" style="color:#f97316">${r.phone||'â'}</a></div>
-        <div class="dr"><label>Email</label><a href="mailto:${r.email}" style="color:#60a5fa">${r.email||'â'}</a></div>
-        <div class="dr"><label>NgÃ y gá»­i</label><span>${fmtDate(r.created_at)}</span></div>
-        <div class="dr col-span-2"><label>Chá»§ Äá»</label><span style="color:#e2e8f0">${r.subject||'â'}</span></div>
-        <div class="dr col-span-2"><label>Ná»i dung</label><div style="color:#e2e8f0;line-height:1.6">${r.message}</div></div>
-      </div>
-      <div class="mb-4"><label class="form-label">Cáº­p nháº­t tráº¡ng thÃ¡i</label><select id="contact-status-${r.id}" class="form-input" style="max-width:200px"><option value="new" ${r.status==='new'?'selected':''}>Má»i</option><option value="read" ${r.status==='read'?'selected':''}>ÄÃ£ Äá»c</option><option value="replied" ${r.status==='replied'?'selected':''}>ÄÃ£ pháº£n há»i</option></select></div>
-      <div style="background:rgba(37,99,235,.1);border:1px solid rgba(96,165,250,.2);border-radius:10px;padding:14px">
-        <div style="font-size:12px;color:#60a5fa;font-weight:600;margin-bottom:6px">ð§ Pháº£n há»i qua email:</div>
-        <a href="mailto:${r.email}?subject=Re: ${encodeURIComponent(r.subject||'LiÃªn há»')}" class="btn btn-secondary" style="font-size:12px"><span class="material-icons" style="font-size:15px">reply</span>Gá»­i email pháº£n há»i</a>
-      </div>`;
-    const footer = `<button class="btn btn-secondary" onclick="closeModal()">ÄÃ³ng</button><button class="btn btn-primary" onclick="updateContactStatus(${r.id})"><span class="material-icons text-base">save</span>LÆ°u tráº¡ng thÃ¡i</button>`;
-    openModal('Chi tiáº¿t liÃªn há» #'+r.id, body, footer);
-    dbUpdate('contacts', r.id, {status: r.status==='new'?'read':r.status});
-  }
-}
-
-function updateQuoteStatus(id) {
-  const status=document.getElementById('quote-status-'+id).value;
-  const notes=document.getElementById('quote-notes-'+id).value;
-  dbUpdate('quotes',id,{status,notes});
-  toast('ÄÃ£ cáº­p nháº­t tráº¡ng thÃ¡i bÃ¡o giÃ¡!');
-  closeModal();
-  renderTable('quotes');
-  renderDashboard();
-}
-function updateContactStatus(id) {
-  const status=document.getElementById('contact-status-'+id).value;
-  dbUpdate('contacts',id,{status});
-  toast('ÄÃ£ cáº­p nháº­t tráº¡ng thÃ¡i!');
-  closeModal();
-  renderTable('contacts');
-}
-
-// âââââââââââââââââââââââââââââââââââââââââââââââââââââââ
-// DELETE
-// âââââââââââââââââââââââââââââââââââââââââââââââââââââââ
-function deleteRecord(coll, id) {
-  const names={products:'sáº£n pháº©m',projects:'dá»± Ã¡n',news:'bÃ i viáº¿t',quotes:'yÃªu cáº§u bÃ¡o giÃ¡',contacts:'liÃªn há»',users:'tÃ i khoáº£n'};
-  if(coll==='users'&&id===currentUser.id){toast('KhÃ´ng thá» xÃ³a tÃ i khoáº£n Äang ÄÄng nháº­p!','error');return;}
-  showConfirm('XÃ¡c nháº­n xÃ³a','Báº¡n cÃ³ cháº¯c muá»n xÃ³a '+(names[coll]||'má»¥c')+'nÃ y? Thao tÃ¡c khÃ´ng thá» hoÃ n tÃ¡c.',()=>{
-    dbDelete(coll,id);
-    toast('ÄÃ£ xÃ³a thÃ nh cÃ´ng!');
-    renderTable(coll);
-    renderDashboard();
-  },'delete');
-}
-
-// âââââââââââââââââââââââââââââââââââââââââââââââââââââââ
-// SETTINGS
-// âââââââââââââââââââââââââââââââââââââââââââââââââââââââ
-function loadSettings() {
-  const s=dbSettings();
-  document.getElementById('set-company').value=s.company||'';
-  document.getElementById('set-slogan').value=s.slogan||'';
-  document.getElementById('set-email').value=s.email||'';
-  document.getElementById('set-phone').value=s.phone||'';
-  document.getElementById('set-address').value=s.address||'';
-  document.getElementById('set-desc').value=s.desc||'';
-  document.getElementById('set-fb').value=s.fb||'';
-  document.getElementById('set-yt').value=s.yt||'';
-  document.getElementById('set-zalo').value=s.zalo||'';
-  document.getElementById('set-li').value=s.li||'';
-}
-function saveSettings() {
-  dbSaveSettings({
-    company:document.getElementById('set-company').value,
-    slogan:document.getElementById('set-slogan').value,
-    email:document.getElementById('set-email').value,
-    phone:document.getElementById('set-phone').value,
-    address:document.getElementById('set-address').value,
-    desc:document.getElementById('set-desc').value,
-    fb:document.getElementById('set-fb').value,
-    yt:document.getElementById('set-yt').value,
-    zalo:document.getElementById('set-zalo').value,
-    li:document.getElementById('set-li').value,
+function miniTbl(rows,cols,labels){
+  if(!rows.length)return '<div class="es"><span class="material-icons">inbox</span><p>Chưa có dữ liệu</p></div>';
+  var h='<div style="overflow-x:auto"><table><thead><tr>';
+  labels.forEach(function(l){h+='<th>'+l+'</th>';});
+  h+='</tr></thead><tbody>';
+  rows.forEach(function(r){
+    h+='<tr>';
+    cols.forEach(function(c){h+='<td>'+(c==='status'?stBadge(r[c]):esc(r[c]||''))+'</td>';});
+    h+='</tr>';
   });
-  toast('ÄÃ£ lÆ°u cÃ i Äáº·t thÃ nh cÃ´ng!');
-}
-function changePassword() {
-  const old=document.getElementById('set-old-pass').value;
-  const n=document.getElementById('set-new-pass').value;
-  const c=document.getElementById('set-confirm-pass').value;
-  if (old!==currentUser.password){toast('Máº­t kháº©u hiá»n táº¡i khÃ´ng ÄÃºng!','error');return;}
-  if (n.length<8){toast('Máº­t kháº©u má»i pháº£i Ã­t nháº¥t 8 kÃ½ tá»±!','error');return;}
-  if (n!==c){toast('Máº­t kháº©u xÃ¡c nháº­n khÃ´ng khá»p!','error');return;}
-  dbUpdate('users',currentUser.id,{password:n});
-  currentUser.password=n;
-  toast('ÄÃ£ Äá»i máº­t kháº©u thÃ nh cÃ´ng!');
-  document.getElementById('set-old-pass').value='';
-  document.getElementById('set-new-pass').value='';
-  document.getElementById('set-confirm-pass').value='';
+  return h+'</tbody></table></div>';
 }
 
-// âââââââââââââââââââââââââââââââââââââââââââââââââââââââ
-// EXPORT CSV
-// âââââââââââââââââââââââââââââââââââââââââââââââââââââââ
-function exportCSV(coll) {
-  const data = dbGet(coll);
-  if (!data.length) { toast('KhÃ´ng cÃ³ dá»¯ liá»u Äá» xuáº¥t!','info'); return; }
-  const headers = Object.keys(data[0]).filter(k=>k!=='id');
-  const rows = data.map(r=>headers.map(h=>`"${(r[h]||'').toString().replace(/"/g,'""')}"`).join(','));
-  const csv = [headers.join(','), ...rows].join('\n');
-  const blob = new Blob(['ï»¿'+csv], {type:'text/csv;charset=utf-8'});
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement('a');
-  a.href=url; a.download=`concretepro_${coll}_${new Date().toISOString().slice(0,10)}.csv`;
-  a.click(); URL.revokeObjectURL(url);
-  toast('ÄÃ£ xuáº¥t file CSV thÃ nh cÃ´ng!');
+// ANALYTICS
+async function renderAnalytics(){
+  var all=await Promise.all([dbGetAll('products'),dbGetAll('projects'),dbGetAll('news'),dbGetAll('quotes'),dbGetAll('contacts')]);
+  var products=all[0],projects=all[1],news=all[2],quotes=all[3],contacts=all[4];
+  var ap=products.filter(function(r){return r.status==='active';}).length;
+  var dp=projects.filter(function(r){return r.status==='completed';}).length;
+  var pn=news.filter(function(r){return r.status==='published';}).length;
+  var pend=quotes.filter(function(r){return r.status==='new'||r.status==='pending';}).length+contacts.filter(function(r){return r.status==='new';}).length;
+  var as='';
+  as+='<div class="sc"><div class="ico" style="background:rgba(234,88,12,.15)"><span class="material-icons" style="color:var(--or)">check_circle</span></div><div class="val">'+ap+'/'+products.length+'</div><div class="lbl">SP Đang bán</div></div>';
+  as+='<div class="sc"><div class="ico" style="background:rgba(59,130,246,.15)"><span class="material-icons" style="color:#60a5fa">task_alt</span></div><div class="val">'+dp+'/'+projects.length+'</div><div class="lbl">DA Hoàn thành</div></div>';
+  as+='<div class="sc"><div class="ico" style="background:rgba(34,197,94,.15)"><span class="material-icons" style="color:#4ade80">published_with_changes</span></div><div class="val">'+pn+'/'+news.length+'</div><div class="lbl">Bài đã đăng</div></div>';
+  as+='<div class="sc"><div class="ico" style="background:rgba(234,179,8,.15)"><span class="material-icons" style="color:#fbbf24">pending_actions</span></div><div class="val">'+pend+'</div><div class="lbl">Chờ xử lý</div></div>';
+  document.getElementById('aSt').innerHTML=as;
+  document.getElementById('aBd').innerHTML='<div class="g2"><div><h4 style="color:var(--tx2);font-size:.75rem;text-transform:uppercase;letter-spacing:.5px;margin-bottom:.75rem">SP theo danh mục</h4>'+groupBar(products,'category')+'</div><div><h4 style="color:var(--tx2);font-size:.75rem;text-transform:uppercase;letter-spacing:.5px;margin-bottom:.75rem">DA theo danh mục</h4>'+groupBar(projects,'category')+'</div></div>';
+}
+function groupBar(arr,key){
+  var m={};arr.forEach(function(r){var k=r[key]||'Khác';m[k]=(m[k]||0)+1;});
+  var total=arr.length||1;
+  var out=Object.entries(m).sort(function(a,b){return b[1]-a[1];}).map(function(e){
+    var k=e[0],v=e[1];
+    return '<div style="margin-bottom:.45rem"><div style="display:flex;justify-content:space-between;font-size:.78rem;margin-bottom:.15rem"><span>'+esc(k)+'</span><span style="color:var(--tx2)">'+v+'</span></div><div style="background:var(--bd);border-radius:4px;height:5px"><div style="background:var(--or);width:'+Math.round(v/total*100)+'%;height:5px;border-radius:4px"></div></div></div>';
+  }).join('');
+  return out||'<p style="color:var(--tx2);font-size:.85rem">Chưa có dữ liệu</p>';
 }
 
-// âââââââââââââââââââââââââââââââââââââââââââââââââââââââ
-// BACKUP & RESTORE
-// âââââââââââââââââââââââââââââââââââââââââââââââââââââââ
-function backupData() {
-  const db = getDB();
-  const blob = new Blob([JSON.stringify(db,null,2)],{type:'application/json'});
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement('a');
-  a.href=url; a.download=`concretepro_backup_${new Date().toISOString().slice(0,10)}.json`;
-  a.click(); URL.revokeObjectURL(url);
-  toast('ÄÃ£ sao lÆ°u dá»¯ liá»u thÃ nh cÃ´ng!');
+// TABLE
+var SCHEMA={
+  products:{cols:['name','category','price','unit','status'],labels:['Tên','Danh mục','Giá','ĐV','TT']},
+  projects:{cols:['name','category','client','location','year','status'],labels:['Tên','Danh mục','KH','Địa điểm','Năm','TT']},
+  news:{cols:['title','category','author','status','created_at'],labels:['Tiêu đề','Danh mục','Tác giả','TT','Ngày']},
+  quotes:{cols:['name','phone','product','status','created_at'],labels:['Khách','ĐT','Sản phẩm','TT','Ngày']},
+  contacts:{cols:['name','phone','subject','status','created_at'],labels:['Khách','ĐT','Chủ đề','TT','Ngày']},
+  users:{cols:['name','username','email','role','status'],labels:['Họ tên','Username','Email','Vai trò','TT']}
+};
+async function renderTable(t){
+  var el=document.getElementById('tbl-'+t);if(!el)return;
+  el.innerHTML='<div class="ld"><div class="sp"></div>Đang tải...</div>';
+  try{var data=await dbGetAll(t);tblCache[t]=data;buildTable(t,data,el);}
+  catch(e){el.innerHTML='<div class="es"><span class="material-icons">error</span><p>Lỗi: '+esc(e.message)+'</p></div>';}
 }
-function restoreData(e) {
-  const file = e.target.files[0];
-  if (!file) return;
-  const reader = new FileReader();
-  reader.onload = (ev) => {
-    try {
-      const db = JSON.parse(ev.target.result);
-      if (!db.users || !db.products) { toast('File khÃ´ng há»£p lá»!','error'); return; }
-      showConfirm('KhÃ´i phá»¥c dá»¯ liá»u','Táº¥t cáº£ dá»¯ liá»u hiá»n táº¡i sáº½ bá» ghi ÄÃ¨. Tiáº¿p tá»¥c?',()=>{
-        saveDB(db); toast('ÄÃ£ khÃ´i phá»¥c dá»¯ liá»u thÃ nh cÃ´ng!'); renderDashboard();
-      },'restore');
-    } catch(err) { toast('Lá»i Äá»c file JSON!','error'); }
+function buildTable(t,data,el){
+  var sch=SCHEMA[t];if(!data.length){el.innerHTML='<div class="es"><span class="material-icons">inbox</span><p>Chưa có dữ liệu</p></div>';return;}
+  var h='<div style="overflow-x:auto"><table><thead><tr>';
+  sch.labels.forEach(function(l){h+='<th>'+l+'</th>';});
+  h+='<th style="text-align:right">Thao tác</th></tr></thead><tbody>';
+  data.forEach(function(row){
+    h+='<tr>';
+    sch.cols.forEach(function(c){h+='<td>'+(c==='status'?stBadge(row[c]||''):c==='created_at'?fmtD(row[c]):esc(String(row[c]||'')))+'</td>';});
+    h+='<td style="text-align:right;white-space:nowrap">'+actBtns(t,row.id)+'</td></tr>';
+  });
+  el.innerHTML=h+'</tbody></table></div>';
+}
+function filterT(t,q){var data=tblCache[t]||[];var f=q?data.filter(function(r){return JSON.stringify(r).toLowerCase().indexOf(q.toLowerCase())>=0;}):data;buildTable(t,f,document.getElementById('tbl-'+t));}
+function actBtns(t,id){
+  var v='<button class="btn bs" style="padding:.28rem .55rem" onclick="viewRec(\''+t+'\',\''+id+'\')" title="Xem"><span class="material-icons" style="font-size:.85rem">visibility</span></button>';
+  var e='<button class="btn bs" style="padding:.28rem .55rem;margin:0 .2rem" onclick="openEdit(\''+t+'\',\''+id+'\')" title="Sửa"><span class="material-icons" style="font-size:.85rem">edit</span></button>';
+  var d='<button class="btn bd2" style="padding:.28rem .55rem" onclick="delRec(\''+t+'\',\''+id+'\')" title="Xóa"><span class="material-icons" style="font-size:.85rem">delete</span></button>';
+  return (['quotes','contacts'].indexOf(t)>=0)?v+d:v+e+d;
+}
+function stBadge(s){
+  var cls={active:'bg',inactive:'bgr',draft:'by',published:'bg',archived:'bgr',completed:'bg',ongoing:'bb',planning:'by',new:'bb',pending:'by',replied:'bg',closed:'bgr',admin:'br',editor:'bb',viewer:'bgr'};
+  var lbl={active:'Đang bán',inactive:'Ngừng',draft:'Nháp',published:'Đã đăng',archived:'Lưu trữ',completed:'Hoàn thành',ongoing:'Đang làm',planning:'Kế hoạch',new:'Mới',pending:'Xử lý',replied:'Đã trả lời',closed:'Đóng',admin:'Admin',editor:'Editor',viewer:'Viewer'};
+  return '<span class="badge '+(cls[s]||'bgr')+'">'+(lbl[s]||s)+'</span>';
+}
+function fmtD(d){if(!d)return '—';try{return new Date(d).toLocaleDateString('vi-VN');}catch(e){return d;}}
+function esc(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+
+// FORM FIELDS CONFIG
+var FIELDS={
+  products:[{k:'name',l:'Tên sản phẩm *',t:'text',req:true},{k:'category',l:'Danh mục',t:'select',opts:['Bê tông tươi','Cấu kiện bê tông','Phụ gia','Khác']},{k:'description',l:'Mô tả',t:'textarea'},{k:'specs',l:'Thông số',t:'textarea'},{k:'price',l:'Giá',t:'text'},{k:'unit',l:'Đơn vị',t:'text'},{k:'status',l:'Trạng thái',t:'select',opts:['active','inactive','draft']},{k:'image',l:'URL ảnh',t:'text'}],
+  projects:[{k:'name',l:'Tên dự án *',t:'text',req:true},{k:'category',l:'Danh mục',t:'select',opts:['Dân dụng','Công nghiệp','Hạ tầng','Khác']},{k:'client',l:'Khách hàng',t:'text'},{k:'location',l:'Địa điểm',t:'text'},{k:'description',l:'Mô tả',t:'textarea'},{k:'year',l:'Năm',t:'text'},{k:'status',l:'Trạng thái',t:'select',opts:['planning','ongoing','completed']},{k:'image',l:'URL ảnh',t:'text'}],
+  news:[{k:'title',l:'Tiêu đề *',t:'text',req:true},{k:'category',l:'Danh mục',t:'select',opts:['Tin tức','Sự kiện','Kỹ thuật','Thị trường']},{k:'excerpt',l:'Tóm tắt',t:'textarea'},{k:'content',l:'Nội dung',t:'textarea'},{k:'author',l:'Tác giả',t:'text'},{k:'status',l:'Trạng thái',t:'select',opts:['draft','published','archived']},{k:'image',l:'URL ảnh',t:'text'}],
+  users:[{k:'name',l:'Họ tên *',t:'text',req:true},{k:'username',l:'Username *',t:'text',req:true},{k:'email',l:'Email *',t:'email',req:true},{k:'role',l:'Vai trò',t:'select',opts:['admin','editor','viewer']},{k:'status',l:'Trạng thái',t:'select',opts:['active','inactive']},{k:'password',l:'Mật khẩu',t:'password'}]
+};
+function openAdd(){var t=curPage;if(!FIELDS[t])return;document.getElementById('mTitle').textContent='Thêm '+PT[t];document.getElementById('mBody').innerHTML=buildForm(t,null);var m=document.getElementById('modal');m.classList.add('open');m.dataset.mode='add';m.dataset.table=t;}
+async function openEdit(t,id){
+  if(!FIELDS[t])return;
+  document.getElementById('mTitle').textContent='Sửa '+PT[t];
+  document.getElementById('mBody').innerHTML='<div class="ld"><div class="sp"></div></div>';
+  var m=document.getElementById('modal');m.classList.add('open');m.dataset.mode='edit';m.dataset.table=t;m.dataset.id=id;
+  try{var row=await dbGet(t,id);document.getElementById('mBody').innerHTML=buildForm(t,row);}
+  catch(e){document.getElementById('mBody').innerHTML='<p style="color:#f87171">Lỗi: '+esc(e.message)+'</p>';}
+}
+function buildForm(t,row){
+  var flds=FIELDS[t]||[];
+  var cols=flds.map(function(f){
+    var v=row?(f.t==='password'?'':(row[f.k]||'')):'';
+    var inp;
+    if(f.t==='select'){inp='<select id="f_'+f.k+'"><option value="">-- Chọn --</option>'+(f.opts||[]).map(function(o){return '<option value="'+o+'"'+(v===o?' selected':'')+'>'+o+'</option>';}).join('')+'</select>';}
+    else if(f.t==='textarea'){inp='<textarea id="f_'+f.k+'" rows="3">'+esc(v)+'</textarea>';}
+    else{inp='<input type="'+f.t+'" id="f_'+f.k+'" value="'+esc(v)+'"'+(f.req?' required':'')+' >';}
+    return '<div class="fg"><label>'+f.l+'</label>'+inp+'</div>';
+  });
+  return '<div class="g2">'+cols.join('')+'</div><div style="display:flex;justify-content:flex-end;gap:.65rem;margin-top:1rem"><button class="btn bs" onclick="closeMd()">Hủy</button><button class="btn bp" onclick="saveRec()"><span class="material-icons" style="font-size:.95rem">save</span>Lưu</button></div>';
+}
+async function saveRec(){
+  var m=document.getElementById('modal'),t=m.dataset.table,mode=m.dataset.mode,id=m.dataset.id,row={};
+  var flds=FIELDS[t]||[];
+  for(var i=0;i<flds.length;i++){var f=flds[i];var el=document.getElementById('f_'+f.k);if(!el)continue;var v=el.value.trim();if(f.req&&!v){toast('Vui lòng điền trường bắt buộc','error');return;}if(f.t!=='password'||v)row[f.k]=v;}
+  try{if(mode==='add'){await dbAdd(t,row);toast('Thêm thành công!','success');}else{await dbUpdate(t,id,row);toast('Cập nhật thành công!','success');}closeMd();renderTable(t);}
+  catch(e){toast('Lỗi: '+e.message,'error');}
+}
+async function viewRec(t,id){
+  document.getElementById('mTitle').textContent='Chi tiết';
+  document.getElementById('mBody').innerHTML='<div class="ld"><div class="sp"></div></div>';
+  document.getElementById('modal').classList.add('open');
+  try{
+    var row=await dbGet(t,id);
+    var entries=Object.entries(row).filter(function(e){return e[0]!=='id';});
+    var canSt=['quotes','contacts'].indexOf(t)>=0;
+    var h='<div class="g2" style="margin-bottom:1rem">';
+    entries.forEach(function(en){
+      var k=en[0],v=en[1];
+      h+='<div style="background:var(--navy4);border-radius:8px;padding:.7rem"><div style="font-size:.65rem;color:var(--tx2);text-transform:uppercase;margin-bottom:.2rem">'+k+'</div><div style="font-size:.85rem;word-break:break-word">'+(k==='status'?stBadge(v||''):esc(String(v||'—')))+'</div></div>';
+    });
+    h+='</div>';
+    if(canSt){h+='<div style="margin-bottom:1rem"><label style="font-size:.75rem;color:var(--tx2);display:block;margin-bottom:.3rem">Đổi trạng thái</label><select onchange="qkSt(\''+t+'\',\''+id+'\',this.value)" style="background:var(--navy4);border:1px solid var(--bd);border-radius:8px;padding:.5rem .75rem;color:var(--tx)"><option value="">-- Chọn --</option><option value="new">Mới</option><option value="pending">Đang xử lý</option><option value="replied">Đã phản hồi</option><option value="closed">Đóng</option></select></div>';}
+    h+='<div style="display:flex;justify-content:flex-end"><button class="btn bs" onclick="closeMd()">Đóng</button></div>';
+    document.getElementById('mBody').innerHTML=h;
+  }catch(e){document.getElementById('mBody').innerHTML='<p style="color:#f87171">Lỗi: '+esc(e.message)+'</p>';}
+}
+async function qkSt(t,id,status){if(!status)return;try{await dbUpdate(t,id,{status:status});toast('Cập nhật trạng thái!','success');closeMd();renderTable(t);updateBadges();}catch(e){toast('Lỗi: '+e.message,'error');}}
+function delRec(t,id){showCf('Xác nhận xóa','Bản ghi sẽ bị xóa vĩnh viễn. Tiếp tục?',async function(){try{await dbDelete(t,id);toast('Đã xóa!','success');renderTable(t);}catch(e){toast('Lỗi: '+e.message,'error');}});}
+
+// SETTINGS
+var SKEYS=['company_name','address','phone','email','website','description'];
+async function loadSettings(){for(var i=0;i<SKEYS.length;i++){var el=document.getElementById('s_'+SKEYS[i]);if(el)el.value=await getSetting(SKEYS[i]);}}
+async function saveSettings(){try{for(var i=0;i<SKEYS.length;i++){var el=document.getElementById('s_'+SKEYS[i]);if(el)await setSetting(SKEYS[i],el.value.trim());}toast('Đã lưu cài đặt!','success');}catch(e){toast('Lỗi: '+e.message,'error');}}
+async function changePw(){
+  var np=document.getElementById('nPw').value,cp=document.getElementById('cPw').value;
+  if(!np||!cp){toast('Nhập đầy đủ thông tin','error');return;}
+  if(np!==cp){toast('Mật khẩu không khớp','error');return;}
+  if(np.length<6){toast('Tối thiểu 6 ký tự','error');return;}
+  var{error}=await sb.auth.updateUser({password:np});
+  if(error){toast('Lỗi: '+error.message,'error');return;}
+  toast('Đã cập nhật mật khẩu!','success');document.getElementById('nPw').value='';document.getElementById('cPw').value='';
+}
+
+// EXPORT
+function doExport(){
+  var t=curPage,data=tblCache[t]||[];if(!data.length){toast('Không có dữ liệu','info');return;}
+  var keys=Object.keys(data[0]);
+  var rows=[keys.join(',')].concat(data.map(function(r){return keys.map(function(k){return '"'+String(r[k]||'').replace(/"/g,'""')+'"';}).join(',');}));
+  var a=document.createElement('a');
+  a.href=URL.createObjectURL(new Blob(['﻿'+rows.join('\n')],{type:'text/csv;charset=utf-8;'}));
+  a.download=t+'_'+new Date().toISOString().slice(0,10)+'.csv';
+  a.click();URL.revokeObjectURL(a.href);toast('Xuất CSV!','success');
+}
+
+// BACKUP/RESTORE/RESET
+async function backupData(){
+  var tables=['products','projects','news','quotes','contacts','users','settings'],bk={_exported:new Date().toISOString()};
+  for(var i=0;i<tables.length;i++){try{bk[tables[i]]=await dbGetAll(tables[i]);}catch(e){bk[tables[i]]=[];}}
+  var a=document.createElement('a');
+  a.href=URL.createObjectURL(new Blob([JSON.stringify(bk,null,2)],{type:'application/json'}));
+  a.download='backup_'+new Date().toISOString().slice(0,10)+'.json';
+  a.click();URL.revokeObjectURL(a.href);toast('Đã xuất sao lưu!','success');
+}
+function restoreData(){
+  var inp=document.createElement('input');inp.type='file';inp.accept='.json';
+  inp.onchange=async function(e){
+    var file=e.target.files[0];if(!file)return;
+    var bk;try{bk=JSON.parse(await file.text());}catch(err){toast('File không hợp lệ','error');return;}
+    showCf('Xác nhận khôi phục','Dữ liệu hiện tại sẽ bị thay thế. Tiếp tục?',async function(){
+      var tables=['products','projects','news','quotes','contacts','users','settings'];
+      for(var i=0;i<tables.length;i++){
+        var t=tables[i];if(!bk[t]||!bk[t].length)continue;
+        try{await sb.from(t).delete().neq('id','00000000-0000-0000-0000-000000000000');await sb.from(t).insert(bk[t].map(function(r){var o={};Object.keys(r).forEach(function(k){if(k!=='id')o[k]=r[k];});return o;}));}
+        catch(err){console.warn('restore:'+t,err);}
+      }
+      toast('Khôi phục thành công!','success');renderPage(curPage);
+    });
   };
-  reader.readAsText(file);
+  inp.click();
 }
-function confirmResetData() {
-  showConfirm('XÃ³a dá»¯ liá»u máº«u','XÃ³a táº¥t cáº£ dá»¯ liá»u vÃ  báº¯t Äáº§u láº¡i tá»« Äáº§u?',()=>{
-    localStorage.removeItem(DB_KEY); initDB(); renderDashboard(); toast('ÄÃ£ reset dá»¯ liá»u!');
-  },'delete_forever');
-}
+function confirmReset(){showCf('XÓA TOÀN BỘ','Hành động KHÔNG THỂ hoàn tác!',async function(){var tables=['products','projects','news','quotes','contacts','settings'];for(var i=0;i<tables.length;i++){try{await sb.from(tables[i]).delete().neq('id','00000000-0000-0000-0000-000000000000');}catch(e){}}tblCache={};toast('Đã xóa toàn bộ','info');renderPage(curPage);});}
 
-// âââââââââââââââââââââââââââââââââââââââââââââââââââââââ
-// UTILS
-// âââââââââââââââââââââââââââââââââââââââââââââââââââââââ
-function esc(s){if(!s)return'';return String(s).replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
-
-// âââââââââââââââââââââââââââââââââââââââââââââââââââââââ
-// INIT
-// âââââââââââââââââââââââââââââââââââââââââââââââââââââââ
-function initAdmin() {
-  renderDashboard();
+// BADGES
+async function updateBadges(){
+  try{
+    var nq=await dbFind('quotes','status','new'),nc=await dbFind('contacts','status','new');
+    var bq=document.getElementById('bq'),bc=document.getElementById('bc');
+    if(bq){bq.textContent=nq.length;bq.style.display=nq.length?'inline':'none';}
+    if(bc){bc.textContent=nc.length;bc.style.display=nc.length?'inline':'none';}
+  }catch(e){}
 }
 
-// START
+// MODAL/CONFIRM
+function closeMd(){document.getElementById('modal').classList.remove('open');}
+function closeCf(){document.getElementById('cfd').classList.remove('open');}
+function showCf(title,msg,onOk){document.getElementById('cfT').textContent=title;document.getElementById('cfM').textContent=msg;document.getElementById('cfOk').onclick=function(){closeCf();onOk();};document.getElementById('cfd').classList.add('open');}
+
+// TOAST
+function toast(msg,type){
+  type=type||'info';
+  var icons={success:'check_circle',error:'error',info:'info'};
+  var el=document.createElement('div');el.className='ti '+type;
+  el.innerHTML='<span class="material-icons" style="font-size:.95rem">'+(icons[type]||'info')+'</span>'+esc(msg);
+  document.getElementById('toast').appendChild(el);setTimeout(function(){el.remove();},3500);
+}
+
+// EVENTS
+document.getElementById('modal').addEventListener('click',function(e){if(e.target===document.getElementById('modal'))closeMd();});
+document.getElementById('cfd').addEventListener('click',function(e){if(e.target===document.getElementById('cfd'))closeCf();});
+
+// BOOT
 checkSession();
 </script>
 </body>
