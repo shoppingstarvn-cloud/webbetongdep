@@ -76,6 +76,26 @@ tr:last-child td{border-bottom:none}tr:hover td{background:rgba(255,255,255,.02)
 @media(max-width:1100px){.g4{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:700px){.g2{grid-template-columns:1fr}#mc{margin-left:0}#sb{display:none}}
 .bdg{margin-left:auto;background:var(--or);color:#fff;border-radius:999px;font-size:.63rem;padding:.1rem .45rem}
+/* SLIDES MODULE */
+.slide-card{background:var(--navy3);border:1px solid var(--bd);border-radius:14px;overflow:hidden;display:flex;flex-direction:column}
+.slide-img-area{position:relative;height:180px;background:var(--navy4);cursor:pointer;overflow:hidden;display:flex;align-items:center;justify-content:center;border-bottom:1px solid var(--bd);transition:background .2s}
+.slide-img-area:hover{background:#1e2d3d}
+.slide-img-area img{width:100%;height:100%;object-fit:cover;position:absolute;inset:0}
+.slide-img-area .uph{display:flex;flex-direction:column;align-items:center;gap:.35rem;color:var(--tx2);font-size:.8rem;z-index:1;pointer-events:none}
+.slide-img-area .uph .material-icons{font-size:2.2rem;color:var(--or);opacity:.7}
+.slide-img-area.uploading::after{content:'';position:absolute;inset:0;background:rgba(0,0,0,.5);z-index:2}
+.slide-img-area .upbar{position:absolute;bottom:0;left:0;height:3px;background:var(--or);z-index:3;transition:width .3s}
+.slide-body{padding:1rem;display:flex;flex-direction:column;gap:.6rem;flex:1}
+.slide-num{position:absolute;top:.5rem;left:.5rem;background:var(--or);color:#fff;border-radius:6px;font-size:.68rem;font-weight:700;padding:.15rem .45rem;z-index:2}
+.slide-del{position:absolute;top:.5rem;right:.5rem;background:rgba(239,68,68,.85);color:#fff;border:none;border-radius:6px;padding:.2rem .4rem;cursor:pointer;z-index:2;display:flex;align-items:center}
+.slide-del .material-icons{font-size:.9rem}
+.sgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1.1rem}
+.slide-ctrl{background:var(--navy3);border:1px solid var(--bd);border-radius:12px;padding:1.1rem 1.4rem;display:flex;align-items:center;flex-wrap:wrap;gap:1rem;margin-bottom:1.25rem}
+.slide-ctrl h3{font-size:.92rem;font-weight:600;margin-right:auto}
+.cnt-inp{display:flex;align-items:center;gap:.55rem}
+.cnt-inp label{font-size:.82rem;color:var(--tx2)}
+.cnt-inp input{width:64px;background:var(--navy4);border:1px solid var(--bd);border-radius:8px;padding:.4rem .65rem;color:var(--tx);font-size:.9rem;outline:none;text-align:center}
+.cnt-inp input:focus{border-color:var(--or)}
 </style>
 </head>
 <body>
@@ -100,6 +120,7 @@ tr:last-child td{border-bottom:none}tr:hover td{background:rgba(255,255,255,.02)
       <div class="ni" data-page="products" onclick="nav(this)"><span class="material-icons">inventory_2</span>Sản phẩm</div>
       <div class="ni" data-page="projects" onclick="nav(this)"><span class="material-icons">engineering</span>Dự án</div>
       <div class="ni" data-page="news" onclick="nav(this)"><span class="material-icons">article</span>Tin tức</div>
+      <div class="ni" data-page="slides" onclick="nav(this)"><span class="material-icons">slideshow</span>Slides trang chủ</div>
       <div class="nss" style="margin-top:.5rem">Khách hàng</div>
       <div class="ni" data-page="quotes" onclick="nav(this)"><span class="material-icons">request_quote</span>Báo giá<span id="bq" class="bdg" style="display:none">0</span></div>
       <div class="ni" data-page="contacts" onclick="nav(this)"><span class="material-icons">contact_mail</span>Liên hệ<span id="bc" class="bdg" style="background:#ef4444;display:none">0</span></div>
@@ -137,6 +158,23 @@ tr:last-child td{border-bottom:none}tr:hover td{background:rgba(255,255,255,.02)
       <div id="page-products" class="pg"><div class="tw"><div class="th2"><h3>Sản phẩm</h3><div class="sb2"><span class="material-icons">search</span><input type="text" placeholder="Tìm..." oninput="filterT('products',this.value)"></div></div><div id="tbl-products"></div></div></div>
       <div id="page-projects" class="pg"><div class="tw"><div class="th2"><h3>Dự án</h3><div class="sb2"><span class="material-icons">search</span><input type="text" placeholder="Tìm..." oninput="filterT('projects',this.value)"></div></div><div id="tbl-projects"></div></div></div>
       <div id="page-news" class="pg"><div class="tw"><div class="th2"><h3>Tin tức</h3><div class="sb2"><span class="material-icons">search</span><input type="text" placeholder="Tìm..." oninput="filterT('news',this.value)"></div></div><div id="tbl-news"></div></div></div>
+      <div id="page-slides" class="pg">
+        <div class="slide-ctrl">
+          <h3><span class="material-icons" style="font-size:1rem;vertical-align:middle;margin-right:.3rem;color:var(--or)">slideshow</span>Quản lý Slides Trang Chủ</h3>
+          <div class="cnt-inp">
+            <label>Số lượng slides:</label>
+            <input type="number" id="slideCount" min="1" max="12" value="3">
+            <button class="btn bp" onclick="applySlideCount()" style="padding:.4rem .9rem"><span class="material-icons" style="font-size:.9rem">tune</span>Áp dụng</button>
+          </div>
+          <button class="btn bs" onclick="renderSlides()" style="padding:.4rem .8rem"><span class="material-icons" style="font-size:.9rem">refresh</span>Làm mới</button>
+          <button class="btn bp" onclick="saveAllSlides()" style="padding:.4rem .9rem"><span class="material-icons" style="font-size:.9rem">save</span>Lưu tất cả</button>
+        </div>
+        <div id="slidesGrid" class="sgrid"></div>
+        <div id="slidesEmpty" style="display:none;text-align:center;padding:3rem;color:var(--tx2)">
+          <span class="material-icons" style="font-size:2.5rem;opacity:.4;display:block;margin-bottom:.75rem">photo_library</span>
+          <p>Chưa có slide nào. Nhập số lượng và nhấn "Áp dụng" để bắt đầu.</p>
+        </div>
+      </div>
       <div id="page-quotes" class="pg"><div class="tw"><div class="th2"><h3>Báo giá</h3><div class="sb2"><span class="material-icons">search</span><input type="text" placeholder="Tìm..." oninput="filterT('quotes',this.value)"></div></div><div id="tbl-quotes"></div></div></div>
       <div id="page-contacts" class="pg"><div class="tw"><div class="th2"><h3>Liên hệ</h3><div class="sb2"><span class="material-icons">search</span><input type="text" placeholder="Tìm..." oninput="filterT('contacts',this.value)"></div></div><div id="tbl-contacts"></div></div></div>
       <div id="page-users" class="pg"><div class="tw"><div class="th2"><h3>Tài khoản</h3></div><div id="tbl-users"></div></div></div>
@@ -195,7 +233,7 @@ async function setSetting(k,v){const r=await dbFind('settings','key',k);if(r.len
 
 // STATE
 var curPage='dashboard', curUser=null, tblCache={};
-var PT={dashboard:'Dashboard',analytics:'Thống kê',products:'Sản phẩm',projects:'Dự án',news:'Tin tức',quotes:'Báo giá',contacts:'Liên hệ',users:'Tài khoản',settings:'Cài đặt'};
+var PT={dashboard:'Dashboard',analytics:'Thống kê',products:'Sản phẩm',projects:'Dự án',news:'Tin tức',slides:'Slides Trang Chủ',quotes:'Báo giá',contacts:'Liên hệ',users:'Tài khoản',settings:'Cài đặt'};
 var ADD_PGS=['products','projects','news','users'];
 var EXP_PGS=['products','projects','news','quotes','contacts','users'];
 
@@ -233,6 +271,7 @@ async function renderPage(pg){
   if(pg==='dashboard')await renderDashboard();
   else if(pg==='analytics')await renderAnalytics();
   else if(pg==='settings')await loadSettings();
+  else if(pg==='slides')await renderSlides();
   else await renderTable(pg);
 }
 
@@ -463,6 +502,134 @@ function toast(msg,type){
   var el=document.createElement('div');el.className='ti '+type;
   el.innerHTML='<span class="material-icons" style="font-size:.95rem">'+(icons[type]||'info')+'</span>'+esc(msg);
   document.getElementById('toast').appendChild(el);setTimeout(function(){el.remove();},3500);
+}
+
+
+// ═══════════════════════════════════════════
+// SLIDES MODULE
+// ═══════════════════════════════════════════
+var _slidesData = [];
+var _slideSlots = [];
+
+async function renderSlides(){
+  var grid=document.getElementById('slidesGrid');
+  var empty=document.getElementById('slidesEmpty');
+  grid.innerHTML='<div class="ld"><div class="sp"></div>Đang tải slides...</div>';
+  empty.style.display='none';
+  try{
+    var rows=await sb.from('slides').select('*').order('order_index',{ascending:true});
+    _slidesData=(rows.data||[]);
+    if(_slidesData.length===0){grid.innerHTML='';empty.style.display='block';document.getElementById('slideCount').value=3;_slideSlots=[];return;}
+    document.getElementById('slideCount').value=_slidesData.length;
+    _slideSlots=_slidesData.map(function(r,i){return {id:r.id,title:r.title||'',subtitle:r.subtitle||'',button_text:r.button_text||'',button_link:r.button_link||'',image_url:r.image_url||'',order_index:r.order_index||i,status:r.status||'active',_dirty:false};});
+    buildSlidesUI();
+  }catch(e){grid.innerHTML='<div class="es"><span class="material-icons">error</span><p>Lỗi: '+esc(e.message)+'</p></div>';}
+}
+
+function applySlideCount(){
+  var n=parseInt(document.getElementById('slideCount').value)||1;
+  if(n<1)n=1;if(n>12)n=12;
+  document.getElementById('slideCount').value=n;
+  var cur=_slideSlots.length;
+  if(n>cur){for(var i=cur;i<n;i++){_slideSlots.push({id:null,title:'',subtitle:'',button_text:'',button_link:'',image_url:'',order_index:i,status:'active',_dirty:true});}}
+  else if(n<cur){_slideSlots=_slideSlots.slice(0,n);}
+  document.getElementById('slidesEmpty').style.display='none';
+  buildSlidesUI();
+  toast('Đã áp dụng '+n+' slides','info');
+}
+
+function buildSlidesUI(){
+  var grid=document.getElementById('slidesGrid');
+  if(!_slideSlots.length){grid.innerHTML='';document.getElementById('slidesEmpty').style.display='block';return;}
+  var html='';
+  _slideSlots.forEach(function(s,i){
+    var hasImg=s.image_url&&s.image_url.length>4;
+    html+='<div class="slide-card" id="scard-'+i+'">';
+    html+='<div class="slide-img-area" id="simg-'+i+'" onclick="document.getElementById(\'sf-'+i+'\').click()" title="Click để chọn ảnh">';
+    html+='<span class="slide-num">Slide '+(i+1)+'</span>';
+    if(hasImg){html+='<img id="sprev-'+i+'" src="'+esc(s.image_url)+'" onerror="this.style.display=\'none\'">';html+='<div class="uph" id="suph-'+i+'" style="display:none"><span class="material-icons">add_photo_alternate</span><span>Đổi ảnh</span></div>';}
+    else{html+='<img id="sprev-'+i+'" src="" style="display:none">';html+='<div class="uph" id="suph-'+i+'"><span class="material-icons">add_photo_alternate</span><span>Click để upload ảnh</span><span style="font-size:.7rem;opacity:.7">JPG, PNG, WEBP</span></div>';}
+    html+='<div class="upbar" id="spbar-'+i+'" style="width:0"></div></div>';
+    html+='<input type="file" id="sf-'+i+'" accept="image/jpeg,image/png,image/webp,image/gif,image/avif" style="display:none" onchange="handleSlideUpload(this,'+i+')">';
+    html+='<div class="slide-body"><div class="g2">';
+    html+='<div class="fg" style="margin:0"><label style="font-size:.68rem">Tiêu đề slide</label><input type="text" id="stit-'+i+'" value="'+esc(s.title)+'" placeholder="Nền Tảng Vững Chắc" oninput="slotChange('+i+')" ></div>';
+    html+='<div class="fg" style="margin:0"><label style="font-size:.68rem">Phụ đề</label><input type="text" id="ssub-'+i+'" value="'+esc(s.subtitle)+'" placeholder="Mô tả ngắn..." oninput="slotChange('+i+')" ></div></div>';
+    html+='<div class="g2"><div class="fg" style="margin:0"><label style="font-size:.68rem">Nút CTA</label><input type="text" id="sbtn-'+i+'" value="'+esc(s.button_text)+'" placeholder="Xem thêm" oninput="slotChange('+i+')" ></div>';
+    html+='<div class="fg" style="margin:0"><label style="font-size:.68rem">Link nút</label><input type="text" id="slnk-'+i+'" value="'+esc(s.button_link)+'" placeholder="/san-pham" oninput="slotChange('+i+')" ></div></div>';
+    html+='<div class="g2"><div class="fg" style="margin:0"><label style="font-size:.68rem">Thứ tự</label><input type="number" id="sord-'+i+'" value="'+(s.order_index||i)+'" min="0" oninput="slotChange('+i+')" style="text-align:center"></div>';
+    html+='<div class="fg" style="margin:0"><label style="font-size:.68rem">Trạng thái</label><select id="sst-'+i+'" onchange="slotChange('+i+')" style="background:var(--navy4);border:1px solid var(--bd);border-radius:8px;padding:.58rem .75rem;color:var(--tx);font-size:.85rem;width:100%;outline:none"><option value="active"'+(s.status==="active"?" selected":"")+'>Hiển thị</option><option value="inactive"'+(s.status==="inactive"?" selected":"")+'>\u1ea8n</option></select></div></div>';
+    html+='<div style="display:flex;justify-content:flex-end;gap:.5rem;padding-top:.2rem">';
+    if(s.image_url){html+='<button class="btn bs" style="padding:.28rem .55rem;font-size:.75rem" onclick="previewSlide('+i+')" title="Xem ảnh"><span class="material-icons" style="font-size:.85rem">open_in_new</span></button>';}
+    if(s.id){html+='<button class="btn bd2" style="padding:.28rem .6rem;font-size:.75rem" onclick="deleteSlide('+i+')" title="Xóa slide này"><span class="material-icons" style="font-size:.85rem">delete</span>Xóa</button>';}
+    html+='<button class="btn bp" style="padding:.28rem .7rem;font-size:.75rem" onclick="saveSingleSlide('+i+')"><span class="material-icons" style="font-size:.85rem">save</span>Lưu</button>';
+    html+='</div></div></div>';
+  });
+  grid.innerHTML=html;
+}
+
+function slotChange(i){if(_slideSlots[i])_slideSlots[i]._dirty=true;}
+
+async function handleSlideUpload(input,i){
+  var file=input.files[0];if(!file)return;
+  if(file.size>10*1024*1024){toast('Ảnh quá lớn (tối đa 10MB)','error');return;}
+  var imgArea=document.getElementById('simg-'+i),pbar=document.getElementById('spbar-'+i),prev=document.getElementById('sprev-'+i),uph=document.getElementById('suph-'+i);
+  imgArea.classList.add('uploading');pbar.style.width='20%';
+  toast('Đang upload ảnh slide '+(i+1)+'...','info');
+  try{
+    var ext=file.name.split('.').pop().toLowerCase();
+    var fname='slide_'+(i+1)+'_'+Date.now()+'.'+ext;
+    pbar.style.width='50%';
+    var{data,error}=await sb.storage.from('slides').upload(fname,file,{cacheControl:'3600',upsert:true});
+    if(error)throw error;
+    pbar.style.width='80%';
+    var{data:{publicUrl}}=sb.storage.from('slides').getPublicUrl(fname);
+    _slideSlots[i].image_url=publicUrl;_slideSlots[i]._dirty=true;
+    prev.src=publicUrl;prev.style.display='block';uph.style.display='none';
+    pbar.style.width='100%';
+    setTimeout(function(){pbar.style.width='0';},600);
+    imgArea.classList.remove('uploading');
+    toast('Upload thành công slide '+(i+1)+'! Nhấn Lưu để cập nhật.','success');
+  }catch(e){imgArea.classList.remove('uploading');pbar.style.width='0';toast('Lỗi upload: '+e.message,'error');}
+}
+
+async function saveSingleSlide(i){
+  var s=_slideSlots[i];if(!s)return;
+  var row={title:document.getElementById('stit-'+i).value.trim(),subtitle:document.getElementById('ssub-'+i).value.trim(),button_text:document.getElementById('sbtn-'+i).value.trim(),button_link:document.getElementById('slnk-'+i).value.trim(),order_index:parseInt(document.getElementById('sord-'+i).value)||i,status:document.getElementById('sst-'+i).value,image_url:s.image_url};
+  try{
+    var saved;
+    if(s.id){saved=await dbUpdate('slides',s.id,row);}else{saved=await dbAdd('slides',row);_slideSlots[i].id=saved.id;}
+    _slideSlots[i]._dirty=false;
+    toast('Đã lưu slide '+(i+1)+'!','success');
+  }catch(e){toast('Lỗi lưu slide '+(i+1)+': '+e.message,'error');}
+}
+
+async function saveAllSlides(){
+  var dirty=_slideSlots.filter(function(s){return s._dirty||!s.id;});
+  if(!dirty.length&&_slideSlots.every(function(s){return s.id;})){toast('Không có thay đổi mới','info');return;}
+  toast('Đang lưu tất cả slides...','info');
+  var ok=0,fail=0;
+  for(var i=0;i<_slideSlots.length;i++){
+    var s=_slideSlots[i];
+    var row={title:document.getElementById('stit-'+i)?document.getElementById('stit-'+i).value.trim():(s.title||''),subtitle:document.getElementById('ssub-'+i)?document.getElementById('ssub-'+i).value.trim():(s.subtitle||''),button_text:document.getElementById('sbtn-'+i)?document.getElementById('sbtn-'+i).value.trim():(s.button_text||''),button_link:document.getElementById('slnk-'+i)?document.getElementById('slnk-'+i).value.trim():(s.button_link||''),order_index:document.getElementById('sord-'+i)?parseInt(document.getElementById('sord-'+i).value)||i:i,status:document.getElementById('sst-'+i)?document.getElementById('sst-'+i).value:(s.status||'active'),image_url:s.image_url||''};
+    try{var saved;if(s.id){saved=await dbUpdate('slides',s.id,row);}else{saved=await dbAdd('slides',row);_slideSlots[i].id=saved.id;}_slideSlots[i]._dirty=false;ok++;}catch(e){fail++;}
+  }
+  if(fail===0)toast('Đã lưu tất cả '+ok+' slides!','success');
+  else toast('Lưu '+ok+' thành công, '+fail+' lỗi','error');
+}
+
+function deleteSlide(i){
+  var s=_slideSlots[i];
+  showCf('Xóa Slide '+(i+1),s.id?'Slide sẽ bị xóa vĩnh viễn. Tiếp tục?':'Xóa slot này?',async function(){
+    if(s.id){try{await dbDelete('slides',s.id);toast('Đã xóa slide '+(i+1),'success');}catch(e){toast('Lỗi xóa: '+e.message,'error');return;}}
+    _slideSlots.splice(i,1);document.getElementById('slideCount').value=_slideSlots.length;buildSlidesUI();
+  });
+}
+
+function previewSlide(i){
+  var s=_slideSlots[i];if(!s||!s.image_url)return;
+  document.getElementById('mTitle').textContent='Xem ảnh slide '+(i+1);
+  document.getElementById('mBody').innerHTML='<img src="'+esc(s.image_url)+'" style="width:100%;border-radius:8px;margin-bottom:1rem"><div style="text-align:right"><button class="btn bs" onclick="closeMd()">Dóng</button></div>';
+  document.getElementById('modal').classList.add('open');
 }
 
 // EVENTS
