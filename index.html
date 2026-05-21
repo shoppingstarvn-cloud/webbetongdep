@@ -150,6 +150,8 @@
 <a href="/muemailboconhkconcretepro.html" class="hidden md:inline-flex items-center justify-center bg-on-tertiary-container text-white px-6 py-2 rounded font-label-bold text-label-bold hover:opacity-90 transition-opacity">
                     Yêu cầu báo giá
                 </a>
+
+<button id="langBtn" onclick="toggleLang()" class="hidden md:flex items-center gap-1.5 px-3 py-1.5 text-sm font-bold border border-slate-300 rounded hover:border-orange-500 hover:text-orange-600 transition-colors text-slate-600">🇻🇳 <span>VI</span></button>
 <button class="md:hidden text-slate-900 dark:text-white">
 <span class="material-symbols-outlined">menu</span>
 </button>
@@ -313,6 +315,78 @@ if ('serviceWorker' in navigator) {
     navigator.serviceWorker.register('/sw.js').catch(() => {});
   });
 }
+</script>
+<script>
+/* ===== CONCRETEPRO Language Switcher ===== */
+(function(){
+  var map={
+    'Trang chủ':'Home',
+    'Sản phẩm':'Products',
+    'Dịch vụ':'Services',
+    'Dự án':'Projects',
+    'Tin tức':'News',
+    'Liên hệ':'Contact',
+    'Yêu cầu báo giá':'Request a Quote',
+    'Nền Tảng Vững Chắc':'A Solid Foundation',
+    'Cho Mọi Công Trình Tương Lai':'For Every Future Project',
+    'Giải pháp bê tông chuyên dụng và vật liệu xây dựng chất lượng cao, đáp ứng các tiêu chuẩn khắt khe nhất của ngành xây dựng công nghiệp.':'Specialized concrete solutions and premium construction materials, meeting the strictest standards in the industrial construction sector.',
+    'Khám Phá Giải Pháp':'Explore Solutions',
+    'Xem Video Năng Lực':'Watch Capability Video',
+    'Năm Kinh Nghiệm':'Years of Experience',
+    'm³ Bê tông/Năm':'m³ Concrete/Year',
+    'Dự Án Lớn':'Major Projects',
+    'Trạm Trộn Phủ Sóng':'Mixing Stations',
+    'Danh mục cốt lõi':'Core Categories',
+    'Sản Phẩm & Giải Pháp':'Products & Solutions',
+    'Xem toàn bộ':'View All',
+    'Bê Tông Tươi Thương Phẩm':'Commercial Ready-Mix Concrete',
+    'Cung cấp bê tông trộn sẵn mác từ M100 đến M800, đảm bảo độ sụt và cường độ ổn định cho các công trình dân dụng và công nghiệp.':'Ready-mix concrete grades M100 to M800, ensuring stable slump and strength for civil and industrial projects.',
+    'Chi tiết':'Details',
+    'Bê Tông Đặc Biệt':'Special Concrete',
+    'Bê tông tự lèn, bê tông sợi thép, bê tông chịu nhiệt đáp ứng yêu cầu kỹ thuật cao.':'Self-compacting, steel fiber, and heat-resistant concrete for high-performance requirements.',
+    'Cần tư vấn giải pháp vật liệu cho dự án của bạn?':'Need material solution consulting for your project?',
+    'Đội ngũ kỹ sư của chúng tôi sẵn sàng hỗ trợ kỹ thuật và báo giá chi tiết.':'Our team of engineers is ready to provide technical support and detailed quotes.',
+    'Liên hệ Kỹ sư':'Contact Engineer',
+    'Đối tác chiến lược cung cấp vật liệu xây dựng và bê tông chất lượng cao cho các dự án công nghiệp trọng điểm.':'Strategic partner supplying high-quality construction materials and concrete for key industrial projects.',
+    'Khám phá':'Explore',
+    'Về chúng tôi':'About Us',
+    'Sản phẩm & Dịch vụ':'Products & Services',
+    'Dự án tiêu biểu':'Featured Projects',
+    'Thông tin':'Information',
+    'Tuyển dụng':'Careers',
+    'Bản đồ':'Map',
+    'Trụ sở chính':'Headquarters',
+    'Chính sách bảo mật':'Privacy Policy',
+    'Điều khoản sử dụng':'Terms of Use'
+  };
+  var reverseMap={};
+  Object.keys(map).forEach(function(k){reverseMap[map[k]]=k;});
+
+  function walk(fn){
+    var walker=document.createTreeWalker(document.body,NodeFilter.SHOW_TEXT,null);
+    var nodes=[];
+    while(walker.nextNode()) nodes.push(walker.currentNode);
+    nodes.forEach(fn);
+  }
+
+  var currentLang=localStorage.getItem('cp_lang')||'vi';
+
+  function applyLang(lang){
+    var trans=lang==='en'?map:reverseMap;
+    walk(function(node){
+      var t=node.textContent.trim();
+      if(trans[t]) node.textContent=node.textContent.replace(t,trans[t]);
+    });
+    document.documentElement.lang=lang==='en'?'en':'vi';
+    currentLang=lang;
+    localStorage.setItem('cp_lang',lang);
+    var btn=document.getElementById('langBtn');
+    if(btn) btn.innerHTML=lang==='en'?'🇬🇧 <span>EN</span>':'🇻🇳 <span>VI</span>';
+  }
+
+  window.toggleLang=function(){ applyLang(currentLang==='vi'?'en':'vi'); };
+  if(currentLang==='en') applyLang('en');
+})();
 </script>
 </body>
 </html>
