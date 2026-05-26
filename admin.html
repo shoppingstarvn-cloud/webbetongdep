@@ -639,5 +639,31 @@ document.getElementById('cfd').addEventListener('click',function(e){if(e.target=
 // BOOT
 checkSession();
 </script>
-</body>
+
+<script>
+/* FIX: Settings flat schema override */
+window.loadSettings = async function() {
+  try {
+    var r = await dbGetAll('settings');
+    if (r.error || !r.data || r.data.length === 0) return;
+    var s = r.data[0]; window._settingsRow = s;
+    var map = [['s_company_name','company'],['s_address','address'],['s_phone','phone'],
+               ['s_email','email'],['s_website','website'],['s_slogan','slogan'],
+               ['s_fb','fb'],['s_yt','yt'],['s_zalo','zalo']];
+    map.forEach(function(p){ var el=document.getElementById(p[0]); if(el) el.value=s[p[1]]||''; });
+  } catch(e){ console.error('loadSettings err:',e.message); }
+};
+window.saveSettings = async function() {
+  try {
+    var g = function(id){ return (document.getElementById(id)||{}).value||''; };
+    var payload = {company:g('s_company_name'),address:g('s_address'),phone:g('s_phone'),
+                   email:g('s_email'),website:g('s_website'),slogan:g('s_slogan'),
+                   fb:g('s_fb'),yt:g('s_yt'),zalo:g('s_zalo')};
+    var rid = (window._settingsRow && window._settingsRow.id) ? window._settingsRow.id : 1;
+    var r = await dbUpdate('settings', rid, payload);
+    if(r.error) showToast('Loi luu cai dat: '+r.error.message,'error');
+    else { window._settingsRow=Object.assign(window._settingsRow||{},payload); showToast('Da luu cai dat!','success'); }
+  } catch(e){ showToast('Loi: '+e.message,'error'); }
+};
+</script></body>
 </html>
