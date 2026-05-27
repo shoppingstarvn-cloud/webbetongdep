@@ -388,5 +388,122 @@ if ('serviceWorker' in navigator) {
   if(currentLang==='en') applyLang('en');
 })();
 </script>
+
+<!-- Hero Slider Script -->
+<script>
+(function(){
+  'use strict';
+  var SB = 'https://clalkraxfaeqbkeaikow.supabase.co';
+  var K = ['eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNsYWxrcmF4ZmFlcWJrZWFpa293Iiwicm9',
+           'sZSI6ImFub24iLCJpYXQiOjE3NzkwNjEzOTksImV4cCI6MjA5NDYzNzM5OX0.2EpUXzqLgjc2GUaOzEdvASILX_S_YZ5SJl-a3KYamWk'].join('');
+
+  var DEFAULT_IMG = 'https://lh3.googleusercontent.com/aida-public/AB6AXuDg6ud2hjOgz2gY8wFwx_HQBtXUTQYTtmY3aLFVrgkohBEryuuNTJiouf4OS_mYD_bQi0_L6B7SvKRYVUOr9AzK9i4fMfl1RvQw5MVOqu1xTLwWZEFg0tvd6uOIp0Gt9WjqanAvD7nguoP2iOCBCqgMLwigeF4qbwXhtK-g1X6QiVjVk2t_MsdFEmju13LOHMrVPsT87aZXI2MqZsHqyRZhixxdAlwP2fRCUSpMM6aAMkhMuJhcXUJMEDLk-6uH_r0hwtFFKmuN5x0K';
+
+  var FALLBACK = [
+    { title: 'Nền Tảng Vững Chắc', subtitle: 'Cho Mọi Công Trình Tương Lai', image_url: DEFAULT_IMG, badge: 'Industrial Excellence', desc: 'Giải pháp bê tông chuyên dụng và vật liệu xây dựng chất lượng cao, đáp ứng các tiêu chuẩn khắt khe nhất của ngành xây dựng công nghiệp.' },
+    { title: 'Chất Lượng Đẳng Cấp', subtitle: 'Vật Liệu Bê Tông Cao Cấp', image_url: 'https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=1280&q=80', badge: 'Premium Quality', desc: 'Sản phẩm bê tông đạt tiêu chuẩn quốc tế, được kiểm định chất lượng nghiêm ngặt tại từng công đoạn sản xuất.' },
+    { title: 'Đối Tác Tin Cậy', subtitle: 'Hàng Nghìn Công Trình Hoàn Thành', image_url: 'https://images.unsplash.com/photo-1590674899484-d5640e854abe?w=1280&q=80', badge: 'Trusted Partner', desc: 'Kinh nghiệm nhiều năm đồng hành cùng các nhà thầu lớn nhỏ, xây dựng niềm tin qua từng dự án thành công.' }
+  ];
+
+  var slides = FALLBACK.slice();
+  var current = 0;
+  var timer = null;
+  var heroImg, heroH1, heroBadge, heroDesc, dots;
+
+  function findHero() {
+    // Find hero section (h-[819px])
+    var sections = document.querySelectorAll('section');
+    var hero = null;
+    for (var i = 0; i < sections.length; i++) {
+      if (sections[i].className && sections[i].className.indexOf('819px') > -1) { hero = sections[i]; break; }
+    }
+    if (!hero) return false;
+    heroImg  = hero.querySelector('img');
+    heroH1   = hero.querySelector('h1');
+    heroBadge = hero.querySelector('span');
+    heroDesc = hero.querySelector('p');
+    var dotWrap = hero.querySelector('.absolute.bottom-10');
+    if (dotWrap) dots = Array.from(dotWrap.querySelectorAll('div'));
+    return true;
+  }
+
+  function updateDots(idx) {
+    if (!dots) return;
+    dots.forEach(function(d, i) {
+      d.style.background = (i === idx) ? '#f97316' : 'rgba(255,255,255,0.3)';
+      d.style.transition = 'background 0.4s';
+    });
+  }
+
+  function goTo(idx) {
+    current = ((idx % slides.length) + slides.length) % slides.length;
+    var s = slides[current];
+    var FADE = 400;
+
+    // Fade out
+    [heroImg, heroH1, heroBadge, heroDesc].forEach(function(el) {
+      if (el) { el.style.transition = 'opacity '+FADE+'ms ease'; el.style.opacity = '0'; }
+    });
+
+    setTimeout(function() {
+      if (heroImg && s.image_url) heroImg.src = s.image_url;
+      if (heroH1 && s.title) heroH1.innerHTML = s.title + (s.subtitle ? '<br/>' + s.subtitle : '');
+      if (heroBadge && s.badge) heroBadge.textContent = s.badge;
+      if (heroDesc && s.desc) heroDesc.textContent = s.desc;
+
+      // Fade in
+      [heroImg, heroH1, heroBadge, heroDesc].forEach(function(el) {
+        if (el) { el.style.opacity = el === heroImg ? '0.6' : '1'; }
+      });
+      updateDots(current);
+    }, FADE);
+
+    resetTimer();
+  }
+
+  function resetTimer() {
+    if (timer) clearInterval(timer);
+    timer = setInterval(function() { goTo(current + 1); }, 5000);
+  }
+
+  function bindDots() {
+    if (!dots) return;
+    dots.forEach(function(d, i) {
+      d.style.cursor = 'pointer';
+      d.addEventListener('click', function() { goTo(i); });
+    });
+  }
+
+  function loadFromDB() {
+    fetch(SB + '/rest/v1/slides?select=*&is_visible=eq.true&order=sort_order', {
+      headers: { 'apikey': K, 'Authorization': 'Bearer ' + K }
+    }).then(function(r) { return r.json(); })
+      .then(function(data) {
+        if (!Array.isArray(data) || data.length === 0) return;
+        // Map DB fields to slide objects, fill to 3 with fallback
+        var dbSlides = data.map(function(r) {
+          return { title: r.title||'', subtitle: r.subtitle||'', image_url: r.image_url||DEFAULT_IMG, badge: r.badge||'', desc: r.description||r.desc||'' };
+        });
+        while (dbSlides.length < 3) dbSlides.push(FALLBACK[dbSlides.length % FALLBACK.length]);
+        slides = dbSlides;
+        goTo(0);
+      }).catch(function(){});
+  }
+
+  function init() {
+    if (!findHero()) return;
+    bindDots();
+    updateDots(0);
+    resetTimer();
+    loadFromDB();
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    setTimeout(init, 100);
+  }
+})();
+</script>
 </body>
 </html>
