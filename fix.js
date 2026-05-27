@@ -56,11 +56,15 @@ function setupProductsPage() {
   if (!location.pathname.includes('snphm')) return;
 
   function getAllCards() {
-    return Array.from(document.querySelectorAll('[class*="col"], article, [class*="product"]')).filter(function(el){
-      return el.querySelector('h2, h3, [class*="name"]');
+    var bestGrid = null, bestCount = 0;
+    Array.from(document.querySelectorAll('[class*="grid-cols"]')).forEach(function(g) {
+      if (g.className.includes('ait-')) return;
+      if (g.closest('nav') || g.closest('header') || g.closest('footer')) return;
+      var cnt = Array.from(g.children).filter(function(c){return c.querySelector('h2,h3');}).length;
+      if (cnt > bestCount) { bestCount = cnt; bestGrid = g; }
     });
+    return bestGrid ? Array.from(bestGrid.children).filter(function(c){return c.querySelector('h2,h3');}) : [];
   }
-
   var checkboxes = Array.from(document.querySelectorAll('input[type=checkbox]')).filter(function(cb){
     return !cb.className.includes('ait-');
   });
@@ -93,9 +97,9 @@ function setupProductsPage() {
   if (sortSelect && !sortSelect.onchange) {
     sortSelect.onchange = function() {
       var val = this.value.toLowerCase();
-      var grid = document.querySelector('.grid, [class*="grid"], [class*="product-grid"]');
+      var cards = getAllCards(); var grid = cards.length ? cards[0].parentElement : null;
       if (!grid) return;
-      var cards = Array.from(grid.children);
+      cards = Array.from(grid.children);
       cards.sort(function(a, b) {
         var aT = (a.querySelector('h2,h3') || {}).textContent || '';
         var bT = (b.querySelector('h2,h3') || {}).textContent || '';
@@ -119,7 +123,7 @@ function setupProductsPage() {
     }
     if (t === 'grid_view' && !btn.onclick) {
       btn.onclick = function() {
-        var grid = document.querySelector('.grid, [class*="product-grid"]');
+        var grid = (function(){var c=getAllCards();return c.length?c[0].parentElement:null;})();
         if (grid) { grid.className = grid.className.replace(/grid-cols-\d+/g, 'grid-cols-3'); }
         btn.style.opacity = '1';
         var listBtn = document.querySelector('button[data-cpview="list"]');
@@ -130,8 +134,7 @@ function setupProductsPage() {
     }
     if (t === 'view_list' && !btn.onclick) {
       btn.onclick = function() {
-        var grid = document.querySelector('.grid, [class*="product-grid"]');
-        if (grid) { grid.className = grid.className.replace(/grid-cols-\d+/g, 'grid-cols-1'); }
+        var grid = document.querySelector('(function(){var c=getAllCards();return c.length?c[0].parentElement:null;})()id.className = grid.className.replace(/grid-cols-\d+/g, 'grid-cols-1'); }
         btn.style.opacity = '1';
         var gridBtn = document.querySelector('button[data-cpview="grid"]');
         if (gridBtn) gridBtn.style.opacity = '0.5';
