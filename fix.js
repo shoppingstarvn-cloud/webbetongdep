@@ -184,19 +184,29 @@ function setupServicesPage() {
   });
 }
 
-// Project filter logic
+// Project filter logic - v3.1 FIX: text-based category matching
 function setupProjectFilters() {
   if (!location.pathname.includes('hsdn')) return;
   var FILTERS = { 'All Projects': 'all', 'Industrial': 'industrial', 'Infrastructure': 'infrastructure', 'Residential': 'residential' };
+
+  function getProjectCards() {
+    var section = document.querySelector('section.grid, section[class*="grid"]');
+    if (section && section.children.length > 1) return Array.from(section.children);
+    return Array.from(document.querySelectorAll('[class*="col-span"]')).filter(function(el){
+      return el.textContent.trim().length > 20 && !el.closest('nav') && !el.closest('header') && !el.closest('footer');
+    });
+  }
+
   document.querySelectorAll('button').forEach(function(btn) {
     var label = btn.textContent.trim();
     if (!FILTERS[label] || btn.onclick) return;
     btn.onclick = function() {
       var key = FILTERS[label];
-      var cards = document.querySelectorAll('[data-category], article, [class*="project"]');
+      var cards = getProjectCards();
       cards.forEach(function(c) {
-        var cat = (c.dataset.category || c.className || '').toLowerCase();
-        c.style.display = (key === 'all' || cat.includes(key)) ? '' : 'none';
+        var cat = (c.dataset.category || '').toLowerCase();
+        var firstLine = c.textContent.trim().toLowerCase().split('\n')[0].trim();
+        c.style.display = (key === 'all' || cat.includes(key) || firstLine.includes(key)) ? '' : 'none';
       });
       document.querySelectorAll('button').forEach(function(b) {
         if (FILTERS[b.textContent.trim()]) { b.style.opacity='0.6'; b.style.fontWeight=''; b.style.background=''; }
