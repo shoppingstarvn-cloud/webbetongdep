@@ -8,14 +8,14 @@ var CONTACT_PAGE = '/giithiucngty.html';
 var PROJECTS_PAGE = '/hsdn.html';
 
 var BTN_MAP = [
-{ re: /Yêu cầu báo giá|Get a Quote|Get Quote|Liên hệ Kỹ sư|Request Technical Specs|Schedule Consultation|Consult an Engineer|Yêu Cầu Báo Giá/i, href: QUOTE_PAGE },
-{ re: /Khám Phá Giải Pháp|Khám phá giải pháp/i, href: PRODUCTS_PAGE },
-{ re: /Xem Video Năng Lực|Xem video|Watch Video/i, fn: function () { window.open('https://www.youtube.com/results?search_query=beton+concretepro+viet+nam', '_blank'); } },
-{ re: /Download Technical Brochure|Tải Brochure|Download Brochure/i, fn: function () { window.open(QUOTE_PAGE, '_self'); } },
-{ re: /View Interactive Map|Xem bản đồ/i, fn: function () { window.open('https://maps.google.com/?q=Hai+Phong+Vietnam+concrete', '_blank'); } },
-{ re: /View Full Org Chart|Xem Sơ đồ/i, fn: function (btn) { toggleOrgChart(btn); } },
-{ re: /Liên hệ$/i, href: CONTACT_PAGE },
-{ re: /Chi tiết|arrow_forward/i, fn: function () { location.href = PRODUCTS_PAGE; } },
+{ re: /YÃªu cáº§u bÃ¡o giÃ¡|Get a Quote|Get Quote|LiÃªn há» Ká»¹ sÆ°|Request Technical Specs|Schedule Consultation|Consult an Engineer|YÃªu Cáº§u BÃ¡o GiÃ¡/i, href: QUOTE_PAGE },
+{ re: /KhÃ¡m PhÃ¡ Giáº£i PhÃ¡p|KhÃ¡m phÃ¡ giáº£i phÃ¡p/i, href: PRODUCTS_PAGE },
+{ re: /Xem Video NÄng Lá»±c|Xem video|Watch Video/i, fn: function () { window.open('https://www.youtube.com/results?search_query=beton+concretepro+viet+nam', '_blank'); } },
+{ re: /Download Technical Brochure|Táº£i Brochure|Download Brochure/i, fn: function () { window.open(QUOTE_PAGE, '_self'); } },
+{ re: /View Interactive Map|Xem báº£n Äá»/i, fn: function () { window.open('https://maps.google.com/?q=Hai+Phong+Vietnam+concrete', '_blank'); } },
+{ re: /View Full Org Chart|Xem SÆ¡ Äá»/i, fn: function (btn) { toggleOrgChart(btn); } },
+{ re: /LiÃªn há»$/i, href: CONTACT_PAGE },
+{ re: /Chi tiáº¿t|arrow_forward/i, fn: function () { location.href = PRODUCTS_PAGE; } },
 { re: /^share$/i, fn: function () { try { if (navigator.share) { navigator.share({url: location.href, title: document.title}); } else if (navigator.clipboard) { navigator.clipboard.writeText(location.href); } } catch(e){} } },
 { re: /^link$/i, fn: function () { try { if (navigator.clipboard) { navigator.clipboard.writeText(location.href); } } catch(e){} } },
 { re: /^social_leaderboard$/i, fn: function () { location.href = PRODUCTS_PAGE; } },
@@ -56,7 +56,7 @@ function setupMobileMenu() {
 function setupProductsPage() {
   if (!location.pathname.includes('snphm')) return;
 
-  // v4 FIX: best-grid strategy — find grid container with most h2/h3 children
+  // v4 FIX: best-grid strategy â find grid container with most h2/h3 children
   function getAllCards() {
     var bestGrid = null, bestCount = 0;
     Array.from(document.querySelectorAll('[class*="grid-cols"]')).forEach(function(g) {
@@ -119,7 +119,7 @@ function setupProductsPage() {
 
   document.querySelectorAll('button').forEach(function(btn) {
     var t = btn.textContent.trim();
-    if ((t === 'Xóa bộ lọc' || t === 'Clear' || t === 'Reset') && !btn.onclick) {
+    if ((t === 'XÃ³a bá» lá»c' || t === 'Clear' || t === 'Reset') && !btn.onclick) {
       btn.onclick = function() {
         checkboxes.forEach(function(cb){ cb.checked = false; });
         getAllCards().forEach(function(c){ c.style.display = ''; });
@@ -195,7 +195,7 @@ function setupServicesPage() {
       e.preventDefault();
       var msg = document.createElement('div');
       msg.style.cssText = 'position:fixed;top:20px;right:20px;background:#22c55e;color:white;padding:16px 24px;border-radius:8px;z-index:9999;font-weight:bold;box-shadow:0 4px 12px rgba(0,0,0,0.3);font-size:16px';
-      msg.textContent = '✓ Yêu cầu đã gửi thành công! Chúng tôi sẽ liên hệ trong 24h.';
+      msg.textContent = 'â YÃªu cáº§u ÄÃ£ gá»­i thÃ nh cÃ´ng! ChÃºng tÃ´i sáº½ liÃªn há» trong 24h.';
       document.body.appendChild(msg);
       form.reset();
       setTimeout(function() { if(msg.parentNode) msg.parentNode.removeChild(msg); }, 5000);
@@ -298,7 +298,7 @@ function applyFixes() {
     var t = a.textContent.trim();
     var h = a.getAttribute('href') || '';
     // Fix Trang chu link
-    if (t === 'Trang chủ' && h === '/trangchconcretepro.html') {
+    if (t === 'Trang chá»§' && h === '/trangchconcretepro.html') {
       a.setAttribute('href', '/');
     }
     // Fix wrong quote link in nav
@@ -311,6 +311,8 @@ function applyFixes() {
   document.querySelectorAll('a[href="#tuyen-dung"]').forEach(function(a) { a.href = CONTACT_PAGE; });
   document.querySelectorAll('a[href="#ban-do"]').forEach(function(a) { a.href = 'https://maps.google.com/?q=Hai+Phong+Vietnam'; a.target = '_blank'; });
   document.querySelectorAll('a[href="#chinh-sach"], a[href="#dieu-khoan"]').forEach(function(a) { a.href = QUOTE_PAGE; });
+  document.querySelectorAll('a[href="#sitemap"], a[href="#tech-specs"], a[href="#compliance"], a[href="#safety"]').forEach(function(a) { a.href = PRODUCTS_PAGE; });
+  document.querySelectorAll('a[href="#privacy"], a[href="#terms"]').forEach(function(a) { a.href = CONTACT_PAGE; });
 
   setupMobileMenu();
   setupProjectFilters();
