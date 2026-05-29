@@ -325,33 +325,18 @@ function applyFixes() {
 // Multi-retry: extended window + MutationObserver for late-rendering buttons
 function scheduleRetries() {
   applyFixes();
-  setTimeout(applyFixes, 500);
-  setTimeout(applyFixes, 1200);
-  setTimeout(applyFixes, 2500);
-  setTimeout(applyFixes, 5000);
-  setTimeout(applyFixes, 8000);
-}
-
-// MutationObserver: catches buttons/links added dynamically after retries
-function setupObserver() {
-  if (!window.MutationObserver) return;
-  var debounce;
-  var observer = new MutationObserver(function(mutations) {
-    var hasNew = mutations.some(function(m) { return m.addedNodes.length > 0; });
-    if (!hasNew) return;
-    clearTimeout(debounce);
-    debounce = setTimeout(applyFixes, 100);
-  });
-  observer.observe(document.body, { childList: true, subtree: true });
-  setTimeout(function() { observer.disconnect(); }, 12000);
+  var attempts = 0;
+  var maxAttempts = 15; // 30 seconds total
+  var interval = setInterval(function() {
+    applyFixes();
+    attempts++;
+    if (attempts >= maxAttempts) clearInterval(interval);
+  }, 2000);
 }
 
 if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', function() {
-    scheduleRetries();
-    setupObserver();
-  });
+  document.addEventListener('DOMContentLoaded', scheduleRetries);
 } else {
-  setTimeout(function() { scheduleRetries(); setupObserver(); }, 100);
+  setTimeout(scheduleRetries, 100);
 }
 })();
