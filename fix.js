@@ -1,4 +1,4 @@
-/* fix.js v7 - ConcretePro Global Button, Link & Module Fixer - ASCII-safe regex */
+/* fix.js v8 - ConcretePro Global Button, Link & Module Fixer - ASCII-safe regex + category inject */
 (function () {
 'use strict';
 
@@ -13,7 +13,6 @@ var PROJECTS_PAGE = '/hsdn.html';
 // ============================================================
 document.addEventListener('click', function(e) {
   var el = e.target;
-  // Walk up to find button or anchor
   while (el && el !== document.body) {
     var tag = el.tagName;
     if (tag === 'BUTTON' || tag === 'A') break;
@@ -24,7 +23,6 @@ document.addEventListener('click', function(e) {
   var text = el.textContent.trim();
   var tag = el.tagName;
 
-  // Skip anchors that already have valid hrefs
   if (tag === 'A') {
     var href = el.getAttribute('href') || '';
     if (href && href !== '#' && !href.startsWith('#') &&
@@ -32,48 +30,36 @@ document.addEventListener('click', function(e) {
         href !== '/muemailbocohnkconcretepro.html') return;
   }
 
-  // ASCII-safe matching: use first ASCII chars of Vietnamese words
-  // "Kham Pha Giai Phap" / "Kh.m Ph. Gi.i Ph.p"
   if (/Kh.m Ph. Gi/i.test(text)) {
     e.preventDefault(); location.href = PRODUCTS_PAGE; return;
   }
-  // "Yeu cau bao gia" / "Get a Quote"
   if (/Y.u c.u b|Get.{0,4}Quote|Get Quote/i.test(text)) {
     e.preventDefault(); location.href = QUOTE_PAGE; return;
   }
-  // "Xem Video Nang Luc" / "Watch Video"
   if (/Xem Video|Watch Video/i.test(text)) {
     e.preventDefault(); window.open('https://www.youtube.com/results?search_query=beton+concretepro+viet+nam', '_blank'); return;
   }
-  // "Lien he Ky su" / "Consult an Engineer"
   if (/Li.n h. K|Consult.{0,10}Engin|Request Technical|Schedule Consul/i.test(text)) {
     e.preventDefault(); location.href = QUOTE_PAGE; return;
   }
-  // "Yeu Cau Bao Gia" (capitalized variant)
   if (/Y.u C.u B.o/i.test(text)) {
     e.preventDefault(); location.href = QUOTE_PAGE; return;
   }
-  // "Download Technical Brochure" / "Tai Brochure"
   if (/Download.{0,5}Brochure|T.i Brochure/i.test(text)) {
     e.preventDefault(); window.open(QUOTE_PAGE, '_self'); return;
   }
-  // "View Interactive Map" / "Xem ban do"
   if (/View.{0,5}Map|Xem b.n .../i.test(text)) {
     e.preventDefault(); window.open('https://maps.google.com/?q=Hai+Phong+Vietnam+concrete', '_blank'); return;
   }
-  // "View Full Org Chart" / "Xem So do"
   if (/Org Chart|S. .../i.test(text)) {
     e.preventDefault(); toggleOrgChart(el); return;
   }
-  // "Lien he" (standalone contact link)
   if (/^Li.n h.$/i.test(text)) {
     e.preventDefault(); location.href = CONTACT_PAGE; return;
   }
-  // "Chi tiet" / "arrow_forward"
   if (/Chi ti.t|arrow_forward/i.test(text)) {
     e.preventDefault(); location.href = PRODUCTS_PAGE; return;
   }
-  // Material icons
   if (/^share$/i.test(text)) {
     e.preventDefault();
     try { if (navigator.share) { navigator.share({url: location.href, title: document.title}); }
@@ -89,7 +75,6 @@ document.addEventListener('click', function(e) {
     e.preventDefault(); location.href = PRODUCTS_PAGE; return;
   }
 
-  // Fix bad nav/footer href on click
   if (tag === 'A') {
     var h = el.getAttribute('href') || '';
     if (h === '/trangchconcretepro.html') { e.preventDefault(); location.href = '/'; return; }
@@ -100,7 +85,7 @@ document.addEventListener('click', function(e) {
     if (h === '#sitemap' || h === '#tech-specs' || h === '#compliance' || h === '#safety') { e.preventDefault(); location.href = PRODUCTS_PAGE; return; }
     if (h === '#privacy' || h === '#terms') { e.preventDefault(); location.href = CONTACT_PAGE; return; }
   }
-}, true); // capture phase - survives DOM re-renders
+}, true);
 
 function toggleOrgChart(btn) {
   var chart = document.getElementById('org-chart') || document.querySelector('[data-org-chart]');
@@ -109,20 +94,17 @@ function toggleOrgChart(btn) {
 }
 
 function applyVisualFixes() {
-  // cursor:pointer for all actionable buttons
   document.querySelectorAll('button').forEach(function(btn) {
     var t = btn.textContent.trim();
     if (/Kh.m|Y.u|Xem|Download|Li.n|Chi ti|arrow|share|link|social|View|consult|schedule|request/i.test(t)) {
       btn.style.cursor = 'pointer';
     }
   });
-  // Fix nav href attributes
   document.querySelectorAll('nav a, header a').forEach(function(a) {
     var h = a.getAttribute('href') || '';
     if (h === '/trangchconcretepro.html') a.setAttribute('href', '/');
     if (h === '/muemailbocohnkconcretepro.html') a.setAttribute('href', QUOTE_PAGE);
   });
-  // Fix footer hash links
   document.querySelectorAll('a[href="#tuyen-dung"]').forEach(function(a) { a.href = CONTACT_PAGE; });
   document.querySelectorAll('a[href="#ban-do"]').forEach(function(a) { a.href = 'https://maps.google.com/?q=Hai+Phong+Vietnam'; a.target = '_blank'; });
   document.querySelectorAll('a[href="#chinh-sach"], a[href="#dieu-khoan"]').forEach(function(a) { a.href = QUOTE_PAGE; });
@@ -201,7 +183,6 @@ function setupProductsPage() {
     };
     sortSelect.style.cursor = 'pointer';
   }
-  // Grid/List view toggle
   document.querySelectorAll('button').forEach(function(btn) {
     var icon = btn.textContent.trim();
     if ((icon === 'grid_view' || icon === 'view_list') && !btn.onclick) {
@@ -209,11 +190,7 @@ function setupProductsPage() {
         var cards = getAllCards();
         var grid = cards.length ? cards[0].parentElement : null;
         if (!grid) return;
-        if (icon === 'view_list') {
-          grid.style.gridTemplateColumns = '1fr';
-        } else {
-          grid.style.gridTemplateColumns = '';
-        }
+        grid.style.gridTemplateColumns = (icon === 'view_list') ? '1fr' : '';
       };
       btn.style.cursor = 'pointer';
     }
@@ -228,7 +205,7 @@ function setupServicesPage() {
       e.preventDefault();
       var msg = document.createElement('div');
       msg.style.cssText = 'position:fixed;top:20px;right:20px;background:#22c55e;color:white;padding:16px 24px;border-radius:8px;z-index:9999;font-weight:bold;box-shadow:0 4px 12px rgba(0,0,0,0.3);font-size:16px';
-      msg.textContent = 'â YÃªu cáº§u ÄÃ£ gá»­i thÃ nh cÃ´ng! ChÃºng tÃ´i sáº½ liÃªn há» trong 24h.';
+      msg.textContent = '✓ Yêu cầu đã gửi thành công! Chúng tôi sẽ liên hệ trong 24h.';
       document.body.appendChild(msg);
       form.reset();
       setTimeout(function() { if (msg.parentNode) msg.parentNode.removeChild(msg); }, 5000);
@@ -238,20 +215,36 @@ function setupServicesPage() {
 
 function setupProjectFilters() {
   if (!location.pathname.includes('hsdn')) return;
+
+  // Inject data-category onto parent container using the badge span text
+  document.querySelectorAll('[class*="project-card-overlay"]').forEach(function(overlay) {
+    var badge = overlay.querySelector('span');
+    if (badge && overlay.parentElement && !overlay.parentElement.dataset.category) {
+      overlay.parentElement.setAttribute('data-category', badge.textContent.trim().toLowerCase());
+    }
+  });
+
   var FILTERS = {
     'All Projects': 'all',
     'Industrial': 'industrial',
     'Infrastructure': 'infrastructure',
     'Residential': 'residential'
   };
+
+  function getProjectCards() {
+    return Array.from(document.querySelectorAll('[data-category]')).filter(function(c) {
+      return !c.closest('nav') && !c.closest('header') && !c.closest('footer');
+    });
+  }
+
   document.querySelectorAll('button').forEach(function(btn) {
     var label = btn.textContent.trim();
     if (!FILTERS[label] || btn.onclick) return;
     btn.onclick = function() {
       var key = FILTERS[label];
-      document.querySelectorAll('[data-category],article,[class*="project"]').forEach(function(c) {
-        var cat = (c.dataset.category || c.className || '').toLowerCase();
-        c.style.display = (key === 'all' || cat.includes(key)) ? '' : 'none';
+      getProjectCards().forEach(function(c) {
+        var cat = (c.dataset.category || '').toLowerCase();
+        c.style.display = (key === 'all' || cat === key) ? '' : 'none';
       });
       document.querySelectorAll('button').forEach(function(b) {
         if (FILTERS[b.textContent.trim()]) { b.style.opacity = '0.6'; b.style.fontWeight = ''; }
