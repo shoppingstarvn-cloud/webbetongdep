@@ -322,17 +322,36 @@ function applyFixes() {
   setupSearch();
 }
 
-// Multi-retry: some pages render buttons asynchronously after DOMContentLoaded
+// Multi-retry: extended window + MutationObserver for late-rendering buttons
 function scheduleRetries() {
   applyFixes();
   setTimeout(applyFixes, 500);
   setTimeout(applyFixes, 1200);
   setTimeout(applyFixes, 2500);
+  setTimeout(applyFixes, 5000);
+  setTimeout(applyFixes, 8000);
+}
+
+// MutationObserver: catches buttons/links added dynamically after retries
+function setupObserver() {
+  if (!window.MutationObserver) return;
+  var debounce;
+  var observer = new MutationObserver(function(mutations) {
+    var hasNew = mutations.some(function(m) { return m.addedNodes.length > 0; });
+    if (!hasNew) return;
+    clearTimeout(debounce);
+    debounce = setTimeout(applyFixes, 100);
+  });
+  observer.observe(document.body, { childList: true, subtree: true });
+  setTimeout(function() { observer.disconnect(); }, 12000);
 }
 
 if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', scheduleRetries);
+  document.addEventListener('DOMContentLoaded', function() {
+    scheduleRetries();
+    setupObserver();
+  });
 } else {
-  setTimeout(scheduleRetries, 100);
+  setTimeout(function() { scheduleRetries(); setupObserver(); }, 100);
 }
 })();
