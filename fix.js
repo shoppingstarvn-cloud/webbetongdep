@@ -334,14 +334,3 @@ if (document.readyState === 'loading') {
   setTimeout(scheduleRetries, 100);
 }
 })();
-500);
-  setTimeout(applyFixes, 1200);
-  setTimeout(applyFixes, 2500);
-}
-
-if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', scheduleRetries);
-} else {
-  setTimeout(scheduleRetries, 100);
-}
-})();
