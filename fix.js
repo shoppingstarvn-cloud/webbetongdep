@@ -1,4 +1,9 @@
-/* fix.js v9 - ConcretePro Global Button, Link & Module Fixer - ASCII-safe regex + category inject + href spelling fix + Get Quote cursor */
+/* fix.js v10 - ConcretePro Global Button, Link & Module Fixer
+   Changes v10: 
+   - BUG#3 FIX: "Xóa bộ lọc" button handler (clear product filters)
+   - BUG#4 FIX: Products page chevron pagination handler
+   - BUG#5 FIX: View Interactive Map regex .{0,5} → .{0,20} to match "View Interactive Map"
+*/
 (function () {
 'use strict';
 
@@ -9,11 +14,9 @@ var PROJECTS_PAGE = '/hsdn.html';
 
 // ============================================================
 // EVENT DELEGATION - handles buttons even after DOM re-render
-// NOTE: All regex use ASCII-only patterns to avoid encoding issues
 // ============================================================
 document.addEventListener('click', function(e) {
   var el = e.target;
-  // Walk up to find button or anchor
   while (el && el !== document.body) {
     var tag = el.tagName;
     if (tag === 'BUTTON' || tag === 'A') break;
@@ -25,7 +28,6 @@ document.addEventListener('click', function(e) {
   var tag = el.tagName;
 
   // Skip anchors that already have valid hrefs
-  // BUG#1 FIX: correct spelling boconhk (was bocohnk)
   if (tag === 'A') {
     var href = el.getAttribute('href') || '';
     if (href && href !== '#' && !href.startsWith('#') &&
@@ -33,8 +35,7 @@ document.addEventListener('click', function(e) {
         href !== '/muemailboconhkconcretepro.html') return;
   }
 
-  // ASCII-safe matching: use first ASCII chars of Vietnamese words
-  // "Kham Pha Giai Phap" / "Kh.m Ph. Gi.i Ph.p"
+  // "Kham Pha Giai Phap"
   if (/Kh.m Ph. Gi/i.test(text)) {
     e.preventDefault(); location.href = PRODUCTS_PAGE; return;
   }
@@ -50,23 +51,23 @@ document.addEventListener('click', function(e) {
   if (/Li.n h. K|Consult.{0,10}Engin|Request Technical|Schedule Consul/i.test(text)) {
     e.preventDefault(); location.href = QUOTE_PAGE; return;
   }
-  // "Yeu Cau Bao Gia" (capitalized variant)
+  // "Yeu Cau Bao Gia" (capitalized)
   if (/Y.u C.u B.o/i.test(text)) {
     e.preventDefault(); location.href = QUOTE_PAGE; return;
   }
-  // "Download Technical Brochure" / "Tai Brochure"
+  // "Download Technical Brochure"
   if (/Download.{0,5}Brochure|T.i Brochure/i.test(text)) {
     e.preventDefault(); window.open(QUOTE_PAGE, '_self'); return;
   }
-  // "View Interactive Map" / "Xem ban do"
-  if (/View.{0,5}Map|Xem b.n .../i.test(text)) {
+  // BUG#5 FIX: View Interactive Map - expand {0,5} to {0,20}
+  if (/View.{0,20}Map|Xem b.n .../i.test(text)) {
     e.preventDefault(); window.open('https://maps.google.com/?q=Hai+Phong+Vietnam+concrete', '_blank'); return;
   }
-  // "View Full Org Chart" / "Xem So do"
+  // "View Full Org Chart"
   if (/Org Chart|S. .../i.test(text)) {
     e.preventDefault(); toggleOrgChart(el); return;
   }
-  // "Lien he" (standalone contact link)
+  // "Lien he" standalone
   if (/^Li.n h.$/i.test(text)) {
     e.preventDefault(); location.href = CONTACT_PAGE; return;
   }
@@ -94,7 +95,6 @@ document.addEventListener('click', function(e) {
   if (tag === 'A') {
     var h = el.getAttribute('href') || '';
     if (h === '/trangchconcretepro.html') { e.preventDefault(); location.href = '/'; return; }
-    // BUG#1 FIX: correct spelling boconhk (was bocohnk)
     if (h === '/muemailboconhkconcretepro.html') { e.preventDefault(); location.href = QUOTE_PAGE; return; }
     if (h === '#tuyen-dung') { e.preventDefault(); location.href = CONTACT_PAGE; return; }
     if (h === '#ban-do') { e.preventDefault(); window.open('https://maps.google.com/?q=Hai+Phong+Vietnam', '_blank'); return; }
@@ -102,7 +102,7 @@ document.addEventListener('click', function(e) {
     if (h === '#sitemap' || h === '#tech-specs' || h === '#compliance' || h === '#safety') { e.preventDefault(); location.href = PRODUCTS_PAGE; return; }
     if (h === '#privacy' || h === '#terms') { e.preventDefault(); location.href = CONTACT_PAGE; return; }
   }
-}, true); // capture phase - survives DOM re-renders
+}, true);
 
 function toggleOrgChart(btn) {
   var chart = document.getElementById('org-chart') || document.querySelector('[data-org-chart]');
@@ -111,21 +111,17 @@ function toggleOrgChart(btn) {
 }
 
 function applyVisualFixes() {
-  // BUG#2 FIX: Added 'Get' to cursor pattern so "Get a Quote"/"Get Quote" buttons get pointer
   document.querySelectorAll('button').forEach(function(btn) {
     var t = btn.textContent.trim();
-    if (/Kh.m|Y.u|Get|Xem|Download|Li.n|Chi ti|arrow|share|link|social|View|consult|schedule|request/i.test(t)) {
+    if (/Kh.m|Y.u|Get|Xem|Download|Li.n|Chi ti|arrow|share|link|social|View|consult|schedule|request|X.a b. l.c/i.test(t)) {
       btn.style.cursor = 'pointer';
     }
   });
-  // Fix nav href attributes
   document.querySelectorAll('nav a, header a').forEach(function(a) {
     var h = a.getAttribute('href') || '';
     if (h === '/trangchconcretepro.html') a.setAttribute('href', '/');
-    // BUG#1 FIX: correct spelling boconhk (was bocohnk)
     if (h === '/muemailboconhkconcretepro.html') a.setAttribute('href', QUOTE_PAGE);
   });
-  // Fix footer hash links
   document.querySelectorAll('a[href="#tuyen-dung"]').forEach(function(a) { a.href = CONTACT_PAGE; });
   document.querySelectorAll('a[href="#ban-do"]').forEach(function(a) { a.href = 'https://maps.google.com/?q=Hai+Phong+Vietnam'; a.target = '_blank'; });
   document.querySelectorAll('a[href="#chinh-sach"], a[href="#dieu-khoan"]').forEach(function(a) { a.href = QUOTE_PAGE; });
@@ -160,6 +156,7 @@ function setupMobileMenu() {
 
 function setupProductsPage() {
   if (!location.pathname.includes('snphm')) return;
+
   function getAllCards() {
     var bestGrid = null, bestCount = 0;
     Array.from(document.querySelectorAll('[class*="grid-cols"]')).forEach(function(g) {
@@ -169,7 +166,9 @@ function setupProductsPage() {
     });
     return bestGrid ? Array.from(bestGrid.children).filter(function(c) { return c.querySelector('h2,h3'); }) : [];
   }
+
   var checkboxes = Array.from(document.querySelectorAll('input[type=checkbox]'));
+
   function applyFilters() {
     var checked = checkboxes.filter(function(cb) { return cb.checked; });
     var cards = getAllCards();
@@ -183,11 +182,25 @@ function setupProductsPage() {
       card.style.display = labels.some(function(l) { return !l || txt.includes(l.substring(0, 6)); }) ? '' : 'none';
     });
   }
+
   checkboxes.forEach(function(cb) {
     if (cb.onchange) return;
     cb.onchange = applyFilters;
     cb.style.cursor = 'pointer';
   });
+
+  // BUG#3 FIX: Xóa bộ lọc clear filter button
+  document.querySelectorAll('button').forEach(function(btn) {
+    var t = btn.textContent.trim();
+    if ((/X.a b. l.c|Clear.{0,6}filter|Reset.{0,6}filter/i.test(t)) && !btn.onclick) {
+      btn.onclick = function() {
+        checkboxes.forEach(function(cb) { cb.checked = false; });
+        getAllCards().forEach(function(c) { c.style.display = ''; });
+      };
+      btn.style.cursor = 'pointer';
+    }
+  });
+
   var sortSelect = document.querySelector('select');
   if (sortSelect && !sortSelect.onchange) {
     sortSelect.onchange = function() {
@@ -197,13 +210,14 @@ function setupProductsPage() {
       Array.from(grid.children).sort(function(a, b) {
         var aT = (a.querySelector('h2,h3') || {}).textContent || '';
         var bT = (b.querySelector('h2,h3') || {}).textContent || '';
-        if (val.includes('ten') || val.includes('name') || val.includes('a-z')) return aT.localeCompare(bT);
+        if (val.includes('ten') || val.includes('unit') || val.includes('a-z')) return aT.localeCompare(bT);
         if (val.includes('z-a')) return bT.localeCompare(aT);
         return 0;
       }).forEach(function(c) { grid.appendChild(c); });
     };
     sortSelect.style.cursor = 'pointer';
   }
+
   // Grid/List view toggle
   document.querySelectorAll('button').forEach(function(btn) {
     var icon = btn.textContent.trim();
@@ -212,12 +226,33 @@ function setupProductsPage() {
         var cards = getAllCards();
         var grid = cards.length ? cards[0].parentElement : null;
         if (!grid) return;
-        if (icon === 'view_list') {
-          grid.style.gridTemplateColumns = '1fr';
-        } else {
-          grid.style.gridTemplateColumns = '';
-        }
+        grid.style.gridTemplateColumns = (icon === 'view_list') ? '1fr' : '';
       };
+      btn.style.cursor = 'pointer';
+    }
+  });
+
+  // BUG#4 FIX: Products page chevron pagination
+  var prodPageSize = 6, prodCurrentPage = 0;
+  var prodCards = getAllCards();
+  var prodTotalPages = Math.max(1, Math.ceil(prodCards.length / prodPageSize));
+
+  function showProductPage(p) {
+    prodCurrentPage = Math.max(0, Math.min(p, prodTotalPages - 1));
+    prodCards = getAllCards();
+    prodCards.forEach(function(c, i) {
+      c.style.display = (i >= prodCurrentPage * prodPageSize && i < (prodCurrentPage + 1) * prodPageSize) ? '' : 'none';
+    });
+  }
+
+  document.querySelectorAll('button').forEach(function(btn) {
+    var t = btn.textContent.trim();
+    if (t.includes('chevron_left') && !btn.onclick) {
+      btn.onclick = function() { showProductPage(prodCurrentPage - 1); };
+      btn.style.cursor = 'pointer';
+    }
+    if (t.includes('chevron_right') && !btn.onclick) {
+      btn.onclick = function() { showProductPage(prodCurrentPage + 1); };
       btn.style.cursor = 'pointer';
     }
   });
@@ -242,7 +277,6 @@ function setupServicesPage() {
 function setupProjectFilters() {
   if (!location.pathname.includes('hsdn')) return;
 
-  // Inject data-category onto parent container using badge span text
   document.querySelectorAll('[class*="project-card-overlay"]').forEach(function(overlay) {
     var badge = overlay.querySelector('span');
     if (badge && overlay.parentElement && !overlay.parentElement.dataset.category) {
@@ -257,7 +291,6 @@ function setupProjectFilters() {
     'Residential': 'residential'
   };
 
-  // Get only top-level project container cards (with data-category now injected)
   function getProjectCards() {
     return Array.from(document.querySelectorAll('[data-category]')).filter(function(c) {
       return !c.closest('nav') && !c.closest('header') && !c.closest('footer');
