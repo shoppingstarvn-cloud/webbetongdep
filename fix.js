@@ -1,4 +1,6 @@
-/* fix.js v12 - ConcretePro Global Button, Link & Module Fixer + UX Enhancement
+/* fix.js v13 - ConcretePro Global Button, Link & Module Fixer + UX Enhancement
+   Changes v13:
+   - BUG FIX: Wire up Pagination < > buttons trang San Pham (chevron_left/right)
    Changes v12:
    - UX#1: Page load progress bar (slim top bar, green)
    - UX#2: Scroll-to-top floating button (appears after 300px scroll)
@@ -57,12 +59,12 @@ document.addEventListener('click', function(e) {
   if (/^share$/i.test(text)) {
     e.preventDefault();
     try { if (navigator.share) { navigator.share({url: location.href, title: document.title}); }
-          else if (navigator.clipboard) { navigator.clipboard.writeText(location.href); showToast('Link đã sao chép!', 'success'); } } catch(ex){}
+          else if (navigator.clipboard) { navigator.clipboard.writeText(location.href); showToast('Link ÄÃ£ sao chÃ©p!', 'success'); } } catch(ex){}
     return;
   }
   if (/^link$/i.test(text)) {
     e.preventDefault();
-    try { if (navigator.clipboard) { navigator.clipboard.writeText(location.href); showToast('Link đã sao chép!', 'success'); } } catch(ex){}
+    try { if (navigator.clipboard) { navigator.clipboard.writeText(location.href); showToast('Link ÄÃ£ sao chÃ©p!', 'success'); } } catch(ex){}
     return;
   }
   if (/^social_leaderboard$/i.test(text)) { e.preventDefault(); location.href = PRODUCTS_PAGE; return; }
@@ -86,7 +88,7 @@ function toggleOrgChart(btn) {
 }
 
 // ============================================================
-// UX#1 — PAGE LOAD PROGRESS BAR
+// UX#1 â PAGE LOAD PROGRESS BAR
 // ============================================================
 function setupPageLoader() {
   if (document.getElementById('cp-loader')) return;
@@ -110,14 +112,14 @@ function setupPageLoader() {
 }
 
 // ============================================================
-// UX#2 — SCROLL-TO-TOP BUTTON
+// UX#2 â SCROLL-TO-TOP BUTTON
 // ============================================================
 function setupScrollToTop() {
   if (document.getElementById('cp-scroll-top')) return;
   var btn = document.createElement('button');
   btn.id = 'cp-scroll-top';
   btn.innerHTML = '&#8679;';
-  btn.title = 'Về đầu trang';
+  btn.title = 'Vá» Äáº§u trang';
   btn.style.cssText = [
     'position:fixed;bottom:24px;right:24px;width:44px;height:44px',
     'background:#16a34a;color:white;border:none;border-radius:50%',
@@ -141,7 +143,7 @@ function setupScrollToTop() {
 }
 
 // ============================================================
-// UX#3 — STICKY HEADER SHADOW ON SCROLL
+// UX#3 â STICKY HEADER SHADOW ON SCROLL
 // ============================================================
 function setupStickyHeader() {
   var header = document.querySelector('header');
@@ -163,7 +165,7 @@ function setupStickyHeader() {
 }
 
 // ============================================================
-// UX#4 — ACTIVE NAV LINK HIGHLIGHT
+// UX#4 â ACTIVE NAV LINK HIGHLIGHT
 // ============================================================
 function setupActiveNav() {
   var path = location.pathname;
@@ -178,7 +180,7 @@ function setupActiveNav() {
 }
 
 // ============================================================
-// UX#5 — SCROLL-REVEAL FADE-IN ANIMATIONS
+// UX#5 â SCROLL-REVEAL FADE-IN ANIMATIONS
 // ============================================================
 function setupScrollReveal() {
   if (!window.IntersectionObserver) return;
@@ -202,6 +204,7 @@ function setupScrollReveal() {
     });
   }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
 
+  // Target sections, cards, feature blocks
   var selectors = [
     'section', 'article',
     '[class*="card"]', '[class*="feature"]', '[class*="stat"]',
@@ -219,7 +222,7 @@ function setupScrollReveal() {
 }
 
 // ============================================================
-// UX#6 — BUTTON RIPPLE CLICK EFFECT
+// UX#6 â BUTTON RIPPLE CLICK EFFECT
 // ============================================================
 var _rippleStyle = false;
 function addRipple(el, e) {
@@ -241,7 +244,7 @@ function addRipple(el, e) {
 }
 
 // ============================================================
-// UX#7 — SMOOTH MOBILE MENU WITH OVERLAY
+// UX#7 â SMOOTH MOBILE MENU WITH OVERLAY
 // ============================================================
 function setupMobileMenu() {
   var menuBtns = Array.from(document.querySelectorAll('header button'));
@@ -254,11 +257,12 @@ function setupMobileMenu() {
   var nav = document.querySelector('header nav');
   if (!nav) return;
 
+  // Create overlay
   var overlay = document.getElementById('cp-menu-overlay');
   if (!overlay) {
     overlay = document.createElement('div');
     overlay.id = 'cp-menu-overlay';
-    overlay.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.35);z-index:9997;opacity:0;pointer-events:none;transition:opacity 0.25s ease;backdrop-filter:blur(2L)';
+    overlay.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.35);z-index:9997;opacity:0;pointer-events:none;transition:opacity 0.25s ease;backdrop-filter:blur(2px)';
     document.body.appendChild(overlay);
   }
 
@@ -274,6 +278,7 @@ function setupMobileMenu() {
       'overflow-y:auto'
     ].join(';');
     overlay.style.opacity = '1'; overlay.style.pointerEvents = 'auto';
+    // Style nav links
     nav.querySelectorAll('a').forEach(function(a) {
       a.style.cssText += ';display:block;padding:10px 12px;border-radius:8px;font-size:16px;font-weight:500;transition:background 0.15s';
       a.onmouseenter = function() { this.style.background = '#f0fdf4'; };
@@ -291,17 +296,18 @@ function setupMobileMenu() {
   overlay.onclick = closeMenu;
   menuBtn.style.cursor = 'pointer';
 
+  // Close on escape key
   document.addEventListener('keydown', function(e) {
     if (e.key === 'Escape' && menuOpen) closeMenu();
   });
 }
 
 // ============================================================
-// UX#8 — STYLED TOAST NOTIFICATIONS
+// UX#8 â STYLED TOAST NOTIFICATIONS
 // ============================================================
 function showToast(msg, type) {
   var colors = { success: '#16a34a', error: '#dc2626', info: '#2563eb', warning: '#d97706' };
-  var icons  = { success: '✓', error: '✕', info: 'ℹ', warning: 'ꚠ' };
+  var icons  = { success: 'â', error: 'â', info: 'â¹', warning: 'â ' };
   var bg = colors[type] || colors.info;
   var icon = icons[type] || icons.info;
   var toast = document.createElement('div');
@@ -328,18 +334,25 @@ function dismissToast(toast) {
   toast.style.opacity = '0'; toast.style.transform = 'translateX(120px)';
   setTimeout(function() { if (toast.parentNode) toast.parentNode.removeChild(toast); }, 350);
 }
-window.cpShowToast = showToast;
+window.cpShowToast = showToast; // expose globally for other scripts
 
 // ============================================================
-// UX#9 — CARD HOVER LIFT EFFECT
+// UX#9 â CARD HOVER LIFT EFFECT
 // ============================================================
 function setupCardHover() {
   var style = document.createElement('style');
   style.textContent = [
-    '[class*="card"]:not(nav *):not(header *):not(footer *){transition:transform 0.22s ease,box-shadow 0.22s ease !important;will-change:transform}',
-    '[class*="card"]:not(nav *):not(header *):not(footer *):hover{transform:translateY(-4px) !important;box-shadow:0 12px 32px rgba(0,0,0,0.12) !important}',
-    '[class*="project"]:not(nav *):not(header *):not(footer *){transition:transform 0.22s ease,box-shadow 0.22s ease !important}',
-    '[class*="project"]:not(nav *):not(header *):not(footer *):hover{transform:translateY(-4px) !important;box-shadow:0 12px 32px rgba(0,0,0,0.12) !important}',
+    '[class*="card"]:not(nav *):not(header *):not(footer *){',
+    'transition:transform 0.22s ease,box-shadow 0.22s ease !important;',
+    'will-change:transform}',
+    '[class*="card"]:not(nav *):not(header *):not(footer *):hover{',
+    'transform:translateY(-4px) !important;',
+    'box-shadow:0 12px 32px rgba(0,0,0,0.12) !important}',
+    '[class*="project"]:not(nav *):not(header *):not(footer *){',
+    'transition:transform 0.22s ease,box-shadow 0.22s ease !important}',
+    '[class*="project"]:not(nav *):not(header *):not(footer *):hover{',
+    'transform:translateY(-4px) !important;',
+    'box-shadow:0 12px 32px rgba(0,0,0,0.12) !important}',
     'button:not(nav *):not(header *){transition:filter 0.15s ease !important}',
     'button:not(nav *):not(header *):hover{filter:brightness(1.07) !important}'
   ].join('');
@@ -347,13 +360,18 @@ function setupCardHover() {
 }
 
 // ============================================================
-// UX#10 — INPUT FOCUS GLOW + FORM ENHANCEMENTS
+// UX#10 â INPUT FOCUS GLOW + FORM ENHANCEMENTS
 // ============================================================
 function setupFormUX() {
   var style = document.createElement('style');
   style.textContent = [
-    'input:not([type=checkbox]):not([type=radio]):not([type=submit]),textarea,select{transition:border-color 0.2s ease,box-shadow 0.2s ease !important}',
-    'input:not([type=checkbox]):not([type=radio]):not([type=submit]):focus,textarea:focus,select:focus{outline:none !important;border-color:#16a34a !important;box-shadow:0 0 0 3px rgba(22,163,74,0.18) !important}',
+    'input:not([type=checkbox]):not([type=radio]):not([type=submit]),textarea,select{',
+    'transition:border-color 0.2s ease,box-shadow 0.2s ease !important}',
+    'input:not([type=checkbox]):not([type=radio]):not([type=submit]):focus,',
+    'textarea:focus,select:focus{',
+    'outline:none !important;',
+    'border-color:#16a34a !important;',
+    'box-shadow:0 0 0 3px rgba(22,163,74,0.18) !important}',
     'input::placeholder,textarea::placeholder{transition:opacity 0.2s ease}',
     'input:focus::placeholder,textarea:focus::placeholder{opacity:0.5}'
   ].join('');
@@ -383,6 +401,7 @@ function applyVisualFixes() {
 
   setupMobileMenu();
   setupProductsPage();
+  setupProductPagination();
   setupServicesPage();
   setupProjectFilters();
   setupTinTucPage();
@@ -448,13 +467,84 @@ function setupProductsPage() {
   });
 }
 
+
+function setupProductPagination() {
+  if (!location.pathname.includes('snphm')) return;
+  var prevSpan = document.querySelector('[data-icon="chevron_left"]');
+  var nextSpan = document.querySelector('[data-icon="chevron_right"]');
+  if (!prevSpan || !nextSpan) return;
+  var prevBtn = prevSpan.closest('button');
+  var nextBtn = nextSpan.closest('button');
+  if (!prevBtn || !nextBtn || prevBtn._paginationSet) return;
+  prevBtn._paginationSet = true;
+  var dotsContainer = document.querySelector('.flex.gap-1.h-2');
+  var currentPage = 0;
+  if (!document.getElementById('cp-pagination-style')) {
+    var pst = document.createElement('style');
+    pst.id = 'cp-pagination-style';
+    pst.textContent = '@keyframes cpSlideIn{from{opacity:0;transform:translateX(24px)}to{opacity:1;transform:translateX(0)}}@keyframes cpSlideBack{from{opacity:0;transform:translateX(-24px)}to{opacity:1;transform:translateX(0)}}';
+    document.head.appendChild(pst);
+  }
+  function getPaginCards() {
+    var bestGrid = null, bestCount = 0;
+    Array.from(document.querySelectorAll('[class*="grid-cols"]')).forEach(function(g) {
+      if (g.closest('nav') || g.closest('header') || g.closest('footer')) return;
+      var cnt = Array.from(g.children).filter(function(c) { return c.querySelector('h2,h3'); }).length;
+      if (cnt > bestCount) { bestCount = cnt; bestGrid = g; }
+    });
+    return bestGrid ? Array.from(bestGrid.children).filter(function(c) { return c.querySelector('h2,h3'); }) : [];
+  }
+  function updatePaginDots(page, total) {
+    if (!dotsContainer) return;
+    var dots = Array.from(dotsContainer.children);
+    dots.forEach(function(dot, i) {
+      dot.style.transition = 'all 0.3s ease';
+      if (i === page) {
+        dot.className = 'h-1 flex-1 bg-on-tertiary-container rounded-sm';
+        dot.style.opacity = '1';
+        dot.style.transform = 'scaleY(2.5)';
+      } else if (i < total) {
+        dot.className = 'h-1 flex-1 bg-surface-container-high rounded-sm';
+        dot.style.opacity = '1';
+        dot.style.transform = '';
+      } else {
+        dot.className = 'h-1 flex-1 bg-surface-container-high rounded-sm';
+        dot.style.opacity = '0.25';
+        dot.style.transform = '';
+      }
+    });
+  }
+  function showPaginPage(p, dir) {
+    var cards = getPaginCards();
+    if (!cards.length) return;
+    var total = cards.length;
+    currentPage = ((p % total) + total) % total;
+    var anim = (dir >= 0) ? 'cpSlideIn 0.35s ease' : 'cpSlideBack 0.35s ease';
+    cards.forEach(function(card, i) {
+      if (i === currentPage) {
+        card.style.display = '';
+        card.style.animation = anim;
+      } else {
+        card.style.display = 'none';
+        card.style.animation = '';
+      }
+    });
+    updatePaginDots(currentPage, total);
+  }
+  prevBtn.onclick = function(e) { e.stopPropagation(); e.preventDefault(); showPaginPage(currentPage - 1, -1); };
+  nextBtn.onclick = function(e) { e.stopPropagation(); e.preventDefault(); showPaginPage(currentPage + 1, 1); };
+  prevBtn.style.cursor = 'pointer';
+  nextBtn.style.cursor = 'pointer';
+  showPaginPage(0, 1);
+}
+
 function setupServicesPage() {
   if (!location.pathname.includes('linhbogi')) return;
   document.querySelectorAll('form').forEach(function(form) {
     if (form.onsubmit) return;
     form.onsubmit = function(e) {
       e.preventDefault();
-      showToast('Y�u cầu đã g�m thành công! Chấng tôi li�n hệ trong 24h.', 'success');
+      showToast('YÃªu cáº§u ÄÃ£ gá»­i thÃ nh cÃ´ng! ChÃºng tÃ´i liÃªn há» trong 24h.', 'success');
       form.reset();
     };
   });
@@ -535,6 +625,7 @@ function bootUX() {
   setupActiveNav();
   setupCardHover();
   setupFormUX();
+  // Scroll reveal runs once after DOM ready
   setTimeout(setupScrollReveal, 500);
 }
 
