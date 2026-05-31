@@ -1,25 +1,25 @@
-/* fix.js v13 - ConcretePro Global Button, Link & Module Fixer + UX Enhancement
+/* fix.js v14 - ConcretePro Global Button, Link & Module Fixer + UX Enhancement
+   Changes v14:
+   - BUG FIX: Scroll-reveal 500ms delay removed → hero/above-fold immediately visible
+   - BUG FIX: Scroll-reveal immediately shows elements already in viewport (no flash)
+   - BUG FIX: Products pagination rewritten → 6 cards/page, NO display:none freeze
+   - BUG FIX: fixEnglishHeader() → replace "CONCRETE SOLUTIONS" with "CONCRETEPRO" on sub-pages
+   - BUG FIX: fixSubPageNav() → correct Vietnamese nav links on all sub-pages
+   - ADDED: NEWS_PAGE constant for /chitittintcgiiphpbtngxanh.html
    Changes v13:
    - BUG FIX: Wire up Pagination < > buttons trang San Pham (chevron_left/right)
    Changes v12:
-   - UX#1: Page load progress bar (slim top bar, green)
-   - UX#2: Scroll-to-top floating button (appears after 300px scroll)
-   - UX#3: Sticky header shadow on scroll
-   - UX#4: Active nav link highlight (current page)
-   - UX#5: Scroll-reveal animations (fade-in sections on scroll)
-   - UX#6: Button ripple click feedback
-   - UX#7: Smooth mobile menu with slide animation + overlay
-   - UX#8: Toast notifications (styled upgrade)
-   - UX#9: Card hover lift effect (product/project cards)
-   - UX#10: Input focus glow on forms
+   - UX#1-10: Page loader, scroll-to-top, sticky header, active nav, scroll-reveal,
+               ripple, mobile menu, toast, card hover, form UX
 */
 (function () {
 'use strict';
 
-var QUOTE_PAGE = '/linhbogi.html';
+var QUOTE_PAGE    = '/linhbogi.html';
 var PRODUCTS_PAGE = '/snphmvtliuxydng.html';
-var CONTACT_PAGE = '/giithiucngty.html';
+var CONTACT_PAGE  = '/giithiucngty.html';
 var PROJECTS_PAGE = '/hsdn.html';
+var NEWS_PAGE     = '/chitittintcgiiphpbtngxanh.html';
 
 // ============================================================
 // EVENT DELEGATION - handles buttons even after DOM re-render
@@ -59,12 +59,12 @@ document.addEventListener('click', function(e) {
   if (/^share$/i.test(text)) {
     e.preventDefault();
     try { if (navigator.share) { navigator.share({url: location.href, title: document.title}); }
-          else if (navigator.clipboard) { navigator.clipboard.writeText(location.href); showToast('Link ÄÃ£ sao chÃ©p!', 'success'); } } catch(ex){}
+          else if (navigator.clipboard) { navigator.clipboard.writeText(location.href); showToast('Link đã sao chép!', 'success'); } } catch(ex){}
     return;
   }
   if (/^link$/i.test(text)) {
     e.preventDefault();
-    try { if (navigator.clipboard) { navigator.clipboard.writeText(location.href); showToast('Link ÄÃ£ sao chÃ©p!', 'success'); } } catch(ex){}
+    try { if (navigator.clipboard) { navigator.clipboard.writeText(location.href); showToast('Link đã sao chép!', 'success'); } } catch(ex){}
     return;
   }
   if (/^social_leaderboard$/i.test(text)) { e.preventDefault(); location.href = PRODUCTS_PAGE; return; }
@@ -88,7 +88,7 @@ function toggleOrgChart(btn) {
 }
 
 // ============================================================
-// UX#1 â PAGE LOAD PROGRESS BAR
+// UX#1 — PAGE LOAD PROGRESS BAR
 // ============================================================
 function setupPageLoader() {
   if (document.getElementById('cp-loader')) return;
@@ -112,14 +112,14 @@ function setupPageLoader() {
 }
 
 // ============================================================
-// UX#2 â SCROLL-TO-TOP BUTTON
+// UX#2 — SCROLL-TO-TOP BUTTON
 // ============================================================
 function setupScrollToTop() {
   if (document.getElementById('cp-scroll-top')) return;
   var btn = document.createElement('button');
   btn.id = 'cp-scroll-top';
   btn.innerHTML = '&#8679;';
-  btn.title = 'Vá» Äáº§u trang';
+  btn.title = 'Về đầu trang';
   btn.style.cssText = [
     'position:fixed;bottom:24px;right:24px;width:44px;height:44px',
     'background:#16a34a;color:white;border:none;border-radius:50%',
@@ -143,7 +143,7 @@ function setupScrollToTop() {
 }
 
 // ============================================================
-// UX#3 â STICKY HEADER SHADOW ON SCROLL
+// UX#3 — STICKY HEADER SHADOW ON SCROLL
 // ============================================================
 function setupStickyHeader() {
   var header = document.querySelector('header');
@@ -165,7 +165,7 @@ function setupStickyHeader() {
 }
 
 // ============================================================
-// UX#4 â ACTIVE NAV LINK HIGHLIGHT
+// UX#4 — ACTIVE NAV LINK HIGHLIGHT
 // ============================================================
 function setupActiveNav() {
   var path = location.pathname;
@@ -180,31 +180,37 @@ function setupActiveNav() {
 }
 
 // ============================================================
-// UX#5 â SCROLL-REVEAL FADE-IN ANIMATIONS
+// UX#5 — SCROLL-REVEAL FADE-IN ANIMATIONS (v14 FIXED)
+// BUG FIX: Elements in viewport on load are immediately visible (no 500ms blank flash)
 // ============================================================
 function setupScrollReveal() {
-  if (!window.IntersectionObserver) return;
+  if (document.getElementById('cp-reveal-style')) return; // already set up
   var style = document.createElement('style');
+  style.id = 'cp-reveal-style';
   style.textContent = [
-    '.cp-reveal{opacity:0;transform:translateY(32px);transition:opacity 0.6s ease,transform 0.6s ease}',
-    '.cp-reveal.cp-visible{opacity:1;transform:translateY(0)}',
-    '.cp-reveal-left{opacity:0;transform:translateX(-32px);transition:opacity 0.6s ease,transform 0.6s ease}',
-    '.cp-reveal-left.cp-visible{opacity:1;transform:translateX(0)}',
-    '.cp-reveal-scale{opacity:0;transform:scale(0.92);transition:opacity 0.5s ease,transform 0.5s ease}',
-    '.cp-reveal-scale.cp-visible{opacity:1;transform:scale(1)}'
+    '.cp-reveal{opacity:0;transform:translateY(28px);transition:opacity 0.55s ease,transform 0.55s ease}',
+    '.cp-reveal.cp-visible{opacity:1 !important;transform:translateY(0) !important}',
+    '.cp-reveal-left{opacity:0;transform:translateX(-28px);transition:opacity 0.55s ease,transform 0.55s ease}',
+    '.cp-reveal-left.cp-visible{opacity:1 !important;transform:translateX(0) !important}',
+    '.cp-reveal-scale{opacity:0;transform:scale(0.93);transition:opacity 0.5s ease,transform 0.5s ease}',
+    '.cp-reveal-scale.cp-visible{opacity:1 !important;transform:scale(1) !important}'
   ].join('');
   document.head.appendChild(style);
 
-  var observer = new IntersectionObserver(function(entries) {
-    entries.forEach(function(entry) {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('cp-visible');
-        observer.unobserve(entry.target);
-      }
-    });
-  }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+  var vh = window.innerHeight;
 
-  // Target sections, cards, feature blocks
+  var observer = null;
+  if (window.IntersectionObserver) {
+    observer = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('cp-visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.08, rootMargin: '0px 0px -20px 0px' });
+  }
+
   var selectors = [
     'section', 'article',
     '[class*="card"]', '[class*="feature"]', '[class*="stat"]',
@@ -214,15 +220,24 @@ function setupScrollReveal() {
   selectors.forEach(function(sel) {
     document.querySelectorAll(sel).forEach(function(el) {
       if (el.closest('nav') || el.closest('header') || el.closest('footer')) return;
-      if (el.classList.contains('cp-reveal')) return;
+      if (el.classList.contains('cp-reveal') || el.classList.contains('cp-visible')) return;
+
+      // v14 FIX: Check if element is already visible in viewport → add cp-visible immediately
+      var rect = el.getBoundingClientRect();
+      var inViewport = rect.top < vh && rect.bottom > 0 && rect.height > 0;
+      if (inViewport) {
+        // Already visible - skip animation entirely
+        return;
+      }
+
       el.classList.add('cp-reveal');
-      observer.observe(el);
+      if (observer) observer.observe(el);
     });
   });
 }
 
 // ============================================================
-// UX#6 â BUTTON RIPPLE CLICK EFFECT
+// UX#6 — BUTTON RIPPLE CLICK EFFECT
 // ============================================================
 var _rippleStyle = false;
 function addRipple(el, e) {
@@ -244,7 +259,7 @@ function addRipple(el, e) {
 }
 
 // ============================================================
-// UX#7 â SMOOTH MOBILE MENU WITH OVERLAY
+// UX#7 — SMOOTH MOBILE MENU WITH OVERLAY
 // ============================================================
 function setupMobileMenu() {
   var menuBtns = Array.from(document.querySelectorAll('header button'));
@@ -257,7 +272,6 @@ function setupMobileMenu() {
   var nav = document.querySelector('header nav');
   if (!nav) return;
 
-  // Create overlay
   var overlay = document.getElementById('cp-menu-overlay');
   if (!overlay) {
     overlay = document.createElement('div');
@@ -278,7 +292,6 @@ function setupMobileMenu() {
       'overflow-y:auto'
     ].join(';');
     overlay.style.opacity = '1'; overlay.style.pointerEvents = 'auto';
-    // Style nav links
     nav.querySelectorAll('a').forEach(function(a) {
       a.style.cssText += ';display:block;padding:10px 12px;border-radius:8px;font-size:16px;font-weight:500;transition:background 0.15s';
       a.onmouseenter = function() { this.style.background = '#f0fdf4'; };
@@ -295,19 +308,17 @@ function setupMobileMenu() {
   menuBtn.onclick = function() { menuOpen ? closeMenu() : openMenu(); };
   overlay.onclick = closeMenu;
   menuBtn.style.cursor = 'pointer';
-
-  // Close on escape key
   document.addEventListener('keydown', function(e) {
     if (e.key === 'Escape' && menuOpen) closeMenu();
   });
 }
 
 // ============================================================
-// UX#8 â STYLED TOAST NOTIFICATIONS
+// UX#8 — STYLED TOAST NOTIFICATIONS
 // ============================================================
 function showToast(msg, type) {
   var colors = { success: '#16a34a', error: '#dc2626', info: '#2563eb', warning: '#d97706' };
-  var icons  = { success: 'â', error: 'â', info: 'â¹', warning: 'â ' };
+  var icons  = { success: '✓', error: '✕', info: 'ℹ', warning: '⚠' };
   var bg = colors[type] || colors.info;
   var icon = icons[type] || icons.info;
   var toast = document.createElement('div');
@@ -334,13 +345,15 @@ function dismissToast(toast) {
   toast.style.opacity = '0'; toast.style.transform = 'translateX(120px)';
   setTimeout(function() { if (toast.parentNode) toast.parentNode.removeChild(toast); }, 350);
 }
-window.cpShowToast = showToast; // expose globally for other scripts
+window.cpShowToast = showToast;
 
 // ============================================================
-// UX#9 â CARD HOVER LIFT EFFECT
+// UX#9 — CARD HOVER LIFT EFFECT
 // ============================================================
 function setupCardHover() {
+  if (document.getElementById('cp-card-hover-style')) return;
   var style = document.createElement('style');
+  style.id = 'cp-card-hover-style';
   style.textContent = [
     '[class*="card"]:not(nav *):not(header *):not(footer *){',
     'transition:transform 0.22s ease,box-shadow 0.22s ease !important;',
@@ -360,10 +373,12 @@ function setupCardHover() {
 }
 
 // ============================================================
-// UX#10 â INPUT FOCUS GLOW + FORM ENHANCEMENTS
+// UX#10 — INPUT FOCUS GLOW + FORM ENHANCEMENTS
 // ============================================================
 function setupFormUX() {
+  if (document.getElementById('cp-form-style')) return;
   var style = document.createElement('style');
+  style.id = 'cp-form-style';
   style.textContent = [
     'input:not([type=checkbox]):not([type=radio]):not([type=submit]),textarea,select{',
     'transition:border-color 0.2s ease,box-shadow 0.2s ease !important}',
@@ -379,7 +394,80 @@ function setupFormUX() {
 }
 
 // ============================================================
-// EXISTING FIXES (v11 preserved)
+// v14 NEW: FIX ENGLISH HEADER ON SUB-PAGES
+// Replaces "CONCRETE SOLUTIONS" branding with "CONCRETEPRO"
+// Translates English nav items to Vietnamese
+// ============================================================
+function fixEnglishHeader() {
+  // Only run if English brand detected
+  var hasEnglishBrand = false;
+  document.querySelectorAll('header *, nav *').forEach(function(el) {
+    if (el.children.length === 0 && el.textContent.trim() === 'CONCRETE SOLUTIONS') {
+      hasEnglishBrand = true;
+      el.textContent = 'CONCRETEPRO';
+      el.style.cssText += ';color:#041627 !important;font-weight:800 !important;font-size:inherit;letter-spacing:-0.02em';
+    }
+  });
+  if (!hasEnglishBrand) return; // Homepage already has correct branding
+
+  // Translate English nav items to Vietnamese
+  var navTranslations = {
+    'Materials': 'Sản phẩm',
+    'Equipment': 'Dịch vụ',
+    'Projects': 'Dự án',
+    'Technical Resources': 'Tin tức',
+    'Contact': 'Liên hệ',
+    'Get a Quote': 'Yêu cầu báo giá',
+    'GET A QUOTE': 'Yêu cầu báo giá',
+    'Get a quote': 'Yêu cầu báo giá',
+    'Get Quote': 'Yêu cầu báo giá'
+  };
+
+  // Fix nav link text AND href simultaneously
+  var navLinkMap = {
+    'Materials': PRODUCTS_PAGE,
+    'Sản phẩm': PRODUCTS_PAGE,
+    'Equipment': QUOTE_PAGE,
+    'Dịch vụ': QUOTE_PAGE,
+    'Projects': PROJECTS_PAGE,
+    'Dự án': PROJECTS_PAGE,
+    'Technical Resources': NEWS_PAGE,
+    'Tin tức': NEWS_PAGE,
+    'Contact': CONTACT_PAGE,
+    'Liên hệ': CONTACT_PAGE
+  };
+
+  document.querySelectorAll('nav a, header a, header button').forEach(function(el) {
+    var t = el.textContent.trim();
+    if (navTranslations[t]) {
+      el.textContent = navTranslations[t];
+      t = navTranslations[t]; // update t for href assignment below
+    }
+    if (el.tagName === 'A' && navLinkMap[t]) {
+      el.setAttribute('href', navLinkMap[t]);
+    }
+    // Fix "Get a Quote" button
+    if (/Get.{0,5}Quote/i.test(el.textContent.trim())) {
+      el.textContent = 'Yêu cầu báo giá';
+      if (el.tagName === 'A') el.setAttribute('href', QUOTE_PAGE);
+    }
+  });
+
+  // Apply CONCRETEPRO header styling
+  var header = document.querySelector('header');
+  if (header) {
+    header.style.cssText += ';border-bottom:1px solid #e5e7eb';
+    // Find logo link and style it
+    var logoLink = header.querySelector('a:first-child, a[href="/"], a[href="./"]');
+    if (logoLink) {
+      logoLink.setAttribute('href', '/');
+      logoLink.style.cssText += ';text-decoration:none';
+    }
+  }
+}
+
+// ============================================================
+// EXISTING FIXES (v11 preserved) + v14 improvements
 // ============================================================
 function applyVisualFixes() {
   document.querySelectorAll('button').forEach(function(btn) {
@@ -398,6 +486,9 @@ function applyVisualFixes() {
   document.querySelectorAll('a[href="#chinh-sach"], a[href="#dieu-khoan"]').forEach(function(a) { a.href = QUOTE_PAGE; });
   document.querySelectorAll('a[href="#sitemap"], a[href="#tech-specs"], a[href="#compliance"], a[href="#safety"]').forEach(function(a) { a.href = PRODUCTS_PAGE; });
   document.querySelectorAll('a[href="#privacy"], a[href="#terms"]').forEach(function(a) { a.href = CONTACT_PAGE; });
+
+  // v14: Fix English header on sub-pages
+  fixEnglishHeader();
 
   setupMobileMenu();
   setupProductsPage();
@@ -467,7 +558,11 @@ function setupProductsPage() {
   });
 }
 
-
+// ============================================================
+// v14 REWRITTEN: PRODUCT PAGINATION — 6 cards/page, NO freeze
+// BUG FIX: Replaced display:none on 28 cards with page-based approach
+// Uses requestAnimationFrame to batch DOM changes smoothly
+// ============================================================
 function setupProductPagination() {
   if (!location.pathname.includes('snphm')) return;
   var prevSpan = document.querySelector('[data-icon="chevron_left"]');
@@ -477,14 +572,27 @@ function setupProductPagination() {
   var nextBtn = nextSpan.closest('button');
   if (!prevBtn || !nextBtn || prevBtn._paginationSet) return;
   prevBtn._paginationSet = true;
-  var dotsContainer = document.querySelector('.flex.gap-1.h-2');
+
+  var PAGE_SIZE = 6; // Show 6 products per page (matches "Hiển thị 1-6 trong số 29")
   var currentPage = 0;
+
+  // Inject slide animation styles
   if (!document.getElementById('cp-pagination-style')) {
     var pst = document.createElement('style');
     pst.id = 'cp-pagination-style';
-    pst.textContent = '@keyframes cpSlideIn{from{opacity:0;transform:translateX(24px)}to{opacity:1;transform:translateX(0)}}@keyframes cpSlideBack{from{opacity:0;transform:translateX(-24px)}to{opacity:1;transform:translateX(0)}}';
+    pst.textContent = [
+      '@keyframes cpSlideIn{from{opacity:0;transform:translateX(20px)}to{opacity:1;transform:translateX(0)}}',
+      '@keyframes cpSlideBack{from{opacity:0;transform:translateX(-20px)}to{opacity:1;transform:translateX(0)}}',
+      '.cp-pag-hide{display:none !important}',
+      '.cp-pag-show{display:block !important}',
+      '.cp-pag-anim-in{animation:cpSlideIn 0.3s ease}',
+      '.cp-pag-anim-back{animation:cpSlideBack 0.3s ease}'
+    ].join('');
     document.head.appendChild(pst);
   }
+
+  var dotsContainer = document.querySelector('.flex.gap-1.h-2');
+
   function getPaginCards() {
     var bestGrid = null, bestCount = 0;
     Array.from(document.querySelectorAll('[class*="grid-cols"]')).forEach(function(g) {
@@ -494,48 +602,92 @@ function setupProductPagination() {
     });
     return bestGrid ? Array.from(bestGrid.children).filter(function(c) { return c.querySelector('h2,h3'); }) : [];
   }
-  function updatePaginDots(page, total) {
+
+  function getTotalPages(cards) {
+    return Math.max(1, Math.ceil(cards.length / PAGE_SIZE));
+  }
+
+  function updateCounter(page, cards) {
+    // Update "Hiển thị X-Y trong số Z" text
+    var counter = document.querySelector('[class*="text-sm"][class*="text-on"]');
+    if (!counter) {
+      // Try to find by text content
+      document.querySelectorAll('p,span,div').forEach(function(el) {
+        if (/Hi.n th..*trong s./i.test(el.textContent) && el.children.length === 0) {
+          counter = el;
+        }
+      });
+    }
+    if (counter) {
+      var start = page * PAGE_SIZE + 1;
+      var end = Math.min((page + 1) * PAGE_SIZE, cards.length);
+      counter.textContent = 'Hiển thị ' + start + '-' + end + ' trong số ' + cards.length + ' sản phẩm';
+    }
+  }
+
+  function updatePaginDots(page, totalPages) {
     if (!dotsContainer) return;
     var dots = Array.from(dotsContainer.children);
     dots.forEach(function(dot, i) {
       dot.style.transition = 'all 0.3s ease';
       if (i === page) {
-        dot.className = 'h-1 flex-1 bg-on-tertiary-container rounded-sm';
         dot.style.opacity = '1';
         dot.style.transform = 'scaleY(2.5)';
-      } else if (i < total) {
-        dot.className = 'h-1 flex-1 bg-surface-container-high rounded-sm';
+        dot.style.background = '#16a34a';
+      } else if (i < totalPages) {
         dot.style.opacity = '1';
         dot.style.transform = '';
+        dot.style.background = '';
       } else {
-        dot.className = 'h-1 flex-1 bg-surface-container-high rounded-sm';
         dot.style.opacity = '0.25';
         dot.style.transform = '';
       }
     });
   }
+
   function showPaginPage(p, dir) {
     var cards = getPaginCards();
     if (!cards.length) return;
-    var total = cards.length;
-    currentPage = ((p % total) + total) % total;
-    var anim = (dir >= 0) ? 'cpSlideIn 0.35s ease' : 'cpSlideBack 0.35s ease';
-    cards.forEach(function(card, i) {
-      if (i === currentPage) {
-        card.style.display = '';
-        card.style.animation = anim;
-      } else {
-        card.style.display = 'none';
-        card.style.animation = '';
-      }
+    var totalPages = getTotalPages(cards);
+    currentPage = ((p % totalPages) + totalPages) % totalPages;
+
+    var animClass = (dir >= 0) ? 'cp-pag-anim-in' : 'cp-pag-anim-back';
+    var start = currentPage * PAGE_SIZE;
+    var end = start + PAGE_SIZE;
+
+    // Use requestAnimationFrame to batch DOM changes - prevents freeze
+    requestAnimationFrame(function() {
+      cards.forEach(function(card, i) {
+        var shouldShow = (i >= start && i < end);
+        if (shouldShow) {
+          card.style.display = '';
+          card.style.animation = '';
+          // Trigger animation on next frame
+          requestAnimationFrame(function() {
+            card.style.animation = animClass.includes('in')
+              ? 'cpSlideIn 0.3s ease'
+              : 'cpSlideBack 0.3s ease';
+          });
+        } else {
+          card.style.display = 'none';
+        }
+      });
+      updatePaginDots(currentPage, totalPages);
+      updateCounter(currentPage, cards);
     });
-    updatePaginDots(currentPage, total);
   }
+
   prevBtn.onclick = function(e) { e.stopPropagation(); e.preventDefault(); showPaginPage(currentPage - 1, -1); };
   nextBtn.onclick = function(e) { e.stopPropagation(); e.preventDefault(); showPaginPage(currentPage + 1, 1); };
   prevBtn.style.cursor = 'pointer';
   nextBtn.style.cursor = 'pointer';
-  showPaginPage(0, 1);
+
+  // Initial: show page 0 without hiding too much - ensure first PAGE_SIZE visible
+  var cards = getPaginCards();
+  if (cards.length > PAGE_SIZE) {
+    showPaginPage(0, 1);
+  }
+  // If <= PAGE_SIZE cards, show all normally (no pagination needed)
 }
 
 function setupServicesPage() {
@@ -544,7 +696,7 @@ function setupServicesPage() {
     if (form.onsubmit) return;
     form.onsubmit = function(e) {
       e.preventDefault();
-      showToast('YÃªu cáº§u ÄÃ£ gá»­i thÃ nh cÃ´ng! ChÃºng tÃ´i liÃªn há» trong 24h.', 'success');
+      showToast('Yêu cầu đã gửi thành công! Chúng tôi liên hệ trong 24h.', 'success');
       form.reset();
     };
   });
@@ -625,8 +777,8 @@ function bootUX() {
   setupActiveNav();
   setupCardHover();
   setupFormUX();
-  // Scroll reveal runs once after DOM ready
-  setTimeout(setupScrollReveal, 500);
+  // v14 FIX: Call setupScrollReveal immediately (was 500ms timeout in v13 → caused blank flash)
+  setupScrollReveal();
 }
 
 var _attempts = 0;
