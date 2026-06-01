@@ -186,7 +186,7 @@ tr:last-child td{border-bottom:none}tr:hover td{background:rgba(255,255,255,.02)
             <div class="fg"><label>Địa chỉ</label><input type="text" id="s_address"></div>
             <div class="fg"><label>Điện thoại</label><input type="text" id="s_phone"></div>
             <div class="fg"><label>Email</label><input type="email" id="s_email"></div>
-            <div class="fg"><label>Website</label><input type="text" id="s_website"></div>
+            <div class="fg"><label>Slogan</label><input type="text" id="s_website"></div>
             <div class="fg"><label>Mô tả SEO</label><textarea id="s_description" rows="3"></textarea></div>
             <button class="btn bp" onclick="saveSettings()"><span class="material-icons" style="font-size:.95rem">save</span>Lưu</button>
           </div>
@@ -229,6 +229,8 @@ async function dbDelete(t,id){const{error}=await sb.from(t).delete().eq('id',id)
 async function dbFind(t,k,v){const{data,error}=await sb.from(t).select('*').eq(k,v);if(error)throw error;return data||[];}
 async function dbCount(t){const{count,error}=await sb.from(t).select('*',{count:'exact',head:true});return error?0:(count||0);}
 async function getSetting(k){const r=await dbFind('settings','key',k);return r.length?r[0].value:'';}
+async function _loadSettingsRow(){const{data,error}=await sb.from('settings').select('*').eq('id',1).single();if(error)throw error;return data;}
+async function _saveSettingsRow(u){const{error}=await sb.from('settings').update(u).eq('id',1);if(error)throw error;}
 async function setSetting(k,v){const r=await dbFind('settings','key',k);if(r.length)await dbUpdate('settings',r[0].id,{value:v});else await dbAdd('settings',{key:k,value:v});}
 
 // STATE
@@ -429,8 +431,8 @@ function delRec(t,id){showCf('Xác nhận xóa','Bản ghi sẽ bị xóa vĩnh 
 
 // SETTINGS
 var SKEYS=['company_name','address','phone','email','website','description'];
-async function loadSettings(){for(var i=0;i<SKEYS.length;i++){var el=document.getElementById('s_'+SKEYS[i]);if(el)el.value=await getSetting(SKEYS[i]);}}
-async function saveSettings(){try{for(var i=0;i<SKEYS.length;i++){var el=document.getElementById('s_'+SKEYS[i]);if(el)await setSetting(SKEYS[i],el.value.trim());}toast('Đã lưu cài đặt!','success');}catch(e){toast('Lỗi: '+e.message,'error');}}
+async function loadSettings(){try{var row=await _loadSettingsRow();if(!row)return;if(document.getElementById('s_company_name'))document.getElementById('s_company_name').value=row.company||'';if(document.getElementById('s_address'))document.getElementById('s_address').value=row.address||'';if(document.getElementById('s_phone'))document.getElementById('s_phone').value=row.phone||'';if(document.getElementById('s_email'))document.getElementById('s_email').value=row.email||'';if(document.getElementById('s_website'))document.getElementById('s_website').value=row.slogan||'';if(document.getElementById('s_description'))document.getElementById('s_description').value=row.description||'';}catch(e){toast('Lỗi tải cài đặt: '+e.message,'error');}}
+async function saveSettings(){try{var updates={company:(document.getElementById('s_company_name')?.value||'').trim(),address:(document.getElementById('s_address')?.value||'').trim(),phone:(document.getElementById('s_phone')?.value||'').trim(),email:(document.getElementById('s_email')?.value||'').trim(),slogan:(document.getElementById('s_website')?.value||'').trim(),description:(document.getElementById('s_description')?.value||'').trim()};await _saveSettingsRow(updates);toast('Đã lưu cài đặt!','success');}catch(e){toast('Lỗi: '+e.message,'error');}}
 async function changePw(){
   var np=document.getElementById('nPw').value,cp=document.getElementById('cPw').value;
   if(!np||!cp){toast('Nhập đầy đủ thông tin','error');return;}
