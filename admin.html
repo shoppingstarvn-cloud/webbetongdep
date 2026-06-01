@@ -18,32 +18,5 @@ document.getElementById('cfd').addEventListener('click',function(e){if(e.target=
 checkSession();
 </script>
 
-
-<script>
-/* FIX: Settings flat schema override */
-window.loadSettings = async function() {
-  try {
-    var {data: r, error: rErr} = await sb.from('settings').select('*').limit(1);
-    if (rErr || !r || r.length === 0) return;
-    var s = r[0]; window._settingsRow = s;
-    var map = [['s_company_name','company'],['s_address','address'],['s_phone','phone'],
-               ['s_email','email'],['s_description','description'],
-               ['s_slogan','slogan'],['s_fb','fb'],['s_yt','yt'],['s_zalo','zalo']];
-    map.forEach(function(p){ var el=document.getElementById(p[0]); if(el) el.value=s[p[1]]||''; });
-  } catch(e){ console.error('loadSettings err:',e.message); }
-};
-window.saveSettings = async function() {
-  try {
-    var g = function(id){ return (document.getElementById(id)||{}).value||''; };
-    var payload = {company:g('s_company_name'),address:g('s_address'),phone:g('s_phone'),
-                   email:g('s_email'),description:g('s_description'),
-                   slogan:g('s_slogan'),fb:g('s_fb'),yt:g('s_yt'),zalo:g('s_zalo')};
-    var rid = (window._settingsRow && window._settingsRow.id) ? window._settingsRow.id : 1;
-    var {error: uErr} = await sb.from('settings').update(payload).eq('id', rid);
-    if (uErr) throw new Error(uErr.message);
-    window._settingsRow=Object.assign(window._settingsRow||{},payload); toast('Đã lưu cài đặt!','success');
-  } catch(e){ toast('Lỗi: '+e.message,'error'); }
-};
-</script></body>
+</body>
 </html>
-
