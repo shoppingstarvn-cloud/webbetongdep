@@ -863,7 +863,9 @@ function loadProducts() {
 function loadProjects() {
   sbGet('projects', 'order=created_at.desc').then(function(rows) {
     if (!rows || !rows.length) return;
-    var grid = afterComment('Project Grid') || findGrid();
+    // v17: Priority selector — find actual project cards grid (has mb-xl), not hero stats
+    var grid = document.querySelector('[class*="grid"][class*="mb-xl"]') ||
+               afterComment('Project Grid') || findGrid();
     if (!grid) return;
     var stLabel = { ongoing: 'Dang thuc hien', completed: 'Hoan thanh', planning: 'Ke hoach' };
     var stColor = { ongoing: '#3b82f6', completed: '#16a34a', planning: '#f59e0b' };
