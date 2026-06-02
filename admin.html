@@ -186,8 +186,11 @@ tr:last-child td{border-bottom:none}tr:hover td{background:rgba(255,255,255,.02)
             <div class="fg"><label>Địa chỉ</label><input type="text" id="s_address"></div>
             <div class="fg"><label>Điện thoại</label><input type="text" id="s_phone"></div>
             <div class="fg"><label>Email</label><input type="email" id="s_email"></div>
-            <div class="fg"><label>Slogan</label><input type="text" id="s_website"></div>
+            <div class="fg"><label>Slogan</label><input type="text" id="s_slogan"></div>
             <div class="fg"><label>Mô tả SEO</label><textarea id="s_description" rows="3"></textarea></div>
+            <div class="fg"><label>Facebook URL</label><input type="text" id="s_fb"></div>
+            <div class="fg"><label>YouTube URL</label><input type="text" id="s_yt"></div>
+            <div class="fg"><label>Zalo</label><input type="text" id="s_zalo"></div>
             <button class="btn bp" onclick="saveSettings()"><span class="material-icons" style="font-size:.95rem">save</span>Lưu</button>
           </div>
           <div>
@@ -1930,6 +1933,33 @@ document.getElementById('cfd').addEventListener('click',function(e){if(e.target=
 
 // BOOT
 checkSession();
+</script>
+
+<script>
+/* Settings v2: flat schema fix */
+window.loadSettings = async function() {
+  try {
+    var rows = await dbGetAll('settings');
+    if (!rows || !rows.length) return;
+    var s = rows[0]; window._settingsRow = s;
+    var map = [['s_company_name','company'],['s_address','address'],['s_phone','phone'],
+               ['s_email','email'],['s_slogan','slogan'],['s_description','description'],
+               ['s_fb','fb'],['s_yt','yt'],['s_zalo','zalo']];
+    map.forEach(function(p){var el=document.getElementById(p[0]);if(el)el.value=s[p[1]]||'';}); 
+  } catch(e){ console.error('loadSettings err:',e.message); }
+};
+window.saveSettings = async function() {
+  try {
+    var g=function(id){return(document.getElementById(id)||{}).value||'';  };
+    var payload={company:g('s_company_name'),address:g('s_address'),phone:g('s_phone'),
+                 email:g('s_email'),slogan:g('s_slogan'),description:g('s_description'),
+                 fb:g('s_fb'),yt:g('s_yt'),zalo:g('s_zalo')};
+    var rid=(window._settingsRow&&window._settingsRow.id)?window._settingsRow.id:1;
+    await dbUpdate('settings',rid,payload);
+    window._settingsRow=Object.assign(window._settingsRow||{},payload);
+    toast('Da luu cai dat!','success');
+  } catch(e){ toast('Loi: '+e.message,'error'); }
+};
 </script>
 </body>
 </html>
