@@ -803,34 +803,24 @@ if (document.readyState === 'loading') {
 })();
 
 // ============================================================
-// v15: SUPABASE DYNAMIC DATA INTEGRATION
-// Admin panel data -> Supabase -> Live frontend pages
+// v16: SUPABASE DYNAMIC DATA INTEGRATION (fixed)
+// - loadProjects: fetch first, only replace if data exists
+// - loadSlides: fix <img> src update (not backgroundImage)
+// - loadHomepageProducts: inject new section (not override bento)
+// - timeout: 1500ms
 // ============================================================
 (function () {
-"use strict";
-
-var SB_URL = "https://clalkraxfaeqbkeaikow.supabase.co";
-var SB_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNsYWxrcmF4ZmFlcWJrZWFpa293Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzkwNjEzOTksImV4cCI6MjA5NDYzNzM5OX0.2EpUXzqLgjc2GUaOzEdvASILX_S_YZ5SJl-a3KYamWk";
-var NEWS_PAGE = "/chitittintcgiiphpbtngxanh.html";
-
+'use strict';
+var SB_URL = 'https://clalkraxfaeqbkeaikow.supabase.co';
+var SB_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNsYWxrcmF4ZmFlcWJrZWFpa293Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzkwNjEzOTksImV4cCI6MjA5NDYzNzM5OX0.2EpUXzqLgjc2GUaOzEdvASILX_S_YZ5SJl-a3KYamWk';
+var NEWS_PAGE = '/chitittintcgiiphpbtngxanh.html';
 function sbGet(table, qs) {
-  var url = SB_URL + "/rest/v1/" + table + "?select=*" + (qs ? "&" + qs : "");
-  return fetch(url, { headers: { "apikey": SB_KEY, "Authorization": "Bearer " + SB_KEY } })
-    .then(function(r) { return r.ok ? r.json() : []; });
+  var url = SB_URL + '/rest/v1/' + table + '?select=*' + (qs ? '&' + qs : '');
+  return fetch(url, { headers: { 'apikey': SB_KEY, 'Authorization': 'Bearer ' + SB_KEY } }).then(function(r) { return r.ok ? r.json() : []; });
 }
-
 function esc(s) {
-  return String(s || "").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
+  return String(s || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 }
-
-function injectHoverCSS() {
-  if (document.getElementById("sb-hover-css")) return;
-  var st = document.createElement("style");
-  st.id = "sb-hover-css";
-  st.textContent = ".sb-card{transition:transform .25s,box-shadow .25s;cursor:pointer}.sb-card:hover{transform:translateY(-4px);box-shadow:0 12px 32px rgba(0,0,0,.12)}.sb-img{width:100%;height:100%;object-fit:cover;transition:transform .5s}.sb-card:hover .sb-img{transform:scale(1.06)}@keyframes cp-spin{to{transform:rotate(360deg)}}";
-  document.head.appendChild(st);
-}
-
 function afterComment(text) {
   var tw = document.createTreeWalker(document.body, NodeFilter.SHOW_COMMENT, null, false);
   var node;
@@ -843,141 +833,98 @@ function afterComment(text) {
   }
   return null;
 }
-
 function findGrid() {
-  var candidates = Array.from(document.querySelectorAll(
-    "[class*=grid-cols-3],[class*=grid-cols-2],[class*=grid-cols-1]"
-  ));
-  return candidates.find(function(g) {
-    return !g.closest("nav") && !g.closest("header") && !g.closest("footer") && !g.closest("aside");
-  }) || null;
+  var candidates = Array.from(document.querySelectorAll('[class*="grid-cols-3"],[class*="grid-cols-2"],[class*="grid-cols-1"]'));
+  return candidates.find(function(g) { return !g.closest('nav') && !g.closest('header') && !g.closest('footer') && !g.closest('aside'); }) || null;
 }
-
 function spinner() {
-  var d = document.createElement("div");
-  d.style.cssText = "display:flex;align-items:center;justify-content:center;padding:3rem;gap:12px;color:#94a3b8;font-size:0.9rem;grid-column:1/-1";
-  d.innerHTML = "<div style='width:28px;height:28px;border:3px solid #e2e8f0;border-top-color:#ea580c;border-radius:50%;animation:cp-spin 0.8s linear infinite'></div>Dang tai du lieu...";
+  var d = document.createElement('div');
+  d.style.cssText = 'display:flex;align-items:center;justify-content:center;padding:3rem;gap:12px;color:#94a3b8;font-size:0.9rem;grid-column:1/-1';
+  d.innerHTML = '<div style="width:28px;height:28px;border:3px solid #e2e8f0;border-top-color:#ea580c;border-radius:50%;animation:cp-spin 0.8s linear infinite"></div>Dang tai...';
+  if (!document.getElementById('cp-spin-kf')) { var st = document.createElement('style'); st.id = 'cp-spin-kf'; st.textContent = '@keyframes cp-spin{to{transform:rotate(360deg)}}'; document.head.appendChild(st); }
   return d;
 }
-
 function loadProducts() {
-  injectHoverCSS();
-  var grid = afterComment("Product Grid") || findGrid();
+  var grid = afterComment('Product Grid') || findGrid();
   if (!grid) return;
-  grid.innerHTML = "";
-  grid.appendChild(spinner());
-  sbGet("products", "status=eq.active&order=created_at.desc").then(function(rows) {
-    if (!rows || !rows.length) {
-      grid.innerHTML = "<p style='color:#94a3b8;padding:2rem;grid-column:1/-1'>Chua co san pham nao.</p>";
-      return;
-    }
+  grid.innerHTML = ''; grid.appendChild(spinner());
+  sbGet('products', 'status=eq.active&order=created_at.desc').then(function(rows) {
+    if (!rows || !rows.length) { grid.innerHTML = '<p style="color:#94a3b8;padding:2rem;grid-column:1/-1">Chua co san pham.</p>'; return; }
     grid.innerHTML = rows.map(function(p) {
-      var img = p.image || "https://images.unsplash.com/photo-1565193566173-7a0ee3dbe261?w=600&q=80";
-      var price = p.price ? esc(p.price) + " VND/" + esc(p.unit || "m3") : "Lien he bao gia";
-      var desc = esc(p.description || p.specs || "Lien he de biet them thong tin.");
-      var cat = esc(p.category || "Be tong");
-      var name = esc(p.name);
-      return "<div class='sb-card bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700 overflow-hidden'><div style='position:relative;height:200px;overflow:hidden;background:#f1f5f9'><img class='sb-img' src='" + esc(img) + "' alt='" + name + "' onerror=\"this.style.display='none'\"><span style='position:absolute;top:10px;left:10px;background:#ea580c;color:#fff;font-size:11px;font-weight:600;padding:3px 10px;border-radius:20px'>" + cat + "</span></div><div style='padding:18px'><h3 style='font-weight:700;font-size:1rem;margin-bottom:6px;color:inherit'>" + name + "</h3><p style='font-size:13px;color:#64748b;margin-bottom:12px;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical'>" + desc + "</p><div style='display:flex;align-items:center;justify-content:space-between'><span style='color:#ea580c;font-weight:600;font-size:13px'>" + price + "</span><a href='/linhbogi.html' style='background:#ea580c;color:#fff;border-radius:20px;padding:6px 14px;font-size:12px;font-weight:600;text-decoration:none'>Bao gia</a></div></div></div>";
-    }).join("");
-  }).catch(function() {});
+      var img = esc(p.image || 'https://images.unsplash.com/photo-1565193566173-7a0ee3dbe261?w=600&q=80');
+      var price = p.price ? esc(p.price) + ' VND/' + esc(p.unit || 'm3') : 'Lien he bao gia';
+      var desc = esc(p.description || p.specs || '');
+      var cat = esc(p.category || 'Be tong');
+      return ['<div class="bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700 overflow-hidden" style="transition:transform .25s,box-shadow .25s" onmouseenter="this.style.transform=\'translateY(-4px)\';this.style.boxShadow=\'0 12px 32px rgba(0,0,0,.12)\'" onmouseleave="this.style.transform=\'\';this.style.boxShadow=\'\'">','<div style="position:relative;height:200px;overflow:hidden;background:#f1f5f9">','<img src="' + img + '" alt="' + esc(p.name) + '" style="width:100%;height:100%;object-fit:cover" onerror="this.style.display=\'none\'">','<span style="position:absolute;top:10px;left:10px;background:#ea580c;color:#fff;font-size:11px;font-weight:600;padding:3px 10px;border-radius:20px">' + cat + '</span>','</div>','<div style="padding:18px">','<h3 style="font-weight:700;font-size:1rem;margin-bottom:6px">' + esc(p.name) + '</h3>','<p style="font-size:13px;color:#64748b;margin-bottom:12px;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical">' + desc + '</p>','<div style="display:flex;align-items:center;justify-content:space-between">','<span style="color:#ea580c;font-weight:600;font-size:13px">' + price + '</span>','<button onclick="location.href=\'/linhbogi.html\'" style="background:#ea580c;color:#fff;border:none;border-radius:20px;padding:6px 14px;font-size:12px;font-weight:600;cursor:pointer" onmouseenter="this.style.background=\'#c2410c\'" onmouseleave="this.style.background=\'#ea580c\'">Bao gia</button>','</div>','</div>','</div>'].join('');
+    }).join('');
+    setTimeout(function() { document.dispatchEvent(new Event('cp-products-loaded')); }, 100);
+  }).catch(function() { grid.innerHTML = ''; });
 }
-
 function loadProjects() {
-  injectHoverCSS();
-  var grid = afterComment("Project Grid") || findGrid();
-  if (!grid) return;
-  grid.innerHTML = "";
-  grid.appendChild(spinner());
-  sbGet("projects", "order=created_at.desc").then(function(rows) {
-    if (!rows || !rows.length) {
-      grid.innerHTML = "<p style='color:#94a3b8;padding:2rem;grid-column:1/-1'>Chua co du an nao.</p>";
-      return;
-    }
-    var stLabel = { ongoing: "Dang thuc hien", completed: "Hoan thanh", planning: "Ke hoach" };
-    var stColor = { ongoing: "#3b82f6", completed: "#16a34a", planning: "#f59e0b" };
-    grid.innerHTML = rows.map(function(p) {
-      var img = p.image || "https://images.unsplash.com/photo-1590674899484-d5640e854abe?w=600&q=80";
-      var lbl = esc(stLabel[p.status] || p.status || "Du an");
-      var col = stColor[p.status] || "#64748b";
-      var meta = [p.client, p.location, p.year].filter(Boolean).map(esc).join(" . ");
-      var name = esc(p.name);
-      return "<div class='sb-card bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700 overflow-hidden'><div style='position:relative;height:210px;overflow:hidden;background:#f1f5f9'><img class='sb-img' src='" + esc(img) + "' alt='" + name + "' onerror=\"this.style.display='none'\"><span style='position:absolute;top:10px;left:10px;background:" + col + ";color:#fff;font-size:11px;font-weight:600;padding:3px 10px;border-radius:20px'>" + lbl + "</span></div><div style='padding:18px'><h3 style='font-weight:700;font-size:1rem;margin-bottom:4px;color:inherit'>" + name + "</h3>" + (meta ? "<p style='font-size:12px;color:#94a3b8;margin-bottom:8px'>" + meta + "</p>" : "") + (p.description ? "<p style='font-size:13px;color:#64748b;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical'>" + esc(p.description) + "</p>" : "") + "</div></div>";
-    }).join("");
-  }).catch(function() {});
-}
-
-function loadSlides() {
-  sbGet("slides", "status=eq.active&order=order_index.asc").then(function(rows) {
+  sbGet('projects', 'order=created_at.desc').then(function(rows) {
     if (!rows || !rows.length) return;
-    var slider = document.getElementById("hero-slider") ||
-                 document.querySelector("[id*=slider],[id*=hero],[class*=hero-slide],[class*=slider-track]");
-    var slide = rows[0];
-    var target = slider || document.querySelector("section:first-of-type,[class*=hero],[class*=banner]");
-    if (!target) return;
-    var h1 = target.querySelector("h1,[class*=text-5xl],[class*=text-4xl]");
-    var p = target.querySelector("p,[class*=text-xl],[class*=text-lg]");
-    var bgEl = target.querySelector("[style*=background-image]") || target;
-    if (h1 && slide.title) h1.textContent = slide.title;
-    if (p && slide.subtitle) p.textContent = slide.subtitle;
-    if (slide.image_url) { bgEl.style.backgroundImage = "url(" + slide.image_url + ")"; bgEl.style.backgroundSize = "cover"; bgEl.style.backgroundPosition = "center"; }
+    var grid = afterComment('Project Grid') || findGrid();
+    if (!grid) return;
+    var stLabel = { ongoing: 'Dang thuc hien', completed: 'Hoan thanh', planning: 'Ke hoach' };
+    var stColor = { ongoing: '#3b82f6', completed: '#16a34a', planning: '#f59e0b' };
+    grid.className = grid.className.replace(/\bmd:grid-cols-12\b/g, 'md:grid-cols-3').replace(/\blg:grid-cols-12\b/g, 'lg:grid-cols-3');
+    grid.innerHTML = rows.map(function(p) {
+      var img = esc(p.image || 'https://images.unsplash.com/photo-1590674899484-d5640e854abe?w=600&q=80');
+      var lbl = esc(stLabel[p.status] || p.status || 'Du an');
+      var col = stColor[p.status] || '#64748b';
+      var meta = [p.client, p.location, p.year].filter(Boolean).map(esc).join(' - ');
+      return ['<div class="bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-slate-100 overflow-hidden" style="transition:transform .25s,box-shadow .25s" onmouseenter="this.style.transform=\'translateY(-4px)\';this.style.boxShadow=\'0 12px 32px rgba(0,0,0,.12)\'" onmouseleave="this.style.transform=\'\';this.style.boxShadow=\'\'">','<div style="position:relative;height:210px;overflow:hidden;background:#f1f5f9">','<img src="' + img + '" alt="' + esc(p.name) + '" style="width:100%;height:100%;object-fit:cover;transition:transform .5s" onmouseenter="this.style.transform=\'scale(1.06)\'" onmouseleave="this.style.transform=\'\'" onerror="this.style.display=\'none\'">','<span style="position:absolute;top:10px;left:10px;background:' + col + ';color:#fff;font-size:11px;font-weight:600;padding:3px 10px;border-radius:20px">' + lbl + '</span>','</div>','<div style="padding:18px">','<h3 style="font-weight:700;font-size:1rem;margin-bottom:4px">' + esc(p.name) + '</h3>',meta ? '<p style="font-size:12px;color:#94a3b8;margin-bottom:8px">' + meta + '</p>' : '',p.description ? '<p style="font-size:13px;color:#64748b;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical">' + esc(p.description) + '</p>' : '','</div>','</div>'].join('');
+    }).join('');
   }).catch(function() {});
 }
-
+function loadSlides() {
+  sbGet('slides', 'status=eq.active&order=order_index.asc&limit=1').then(function(rows) {
+    if (!rows || !rows.length) return;
+    var slide = rows[0];
+    var hero = document.getElementById('hero-slider') || document.querySelector('[id*="slider"],[id*="hero"],[class*="hero-slide"],[class*="slider-track"]') || document.querySelector('main > section:first-child') || document.querySelector('section:first-of-type');
+    if (!hero) return;
+    if (slide.title) { var h1 = hero.querySelector('h1'); if (h1) h1.textContent = slide.title; }
+    if (slide.subtitle) { var paras = hero.querySelectorAll('p'); for (var i = 0; i < paras.length; i++) { if (!paras[i].closest('button') && !paras[i].closest('a')) { paras[i].textContent = slide.subtitle; break; } } }
+    if (slide.image_url) { var bgImg = hero.querySelector('img'); if (bgImg) { bgImg.src = slide.image_url; } else { hero.style.backgroundImage = 'url(' + slide.image_url + ')'; hero.style.backgroundSize = 'cover'; hero.style.backgroundPosition = 'center'; } }
+  }).catch(function() {});
+}
 function loadNewsSidebar() {
-  var sidebarEl = afterComment("Latest News") || afterComment("Sidebar Section: Latest News");
-  if (!sidebarEl) {
-    var aside = document.querySelector("aside");
-    if (!aside) return;
-    var lists = aside.querySelectorAll("ul,ol");
-    if (!lists.length) return;
-    sidebarEl = lists[0];
-  }
-  sbGet("news", "status=eq.published&order=created_at.desc&limit=5").then(function(rows) {
+  var sidebarEl = afterComment('Latest News') || afterComment('Sidebar Section: Latest News');
+  if (!sidebarEl) { var aside = document.querySelector('aside'); if (!aside) return; var lists = aside.querySelectorAll('ul,ol'); if (!lists.length) return; sidebarEl = lists[0]; }
+  sbGet('news', 'status=eq.published&order=created_at.desc&limit=5').then(function(rows) {
     if (!rows || !rows.length) return;
     sidebarEl.innerHTML = rows.map(function(n) {
-      var date = n.created_at ? new Date(n.created_at).toLocaleDateString("vi-VN") : "";
-      return "<li style='padding:10px 0;border-bottom:1px solid #f1f5f9'><a href='" + NEWS_PAGE + "' style='font-size:13px;font-weight:500;color:inherit;text-decoration:none;display:block;margin-bottom:3px'>" + esc(n.title) + "</a><div style='font-size:11px;color:#94a3b8'>" + date + (n.category ? " . " + esc(n.category) : "") + "</div></li>";
-    }).join("");
+      var date = n.created_at ? new Date(n.created_at).toLocaleDateString('vi-VN') : '';
+      return ['<li style="padding:10px 0;border-bottom:1px solid #f1f5f9">','<a href="' + NEWS_PAGE + '" style="font-size:13px;font-weight:500;color:inherit;text-decoration:none;display:block;margin-bottom:3px;transition:color .15s" onmouseenter="this.style.color=\'#ea580c\'" onmouseleave="this.style.color=\'\'">',esc(n.title),'</a>','<div style="font-size:11px;color:#94a3b8">' + date + (n.category ? ' - ' + esc(n.category) : '') + '</div>','</li>'].join('');
+    }).join('');
   }).catch(function() {});
 }
-
 function loadHomepageProducts() {
-  injectHoverCSS();
-  var featuredSection = null;
-  var tw = document.createTreeWalker(document.body, NodeFilter.SHOW_COMMENT, null, false);
-  var node;
-  while ((node = tw.nextNode())) {
-    var v = node.nodeValue || "";
-    if (v.indexOf("Featured") >= 0 || v.indexOf("San pham") >= 0 || v.indexOf("Products") >= 0) {
-      var sib = node.nextSibling;
-      while (sib && sib.nodeType === 3) sib = sib.nextSibling;
-      if (sib) { featuredSection = sib; break; }
-    }
-  }
-  if (!featuredSection) return;
-  var grid = featuredSection.querySelector("[class*=grid-cols]");
-  if (!grid) return;
-  sbGet("products", "status=eq.active&order=created_at.desc&limit=6").then(function(rows) {
+  if (document.getElementById('sb-hp-products')) return;
+  sbGet('products', 'status=eq.active&order=created_at.desc&limit=6').then(function(rows) {
     if (!rows || !rows.length) return;
-    grid.innerHTML = rows.map(function(p) {
-      var img = p.image || "https://images.unsplash.com/photo-1565193566173-7a0ee3dbe261?w=400&q=80";
-      return "<div class='sb-card' style='border-radius:16px;overflow:hidden;box-shadow:0 2px 12px rgba(0,0,0,.08);background:#fff'><div style='height:180px;overflow:hidden;background:#f1f5f9'><img class='sb-img' src='" + esc(img) + "' alt='" + esc(p.name) + "' onerror=\"this.style.display='none'\"></div><div style='padding:14px'><div style='font-size:11px;color:#ea580c;font-weight:600;margin-bottom:4px'>" + esc(p.category || "") + "</div><div style='font-weight:700;font-size:0.9rem'>" + esc(p.name) + "</div>" + (p.price ? "<div style='font-size:12px;color:#64748b;margin-top:4px'>" + esc(p.price) + " VND/" + esc(p.unit || "m3") + "</div>" : "") + "</div></div>";
-    }).join("");
+    var insertAfter = null;
+    var sections = document.querySelectorAll('main section, main > div');
+    for (var i = 0; i < sections.length; i++) { var h = sections[i].querySelector('h2,h3'); if (h && (h.textContent.indexOf('Ph') >= 0 || h.textContent.indexOf('Products') >= 0)) { insertAfter = sections[i]; break; } }
+    if (!insertAfter) { var cs = document.querySelectorAll('main section'); if (cs.length >= 3) insertAfter = cs[cs.length - 2]; }
+    if (!insertAfter || !insertAfter.parentNode) return;
+    var ns = document.createElement('section');
+    ns.id = 'sb-hp-products';
+    ns.style.cssText = 'padding:3rem 0;background:#f8f9fb;border-top:1px solid #e2e8f0';
+    ns.innerHTML = ['<div style="max-width:1280px;margin:0 auto;padding:0 2rem">','<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1.5rem;border-bottom:2px solid #041627;padding-bottom:.5rem">','<h2 style="font-size:1.5rem;font-weight:700;color:#041627">San Pham Moi Nhat</h2>','<a href="/snphmvtliuxydng.html" style="color:#ea580c;font-size:.8rem;font-weight:700;text-decoration:none;text-transform:uppercase">Xem tat ca</a>','</div>','<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:1.5rem">',rows.map(function(p) { var img = esc(p.image || 'https://images.unsplash.com/photo-1565193566173-7a0ee3dbe261?w=400&q=80'); var price = p.price ? esc(p.price) + ' VND' + (p.unit ? '/' + esc(p.unit) : '') : 'Lien he'; return ['<div style="border-radius:12px;overflow:hidden;box-shadow:0 2px 12px rgba(0,0,0,.08);background:#fff;transition:transform .25s,box-shadow .25s;cursor:pointer" onmouseenter="this.style.transform=\'translateY(-4px)\';this.style.boxShadow=\'0 12px 32px rgba(0,0,0,.12)\'" onmouseleave="this.style.transform=\'\';this.style.boxShadow=\'\'" onclick="location.href=\'/snphmvtliuxydng.html\'">','<div style="height:170px;overflow:hidden;background:#f1f5f9">','<img src="' + img + '" alt="' + esc(p.name) + '" style="width:100%;height:100%;object-fit:cover" onerror="this.style.display=\'none\'">','</div>','<div style="padding:14px">','<div style="font-size:11px;color:#ea580c;font-weight:600;margin-bottom:3px;text-transform:uppercase">' + esc(p.category || 'Be tong') + '</div>','<div style="font-weight:700;font-size:.9rem;margin-bottom:4px;color:#041627">' + esc(p.name) + '</div>','<div style="font-size:12px;color:#64748b">' + price + '</div>','</div>','</div>'].join(''); }).join(''),'</div>','</div>'].join('');
+    insertAfter.parentNode.insertBefore(ns, insertAfter.nextSibling);
   }).catch(function() {});
 }
-
 function initSupabaseData() {
   var path = location.pathname;
-  if (path.indexOf("snphm") >= 0) { loadProducts(); }
-  else if (path.indexOf("hsdn") >= 0) { loadProjects(); }
-  else if (path === "/" || path === "/index.html" || path.indexOf("trangch") >= 0) { loadSlides(); loadHomepageProducts(); }
-  else if (path.indexOf("chitittint") >= 0) { loadNewsSidebar(); }
+  if (path.indexOf('snphm') >= 0) { loadProducts(); }
+  else if (path.indexOf('hsdn') >= 0) { loadProjects(); }
+  else if (path === '/' || path === '/index.html' || path.indexOf('trangch') >= 0) { loadSlides(); loadHomepageProducts(); }
+  else if (path.indexOf('chitittint') >= 0) { loadNewsSidebar(); }
 }
-
-if (document.readyState === "loading") {
-  document.addEventListener("DOMContentLoaded", initSupabaseData);
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', function() { setTimeout(initSupabaseData, 800); });
 } else {
   setTimeout(initSupabaseData, 1500);
 }
-
 })();
