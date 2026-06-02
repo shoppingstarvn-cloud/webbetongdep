@@ -886,7 +886,7 @@ function loadProducts() {
         '</div></div></div>'
       ].join('');
     }).join('');
-    setTimeout(function() { document.dispatchEvent(new Event('cp-products-loaded')); }, 100);
+    // products loaded
   }).catch(function() {});
 }
 
@@ -998,7 +998,7 @@ function initSupabaseData() {
 if (document.readyState === 'loading') {
   document.addEventListener('DOMContentLoaded', initSupabaseData);
 } else {
-  setTimeout(initSupabaseData, 400);
+  setTimeout(initSupabaseData, 1500);
 }
 
 })();
