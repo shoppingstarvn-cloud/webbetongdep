@@ -1,4 +1,5 @@
-/* fix.js v14 - ConcretePro Global Button, Link & Module Fixer + UX Enhancement
+/* fix.js v17 - [BUG FIXES: race condition, hero img, news inject]
+   Original: v14 - ConcretePro Global Button, Link & Module Fixer + UX Enhancement
    Changes v14:
    - BUG FIX: Scroll-reveal 500ms delay removed → hero/above-fold immediately visible
    - BUG FIX: Scroll-reveal immediately shows elements already in viewport (no flash)
@@ -924,11 +925,10 @@ function initSupabaseData() {
   else if (path === '/' || path === '/index.html' || path.indexOf('trangch') >= 0) { loadSlides(); loadHomepageProducts(); }
   else if (path.indexOf('chitittint') >= 0) { loadNewsSidebar(); }
 }
-if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', function() { setTimeout(initSupabaseData, 800); });
-} else {
-  setTimeout(initSupabaseData, 1500);
-}
+// v17 FIX: initSupabaseData DISABLED — superseded by runSBData
+// Was causing race condition: ran at 1500ms AFTER runSBData (500ms), overwrote correct data
+// Also used p.image instead of p.image_url causing wrong/missing images
+// runSBData handles all pages correctly with image_url||image||img fallback
 
 // ============================================================
 // SUPABASE REST API DATA LOADER - v16
@@ -980,6 +980,10 @@ function _loadHero() {
     hero.style.backgroundSize = 'cover';
     hero.style.backgroundPosition = 'center';
     hero.classList.remove('bg-primary');
+    // v17 FIX: update <img> src if hero uses img tag (not just CSS background)
+    var heroImg = hero.querySelector('img[alt*="ero"],img[alt*="hero"],img:first-child');
+    if (!heroImg) heroImg = hero.querySelector('img');
+    if (heroImg && img !== _IH) heroImg.src = img;
   });
 }
 
@@ -1107,10 +1111,25 @@ function _loadNewsPage() {
   if (!location.pathname.includes('chitittint')) return;
   _sbGet('news', 'order=created_at.desc').then(function(rows) {
     if (!rows || !rows.length) return;
+    // v17 FIX: Don't replace main article - inject news listing section safely
     var container = null;
     var arts = document.querySelectorAll('article');
-    if (arts.length) container = arts[0].parentElement;
-    else document.querySelectorAll('[class*="grid"]').forEach(function(g) { if (!container && !g.closest('nav') && !g.closest('header')) container = g; });
+    if (arts.length > 1) {
+      container = arts[arts.length - 1].parentElement; // use related articles section
+    } else {
+      // Single article page - inject new section before footer
+      var existSec = document.getElementById('sb-news-listing');
+      if (!existSec) {
+        existSec = document.createElement('section');
+        existSec.id = 'sb-news-listing';
+        existSec.style.cssText = 'padding:3rem 0;background:#f8fafc;border-top:2px solid #ea580c';
+        existSec.innerHTML = '<div style="max-width:1200px;margin:0 auto;padding:0 2rem"><h2 style="font-size:1.5rem;font-weight:700;color:#041627;margin-bottom:1.5rem">\u2714 Tin T\u1ee9c M\u1edbi Nh\u1ea5t T\u1eeb Admin</h2><div id="sb-news-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1.5rem"></div></div>';
+        var footer = document.querySelector('footer');
+        if (footer) footer.parentNode.insertBefore(existSec, footer);
+        else document.body.appendChild(existSec);
+      }
+      container = existSec.querySelector('#sb-news-grid') || existSec;
+    }
     if (!container) return;
     container.innerHTML = rows.map(function(a) {
       var img = _im(a, _IN);
