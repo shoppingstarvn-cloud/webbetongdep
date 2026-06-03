@@ -929,4 +929,226 @@ if (document.readyState === 'loading') {
 } else {
   setTimeout(initSupabaseData, 1500);
 }
+
+// ============================================================
+// SUPABASE REST API DATA LOADER - v16
+// Uses direct fetch() - no Supabase JS library needed
+// ============================================================
+var _SB_URL = 'https://clalkraxfaeqbkeaikow.supabase.co';
+var _SB_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNsYWxrcmF4ZmFlcWJrZWFpa293Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzkwNjEzOTksImV4cCI6MjA5NDYzNzM5OX0.2EpUXzqLgjc2GUaOzEdvASILX_S_YZ5SJl-a3KYamWk';
+var _IP = 'https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=600&q=80';
+var _IJ = 'https://images.unsplash.com/photo-1590274853856-f22d5ee3d228?w=600&q=80';
+var _IN = 'https://images.unsplash.com/photo-1541888946425-d81bb19240f5?w=600&q=80';
+var _IH = 'https://images.unsplash.com/photo-1513467535987-fd81bc7d62f8?w=1400&q=80';
+
+function _sbGet(table, qs) {
+  var url = _SB_URL + '/rest/v1/' + table + '?select=*' + (qs ? '&' + qs : '');
+  return fetch(url, { headers: { apikey: _SB_KEY, Authorization: 'Bearer ' + _SB_KEY } })
+    .then(function(r) { return r.ok ? r.json() : []; })
+    .catch(function() { return []; });
+}
+function _im(r, fb) { return r.image_url || r.image || r.img || fb; }
+
+function _addFade() {
+  if (document.getElementById('sb-f')) return;
+  var s = document.createElement('style');
+  s.id = 'sb-f';
+  s.textContent = '@keyframes sbF{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}';
+  document.head.appendChild(s);
+}
+
+function _findSec(keywords) {
+  var found = null;
+  document.querySelectorAll('section').forEach(function(s) {
+    if (found) return;
+    var h = s.querySelector('h2,h3');
+    if (h && keywords.some(function(k) { return h.textContent.toLowerCase().includes(k.toLowerCase()); })) found = s;
+  });
+  return found;
+}
+
+// HERO
+function _loadHero() {
+  var hero = null;
+  document.querySelectorAll('section').forEach(function(s) {
+    if (!hero && (s.className.includes('819') || s.className.includes('600'))) hero = s;
+  });
+  if (!hero) return;
+  _sbGet('slides', 'order=order_index.asc&limit=1').then(function(rows) {
+    var img = rows && rows[0] ? (rows[0].image_url || _IH) : _IH;
+    hero.style.backgroundImage = 'linear-gradient(rgba(0,0,0,0.5),rgba(0,0,0,0.5)),url(' + img + ')';
+    hero.style.backgroundSize = 'cover';
+    hero.style.backgroundPosition = 'center';
+    hero.classList.remove('bg-primary');
+  });
+}
+
+// HOMEPAGE PRODUCTS
+function _loadHPProducts() {
+  var sec = document.getElementById('sb-hp-products') || _findSec(['S\u1ea3n Ph\u1ea9m', 'San Pham']);
+  if (!sec) return;
+  _sbGet('products', 'status=eq.active&order=created_at.desc&limit=6').then(function(rows) {
+    if (!rows || !rows.length) return;
+    var ht = (sec.querySelector('h2,h3') || {}).outerHTML || '<h2 class="text-3xl font-bold text-center mb-8">S\u1ea3n Ph\u1ea9m M\u1edbi Nh\u1ea5t</h2>';
+    sec.innerHTML = ht + '<div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-6">' + rows.map(function(p) {
+      var img = _im(p, _IP);
+      var pr = p.price ? (parseInt(p.price)||0).toLocaleString('vi-VN') + ' \u0111/' + (p.unit||'m\u00b3') : 'Li\u00ean h\u1ec7';
+      return '<div class="bg-white rounded-2xl shadow hover:shadow-lg transition overflow-hidden border border-gray-100 group" style="animation:sbF 0.4s ease">' +
+        '<div class="h-48 overflow-hidden"><img src="' + img + '" alt="' + p.name + '" class="w-full h-full object-cover group-hover:scale-105 transition-transform" onerror="this.src=\'https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=600&q=80\'"></div>' +
+        '<div class="p-5"><span class="text-xs font-semibold text-green-700 bg-green-50 px-2 py-1 rounded-full">' + (p.category||'B\u00ea t\u00f4ng') + '</span>' +
+        '<h3 class="font-bold text-lg mt-2 mb-1">' + p.name + '</h3>' +
+        '<p class="text-gray-500 text-sm mb-3 line-clamp-2">' + (p.description||'') + '</p>' +
+        '<div class="flex justify-between items-center"><span class="text-green-700 font-bold text-sm">' + pr + '</span>' +
+        '<a href="/snphmvtliuxydng.html" class="text-sm text-green-600 font-medium">Chi ti\u1ebft \u2192</a></div></div></div>';
+    }).join('') + '</div><div class="text-center mt-8"><a href="/snphmvtliuxydng.html" class="bg-green-600 hover:bg-green-700 text-white font-semibold px-8 py-3 rounded-xl inline-block transition">Xem T\u1ea5t C\u1ea3 \u2192</a></div>';
+  });
+}
+
+// HOMEPAGE NEWS
+function _loadHPNews() {
+  var sec = _findSec(['Tin T\u1ee9c', 'Blog', 'News']);
+  if (!sec) return;
+  _sbGet('news', 'order=created_at.desc&limit=3').then(function(rows) {
+    if (!rows || !rows.length) return;
+    var ht = (sec.querySelector('h2,h3') || {}).outerHTML || '<h2 class="text-3xl font-bold text-center mb-8">Tin T\u1ee9c</h2>';
+    sec.innerHTML = ht + '<div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-6">' + rows.map(function(a) {
+      var img = _im(a, _IN);
+      var dt = a.created_at ? new Date(a.created_at).toLocaleDateString('vi-VN') : '';
+      return '<article class="bg-white rounded-2xl shadow hover:shadow-lg transition overflow-hidden border border-gray-100 group" style="animation:sbF 0.4s ease">' +
+        '<div class="h-44 overflow-hidden"><img src="' + img + '" alt="' + a.title + '" class="w-full h-full object-cover group-hover:scale-105 transition-transform" onerror="this.src=\'https://images.unsplash.com/photo-1541888946425-d81bb19240f5?w=600&q=80\'"></div>' +
+        '<div class="p-5"><div class="flex gap-2 mb-2"><span class="text-xs font-semibold text-blue-700 bg-blue-50 px-2 py-1 rounded">' + (a.category||'Tin t\u1ee9c') + '</span>' +
+        (dt ? '<span class="text-xs text-gray-400">' + dt + '</span>' : '') + '</div>' +
+        '<h3 class="font-bold text-base mb-2 line-clamp-2">' + a.title + '</h3>' +
+        '<p class="text-gray-500 text-sm line-clamp-3 mb-3">' + (a.excerpt||a.content||'').substring(0,150) + '</p>' +
+        '<a href="/chitittintcgiiphpbtngxanh.html" class="text-sm text-green-600 font-medium">\u0110\u1ecdc th\u00eam \u2192</a></div></article>';
+    }).join('') + '</div><div class="text-center mt-8"><a href="/chitittintcgiiphpbtngxanh.html" class="bg-green-600 hover:bg-green-700 text-white font-semibold px-8 py-3 rounded-xl inline-block transition">Xem T\u1ea5t C\u1ea3 \u2192</a></div>';
+  });
+}
+
+// HOMEPAGE PROJECTS
+function _loadHPProjects() {
+  var sec = _findSec(['D\u1ef1 \u00c1n', 'Project']);
+  if (!sec) return;
+  _sbGet('projects', 'status=eq.active&order=created_at.desc&limit=3').then(function(rows) {
+    if (!rows || !rows.length) return;
+    var ht = (sec.querySelector('h2,h3') || {}).outerHTML || '<h2 class="text-3xl font-bold text-center mb-8">D\u1ef1 \u00c1n</h2>';
+    sec.innerHTML = ht + '<div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-6">' + rows.map(function(p) {
+      var img = _im(p, _IJ);
+      return '<div class="relative rounded-2xl overflow-hidden shadow hover:shadow-xl transition group" style="height:280px;animation:sbF 0.4s ease">' +
+        '<img src="' + img + '" alt="' + p.name + '" class="w-full h-full object-cover group-hover:scale-105 transition-transform" onerror="this.src=\'https://images.unsplash.com/photo-1590274853856-f22d5ee3d228?w=600&q=80\'">' +
+        '<div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>' +
+        '<div class="absolute bottom-0 left-0 right-0 p-5 text-white"><span class="text-xs font-semibold bg-green-600 px-2 py-1 rounded mb-2 inline-block">' + (p.category||'D\u1ef1 \u00e1n') + '</span>' +
+        '<h3 class="font-bold text-lg">' + p.name + '</h3>' +
+        '<p class="text-gray-300 text-sm">' + (p.location||p.client||'') + (p.year ? ' \u00b7 ' + p.year : '') + '</p></div></div>';
+    }).join('') + '</div><div class="text-center mt-8"><a href="/hsdn.html" class="bg-green-600 hover:bg-green-700 text-white font-semibold px-8 py-3 rounded-xl inline-block transition">Xem T\u1ea5t C\u1ea3 \u2192</a></div>';
+  });
+}
+
+// PRODUCTS PAGE
+function _loadProductsPage() {
+  if (!location.pathname.includes('snphm')) return;
+  _sbGet('products', 'order=created_at.desc').then(function(all) {
+    if (!all || !all.length) return;
+    var grid = null;
+    document.querySelectorAll('[class*="grid-cols"]').forEach(function(g) {
+      if (!grid && !g.closest('nav') && !g.closest('header') && g.children.length >= 2) grid = g;
+    });
+    if (!grid) return;
+    var PAGE = 6, cur = 0;
+    function rp(p) {
+      cur = p; var s = p * PAGE;
+      grid.innerHTML = all.slice(s, s + PAGE).map(function(pr) {
+        var img = _im(pr, _IP);
+        var price = pr.price ? (parseInt(pr.price)||0).toLocaleString('vi-VN') + ' \u0111/' + (pr.unit||'m\u00b3') : 'Li\u00ean h\u1ec7';
+        return '<div class="bg-white rounded-2xl shadow hover:shadow-lg transition overflow-hidden border border-gray-100 group" style="animation:sbF 0.3s ease">' +
+          '<div class="h-52 overflow-hidden bg-gray-50"><img src="' + img + '" alt="' + pr.name + '" class="w-full h-full object-cover group-hover:scale-105 transition-transform" onerror="this.src=\'https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=600&q=80\'"></div>' +
+          '<div class="p-5"><span class="text-xs font-semibold text-green-700 bg-green-50 px-2 py-1 rounded-full">' + (pr.category||'B\u00ea t\u00f4ng') + '</span>' +
+          '<h3 class="font-bold text-lg mt-2 mb-1">' + pr.name + '</h3>' +
+          '<p class="text-gray-500 text-sm line-clamp-2 mb-3">' + (pr.description||'') + '</p>' +
+          '<div class="flex justify-between items-center pt-3 border-t border-gray-100"><span class="text-green-700 font-bold">' + price + '</span>' +
+          '<button onclick="location.href=\'/linhbogi.html\'" class="text-sm bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition">B\u00e1o gi\u00e1</button></div></div></div>';
+      }).join('');
+      document.querySelectorAll('p,span').forEach(function(el) {
+        if (el.children.length === 0 && /trong s/.test(el.textContent)) el.textContent = 'Hi\u1ec3n th\u1ecb ' + (s+1) + '-' + Math.min(s+PAGE, all.length) + ' trong s\u1ed1 ' + all.length + ' s\u1ea3n ph\u1ea9m';
+      });
+    }
+    var ps = document.querySelector('[data-icon="chevron_left"]');
+    var ns = document.querySelector('[data-icon="chevron_right"]');
+    if (ps) { var pb = ps.closest('button'); if (pb && !pb._sb) { pb._sb=true; pb.onclick=function(e){e.stopPropagation();if(cur>0)rp(cur-1);}; } }
+    if (ns) { var nb = ns.closest('button'); if (nb && !nb._sb) { nb._sb=true; nb.onclick=function(e){e.stopPropagation();if((cur+1)*PAGE<all.length)rp(cur+1);}; } }
+    rp(0);
+  });
+}
+
+// PROJECTS PAGE
+function _loadProjectsPage() {
+  if (!location.pathname.includes('hsdn')) return;
+  _sbGet('projects', 'order=created_at.desc').then(function(rows) {
+    if (!rows || !rows.length) return;
+    var grid = null;
+    document.querySelectorAll('[class*="grid-cols"]').forEach(function(g) {
+      if (!grid && !g.closest('nav') && !g.closest('header') && g.children.length >= 2) grid = g;
+    });
+    if (!grid) return;
+    grid.innerHTML = rows.map(function(p) {
+      var img = _im(p, _IJ);
+      return '<div class="relative rounded-2xl overflow-hidden shadow hover:shadow-xl transition group" style="height:300px;animation:sbF 0.4s ease" data-category="' + (p.category||'').toLowerCase() + '">' +
+        '<img src="' + img + '" alt="' + p.name + '" class="w-full h-full object-cover group-hover:scale-105 transition-transform" onerror="this.src=\'https://images.unsplash.com/photo-1590274853856-f22d5ee3d228?w=600&q=80\'">' +
+        '<div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>' +
+        '<div class="absolute top-4 left-4"><span class="text-xs font-semibold bg-green-600 text-white px-3 py-1 rounded-full">' + (p.category||'D\u1ef1 \u00e1n') + '</span></div>' +
+        '<div class="absolute bottom-0 left-0 right-0 p-5 text-white"><h3 class="font-bold text-lg">' + p.name + '</h3>' +
+        '<p class="text-gray-300 text-sm">' + (p.client||'') + (p.location ? ' \u00b7 ' + p.location : '') + (p.year ? ' \u00b7 ' + p.year : '') + '</p></div></div>';
+    }).join('');
+  });
+}
+
+// NEWS PAGE
+function _loadNewsPage() {
+  if (!location.pathname.includes('chitittint')) return;
+  _sbGet('news', 'order=created_at.desc').then(function(rows) {
+    if (!rows || !rows.length) return;
+    var container = null;
+    var arts = document.querySelectorAll('article');
+    if (arts.length) container = arts[0].parentElement;
+    else document.querySelectorAll('[class*="grid"]').forEach(function(g) { if (!container && !g.closest('nav') && !g.closest('header')) container = g; });
+    if (!container) return;
+    container.innerHTML = rows.map(function(a) {
+      var img = _im(a, _IN);
+      var dt = a.created_at ? new Date(a.created_at).toLocaleDateString('vi-VN') : '';
+      return '<article class="bg-white rounded-2xl shadow hover:shadow-lg transition overflow-hidden border border-gray-100 group" style="animation:sbF 0.4s ease">' +
+        '<div class="h-52 overflow-hidden"><img src="' + img + '" alt="' + a.title + '" class="w-full h-full object-cover group-hover:scale-105 transition-transform" onerror="this.src=\'https://images.unsplash.com/photo-1541888946425-d81bb19240f5?w=600&q=80\'"></div>' +
+        '<div class="p-6"><div class="flex items-center gap-3 mb-3"><span class="text-xs font-semibold text-blue-700 bg-blue-50 px-3 py-1 rounded-full">' + (a.category||'Tin t\u1ee9c') + '</span>' +
+        (dt ? '<span class="text-xs text-gray-400">' + dt + '</span>' : '') + '</div>' +
+        '<h2 class="font-bold text-xl mb-3 line-clamp-2">' + a.title + '</h2>' +
+        '<p class="text-gray-600 text-sm line-clamp-3 mb-4">' + (a.excerpt||a.content||'').substring(0,200) + '...</p>' +
+        '<div class="flex justify-between items-center"><span class="text-xs text-gray-400">B\u1edfi ' + (a.author||'CONCRETEPRO') + '</span>' +
+        '<button class="text-sm text-green-600 font-semibold">\u0110\u1ecdc ti\u1ebfp \u2192</button></div></div></article>';
+    }).join('');
+  });
+}
+
+// MAIN
+function runSBData() {
+  _addFade();
+  var p = location.pathname;
+  if (p === '/' || p.includes('index')) {
+    _loadHero();
+    setTimeout(_loadHPProducts, 100);
+    setTimeout(_loadHPProjects, 200);
+    setTimeout(_loadHPNews, 300);
+  }
+  if (p.includes('snphm')) _loadProductsPage();
+  if (p.includes('hsdn')) _loadProjectsPage();
+  if (p.includes('chitittint')) _loadNewsPage();
+}
+
+
+// Boot Supabase data after DOM ready
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', function() { setTimeout(runSBData, 500); });
+} else {
+  setTimeout(runSBData, 500);
+}
+
 })();
+/* fix.js v16 - Supabase REST API data loader */
