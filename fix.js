@@ -1,4 +1,4 @@
-/* fix.js v17 - [BUG FIXES: race condition, hero img, news inject]
+/* fix.js v18 - [BUG FIXES: race condition, hero img, news inject, homepage trangch]
    Original: v14 - ConcretePro Global Button, Link & Module Fixer + UX Enhancement
    Changes v14:
    - BUG FIX: Scroll-reveal 500ms delay removed → hero/above-fold immediately visible
@@ -1150,7 +1150,7 @@ function _loadNewsPage() {
 function runSBData() {
   _addFade();
   var p = location.pathname;
-  if (p === '/' || p.includes('index')) {
+  if (p === '/' || p.includes('index') || p.includes('trangch')) {
     _loadHero();
     setTimeout(_loadHPProducts, 100);
     setTimeout(_loadHPProjects, 200);
