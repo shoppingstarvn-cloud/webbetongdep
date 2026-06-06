@@ -1011,7 +1011,7 @@ function _loadHPProducts() {
 // HOMEPAGE NEWS
 function _loadHPNews() {
   var sec = _findSec(['Tin T\u1ee9c', 'Blog', 'News']);
-  if (!sec) return;
+  if (!sec) { sec = document.createElement('section'); sec.className = 'py-16 bg-white'; var _ftn=document.querySelector('footer'); if(_ftn)_ftn.parentNode.insertBefore(sec,_ftn); else document.body.appendChild(sec); }
   _sbGet('news', 'order=created_at.desc&limit=3').then(function(rows) {
     if (!rows || !rows.length) return;
     var ht = (sec.querySelector('h2,h3') || {}).outerHTML || '<h2 class="text-3xl font-bold text-center mb-8">Tin T\u1ee9c</h2>';
@@ -1032,8 +1032,8 @@ function _loadHPNews() {
 // HOMEPAGE PROJECTS
 function _loadHPProjects() {
   var sec = _findSec(['D\u1ef1 \u00c1n', 'Project']);
-  if (!sec) return;
-  _sbGet('projects', 'status=eq.active&order=created_at.desc&limit=3').then(function(rows) {
+  if (!sec) { sec = document.createElement('section'); sec.className = 'py-16 bg-gray-50'; var _ftp=document.querySelector('footer'); if(_ftp)_ftp.parentNode.insertBefore(sec,_ftp); else document.body.appendChild(sec); }
+  _sbGet('projects', 'order=created_at.desc&limit=3').then(function(rows) {
     if (!rows || !rows.length) return;
     var ht = (sec.querySelector('h2,h3') || {}).outerHTML || '<h2 class="text-3xl font-bold text-center mb-8">D\u1ef1 \u00c1n</h2>';
     sec.innerHTML = ht + '<div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-6">' + rows.map(function(p) {
