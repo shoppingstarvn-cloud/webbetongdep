@@ -164,13 +164,13 @@
 <img alt="Hero background" class="absolute inset-0 w-full h-full object-cover opacity-60 mix-blend-overlay" data-alt="Massive concrete industrial construction site at dusk with dramatic lighting, steel rebar structures, and cranes against a deep blue sky" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDg6ud2hjOgz2gY8wFwx_HQBtXUTQYTtmY3aLFVrgkohBEryuuNTJiouf4OS_mYD_bQi0_L6B7SvKRYVUOr9AzK9i4fMfl1RvQw5MVOqu1xTLwWZEFg0tvd6uOIp0Gt9WjqanAvD7nguoP2iOCBCqgMLwigeF4qbwXhtK-g1X6QiVjVk2t_MsdFEmju13LOHMrVPsT87aZXI2MqZsHqyRZhixxdAlwP2fRCUSpMM6aAMkhMuJhcXUJMEDLk-6uH_r0hwtFFKmuN5x0K"/>
 <div class="absolute inset-0 bg-gradient-to-t from-primary/90 to-transparent"></div>
 <div class="relative z-10 w-full max-w-[1280px] mx-auto px-margin text-center">
-<span class="inline-block px-4 py-1 mb-6 border border-white/20 text-white font-label-bold text-label-bold tracking-widest uppercase">
+<span id="hero-badge" class="inline-block px-4 py-1 mb-6 border border-white/20 text-white font-label-bold text-label-bold tracking-widest uppercase">
                     Industrial Excellence
                 </span>
-<h1 class="font-display-lg text-display-lg text-white mb-6 max-w-4xl mx-auto">
+<h1 id="hero-h1" class="font-display-lg text-display-lg text-white mb-6 max-w-4xl mx-auto">
                     Nền Tảng Vững Chắc<br/>Cho Mọi Công Trình Tương Lai
                 </h1>
-<p class="font-body-lg text-body-lg text-inverse-on-surface mb-10 max-w-2xl mx-auto">
+<p id="hero-desc" class="font-body-lg text-body-lg text-inverse-on-surface mb-10 max-w-2xl mx-auto">
                     Giải pháp bê tông chuyên dụng và vật liệu xây dựng chất lượng cao, đáp ứng các tiêu chuẩn khắt khe nhất của ngành xây dựng công nghiệp.
                 </p>
 <div class="flex flex-col sm:flex-row gap-4 justify-center">
@@ -183,7 +183,7 @@
 </div>
 </div>
 <!-- Fake Slider Indicators -->
-<div class="absolute bottom-10 left-1/2 -translate-x-1/2 flex gap-2">
+<div id="hero-dots" class="absolute bottom-10 left-1/2 -translate-x-1/2 flex gap-2">
 <div class="w-12 h-1 bg-on-tertiary-container rounded-none"></div>
 <div class="w-12 h-1 bg-white/30 rounded-none cursor-pointer hover:bg-white/50 transition-colors"></div>
 <div class="w-12 h-1 bg-white/30 rounded-none cursor-pointer hover:bg-white/50 transition-colors"></div>
@@ -475,7 +475,7 @@ if ('serviceWorker' in navigator) {
   }
 
   function loadFromDB() {
-    fetch(SB + '/rest/v1/slides?select=*&is_visible=eq.true&order=sort_order', {
+    fetch(SB + '/rest/v1/slides?select=*&status=eq.active&order=order_index', {
       headers: { 'apikey': K, 'Authorization': 'Bearer ' + K }
     }).then(function(r) { return r.json(); })
       .then(function(data) {
@@ -506,5 +506,6 @@ if ('serviceWorker' in navigator) {
 })();
 </script>
 <script src="/fix.js"></script>
+<script src="/fix-v20-patch.js"></script>
 </body>
 </html>
