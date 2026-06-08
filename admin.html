@@ -644,6 +644,56 @@ document.getElementById('cfd').addEventListener('click',function(e){if(e.target=
 // BOOT
 checkSession();
 </script>
+
+<!-- IMAGE UPLOAD PATCH v1 - Auto upload for Products/News/Projects -->
+<script>
+(function(){
+  var SB='https://clalkraxfaeqbkeaikow.supabase.co';
+  var K='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNsYWxrcmF4ZmFlcWJrZWFpa293Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzkwNjEzOTksImV4cCI6MjA5NDYzNzM5OX0.2EpUXzqLgjc2GUaOzEdvASILX_S_YZ5SJl-a3KYamWk';
+  var obs=new MutationObserver(function(){
+    var inp=document.getElementById('f_image');
+    if(inp&&!inp._up){
+      inp._up=true;
+      // Wrap input with upload button
+      var w=document.createElement('div');
+      w.style.cssText='display:flex;gap:8px;align-items:center;width:100%';
+      inp.style.flex='1';
+      var par=inp.parentNode;
+      par.insertBefore(w,inp);
+      w.appendChild(inp);
+      var fi=document.createElement('input');
+      fi.type='file';fi.accept='image/jpeg,image/png,image/webp,image/gif';fi.style.display='none';
+      var b=document.createElement('button');
+      b.type='button';
+      b.innerHTML='📁 Tải ảnh';
+      b.style.cssText='padding:8px 14px;background:#ea580c;color:#fff;border:none;border-radius:8px;cursor:pointer;font-size:12px;font-weight:700;white-space:nowrap;transition:background 0.2s';
+      var pv=document.createElement('img');
+      pv.style.cssText='width:44px;height:44px;object-fit:cover;border-radius:6px;border:2px solid #334155;display:none;flex-shrink:0';
+      b.onclick=function(){fi.click();};
+      fi.onchange=async function(){
+        var f=fi.files[0];if(!f)return;
+        b.textContent='⏳...';b.disabled=true;
+        try{
+          var fn='img_'+Date.now()+'_'+f.name.replace(/[^a-zA-Z0-9._-]/g,'_');
+          var r=await fetch(SB+'/storage/v1/object/slides/'+fn,{method:'POST',headers:{'Authorization':'Bearer '+K,'Content-Type':f.type,'x-upsert':'true'},body:f});
+          if(!r.ok)throw new Error(r.status);
+          var url=SB+'/storage/v1/object/public/slides/'+fn;
+          inp.value=url;pv.src=url;pv.style.display='block';
+          b.textContent='✅ OK';b.style.background='#16a34a';
+          setTimeout(function(){b.textContent='📁 Tải ảnh';b.style.background='#ea580c';b.disabled=false;},2000);
+          if(typeof cpShowToast==='function')cpShowToast&&window.cpShowToast('Tải ảnh thành công!','success');
+        }catch(e){
+          b.textContent='❌ Lỗi';b.style.background='#dc2626';b.disabled=false;
+        }
+      };
+      if(inp.value){pv.src=inp.value;pv.style.display='block';}
+      inp.addEventListener('input',function(){if(inp.value){pv.src=inp.value;pv.style.display='block';}});
+      w.appendChild(fi);w.appendChild(b);w.appendChild(pv);
+    }
+  });
+  obs.observe(document.body,{childList:true,subtree:true});
+})();
+</script>
 </body>
 </html>
 <!DOCTYPE html>
