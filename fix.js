@@ -973,6 +973,13 @@ function _loadHero() {
   document.querySelectorAll('section').forEach(function(s) {
     if (!hero && (s.className.includes('819') || s.className.includes('600'))) hero = s;
   });
+  // v18 FIX: fallback hero detection for trangchconcretepro.html
+  if (!hero) {
+    var secs = (document.querySelector('main') || document.body).querySelectorAll('section');
+    for (var _hi = 0; _hi < secs.length; _hi++) {
+      if (secs[_hi].querySelector('img') || secs[_hi].querySelector('h1')) { hero = secs[_hi]; break; }
+    }
+  }
   if (!hero) return;
   _sbGet('slides', 'order=order_index.asc&limit=1').then(function(rows) {
     var img = rows && rows[0] ? (rows[0].image_url || _IH) : _IH;
